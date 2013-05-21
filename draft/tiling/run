@@ -1,0 +1,12 @@
+#!/bin/bash
+echo -en '\e[?1049h\e[H\e[2J\e[?25l'
+stty -echo -icanon
+dearg()
+{
+    shift
+    echo "$@"
+}
+"$(dirname "$0")/$1.py" $(stty size) $(dearg "$@")
+stty echo icanon
+echo -en '\e[?25h\e[H\e[2J\e[?1049l'
+
