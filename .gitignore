@@ -1,0 +1,16 @@
+_/
+__pycache__/
+/bin/
+/obj/
+\#*\#
+.*
+!.git*
+*.gz
+*.xz
+*.pyo
+*.pyc
+*.class
+*.o
+*.gch
+*~
+
