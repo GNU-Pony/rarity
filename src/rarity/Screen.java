@@ -192,17 +192,6 @@ public class Screen
      * @param  property  The property
      * @param  value     The property value
      */
-    public void set(final String property, final String value)
-    {
-	this.set(property, (Object)value);
-    }
-    
-    /**
-     * Sets a property for the screen
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
     public void set(final String property, final int value)
     {
 	this.set(property, (Integer)(Integer.valueOf(value)));
