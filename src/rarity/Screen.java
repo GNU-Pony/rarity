@@ -141,6 +141,52 @@ public class Screen
     
     
     /**
+     * Blackboard message for {@link Screen} property updates
+     * 
+     * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
+     */
+    public static class Message implements BlackboardMessage
+    {
+	/**
+	 * Constructor
+	 * 
+	 * @param  property  The updated property
+	 */
+	public Message(final Screen screen, final String property)
+	{
+	    this.screen = screen;
+	    this.property = property;
+	    int i = 0;
+	    for (final Screen scr : Screen.screens)
+		if (scr == screen)
+		    break;
+		else
+		    i++;
+	    this.index = i;
+	}
+	
+	
+	
+	/**
+	 * The updated screen
+	 */
+	public final Screen screen;
+	
+	/**
+	 * The index of the updated screen
+	 */
+	public final int index;
+	
+	/**
+	 * The updated property
+	 */
+	public final String property;
+	
+    }
+    
+    
+    
+    /**
      * Gets a screen by its index
      * 
      * @param   index  The screen's index
@@ -214,7 +260,7 @@ public class Screen
     public void set(final String property, final Object value)
     {
 	this.properties.set(property, value);
-	/* TODO Broadcast update */
+	Blackboard.broadcastMessage(new Screen.Message(this, property));
     }
     
     /**
