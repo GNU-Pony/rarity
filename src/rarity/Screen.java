@@ -153,7 +153,10 @@ public class Screen
      */
     public String getString(final String property)
     {
-	return (String)(this.properties.get(property));
+	Object obj = this.properties.get(property);
+	if ((obj == null) || (obj instanceof String == false))
+	    return null;
+	return (String)obj;
     }
     
     /**
@@ -164,8 +167,10 @@ public class Screen
      */
     public int getInteger(final String property)
     {
-	Integer value = (String)(this.properties.get(property));
-	return value == null ? 0 : value.intValue();
+	Object obj = this.properties.get(property);
+	if ((obj == null) || (obj instanceof Integer == false))
+	    return 0;
+	return value.intValue();
     }
     
     
