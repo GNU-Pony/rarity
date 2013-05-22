@@ -72,6 +72,16 @@ public class Screen
      */
     public static final String MARGIN_BOTTOM = "marginBottom";
     
+    /**
+     * The unoccupied screen width
+     */
+    public static final String WIDTH = "width";
+    
+    /**
+     * The unoccupied screen height
+     */
+    public static final String HEIGHT = "height";
+    
     
     
     /**
@@ -94,7 +104,24 @@ public class Screen
 	this.set(MARGIN_RIGHT, 0);
 	this.set(MARGIN_TOP, 0);
 	this.set(MARGIN_BOTTOM, 0);
-	/* TODO add width and height lambda */
+	this.set(WIDTH, new Lambda()
+	    {
+		@Override
+		public Object evaluate(final Object... params)
+		{
+		    final Screen screen = (Screen)(params[0]);
+		    return screen.getInteger(RESOLUTION_X) - screen.getInteger(MARGIN_LEFT) - screen.getInteger(MARGIN_RIGHT);
+		}
+	    });
+	this.set(HEIGHT, new Lambda()
+	    {
+		@Override
+		public Object evaluate(final Object... params)
+		{
+		    final Screen screen = (Screen)(params[0]);
+		    return screen.getInteger(RESOLUTION_Y) - screen.getInteger(MARGIN_TOP) - screen.getInteger(MARGIN_BOTTOM);
+		}
+	    });
     }
     
     
