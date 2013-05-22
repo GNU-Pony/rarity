@@ -142,7 +142,10 @@ public class Screen
      */
     public Object get(final String property)
     {
-	return this.properties.get(property);
+	Object obj = this.properties.get(property);
+	if ((obj == null) || (obj instanceof Lambda == false))
+	    return obj;
+	return ((Lambda)obj).evaluate(this);
     }
     
     /**
@@ -153,7 +156,7 @@ public class Screen
      */
     public String getString(final String property)
     {
-	Object obj = this.properties.get(property);
+	Object obj = get(property);
 	if ((obj == null) || (obj instanceof String == false))
 	    return null;
 	return (String)obj;
