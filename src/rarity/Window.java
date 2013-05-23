@@ -18,15 +18,13 @@
  */
 package rarity;
 
-import java.util.*;
-
 
 /**
  * Window instances in the environment
  * 
  * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
  */
-public class Window
+public class Window extends PropertyBase
 {
     /**
      * The window's width
@@ -73,13 +71,6 @@ public class Window
     
     
     /**
-     * Map for the window's properties
-     */
-    private HashMap<String, Object> properties = new HashMap<String, Object>();
-    
-    
-    
-    /**
      * Blackboard message for {@link Window} property updates
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
@@ -115,94 +106,11 @@ public class Window
     
     
     /**
-     * Gets a property from the window
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@link Object}
+     * {@inheritDoc}
      */
-    public Object get(final String property)
+    protected void updated(final String property, final Object value)
     {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Lambda == false))
-	    return obj;
-	return ((Lambda)obj).evaluate(this);
-    }
-    
-    /**
-     * Gets a property from the window
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@link String}
-     */
-    public String getString(final String property)
-    {
-	Object obj = get(property);
-	if ((obj == null) || (obj instanceof String == false))
-	    return null;
-	return (String)obj;
-    }
-    
-    /**
-     * Gets a property from the window
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@code int}
-     */
-    public int getInteger(final String property)
-    {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Integer == false))
-	    return 0;
-	return ((Integer)obj).intValue();
-    }
-    
-    /**
-     * Gets a property from the window
-     * 
-     * @param   property  The property
-     * @return            The property value as a {@code boolean}
-     */
-    public boolean getBoolean(final String property)
-    {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Boolean == false))
-	    return false;
-	return ((Boolean)obj).booleanValue();
-    }
-    
-    
-    /**
-     * Sets a property for the window
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final Object value)
-    {
-	this.properties.put(property, value);
 	Blackboard.getInstance(Window.class).broadcastMessage(new Window.Message(this, property));
-    }
-    
-    /**
-     * Sets a property for the window
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final int value)
-    {
-	this.set(property, Integer.valueOf(value));
-    }
-    
-    /**
-     * Sets a property for the window
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final boolean value)
-    {
-	this.set(property, Boolean.valueOf(value));
     }
     
 }

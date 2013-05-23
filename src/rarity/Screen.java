@@ -18,7 +18,7 @@
  */
 package rarity;
 
-import java.util.*;
+import java.util.Vector;
 
 
 /**
@@ -26,7 +26,7 @@ import java.util.*;
  * 
  * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
  */
-public class Screen
+public class Screen extends PropertyBase
 {
     /**
      * The screen's virtual resolution on the X-axis
@@ -128,15 +128,9 @@ public class Screen
     
     
     /**
-     * Map for the screen's properties
-     */
-    private HashMap<String, Object> properties = new HashMap<String, Object>();
-    
-    
-    /**
      * All screen in index order
      */
-    protected static Vector<Screen> screens = new Vector<Screen>();
+    static Vector<Screen> screens = new Vector<Screen>();
     
     
     
@@ -210,94 +204,11 @@ public class Screen
     
     
     /**
-     * Gets a property from the screen
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@link Object}
+     * {@inheritDoc}
      */
-    public Object get(final String property)
+    protected void updated(final String property, final Object value)
     {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Lambda == false))
-	    return obj;
-	return ((Lambda)obj).evaluate(this);
-    }
-    
-    /**
-     * Gets a property from the screen
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@link String}
-     */
-    public String getString(final String property)
-    {
-	Object obj = get(property);
-	if ((obj == null) || (obj instanceof String == false))
-	    return null;
-	return (String)obj;
-    }
-    
-    /**
-     * Gets a property from the screen
-     * 
-     * @param   property  The property
-     * @return            The property value as an {@code int}
-     */
-    public int getInteger(final String property)
-    {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Integer == false))
-	    return 0;
-	return ((Integer)obj).intValue();
-    }
-    
-    /**
-     * Gets a property from the screen
-     * 
-     * @param   property  The property
-     * @return            The property value as a {@code boolean}
-     */
-    public int getInteger(final String property)
-    {
-	Object obj = this.properties.get(property);
-	if ((obj == null) || (obj instanceof Boolean == false))
-	    return 0;
-	return ((Boolean)obj).booleanValue();
-    }
-    
-    
-    /**
-     * Sets a property for the screen
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final Object value)
-    {
-	this.properties.put(property, value);
 	Blackboard.getInstance(Screen.class).broadcastMessage(new Screen.Message(this, property));
-    }
-    
-    /**
-     * Sets a property for the screen
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final int value)
-    {
-	this.set(property, Integer.valueOf(value));
-    }
-    
-    /**
-     * Sets a property for the screen
-     * 
-     * @param  property  The property
-     * @param  value     The property value
-     */
-    public void set(final String property, final boolean value)
-    {
-	this.set(property, Boolean.valueOf(value));
     }
     
 }
