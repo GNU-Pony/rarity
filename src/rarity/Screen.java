@@ -128,7 +128,7 @@ public class Screen
     
     
     /**
-     * Map for the screens properties
+     * Map for the screen's properties
      */
     private HashMap<String, Object> properties = new HashMap<String, Object>();
     
@@ -150,6 +150,7 @@ public class Screen
 	/**
 	 * Constructor
 	 * 
+	 * @param  screen    The updated screen
 	 * @param  property  The updated property
 	 */
 	public Message(final Screen screen, final String property)
@@ -250,6 +251,20 @@ public class Screen
 	return ((Integer)obj).intValue();
     }
     
+    /**
+     * Gets a property from the screen
+     * 
+     * @param   property  The property
+     * @return            The property value as a {@code boolean}
+     */
+    public int getInteger(final String property)
+    {
+	Object obj = this.properties.get(property);
+	if ((obj == null) || (obj instanceof Boolean == false))
+	    return 0;
+	return ((Boolean)obj).booleanValue();
+    }
+    
     
     /**
      * Sets a property for the screen
@@ -272,6 +287,17 @@ public class Screen
     public void set(final String property, final int value)
     {
 	this.set(property, Integer.valueOf(value));
+    }
+    
+    /**
+     * Sets a property for the screen
+     * 
+     * @param  property  The property
+     * @param  value     The property value
+     */
+    public void set(final String property, final boolean value)
+    {
+	this.set(property, Boolean.valueOf(value));
     }
     
 }
