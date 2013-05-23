@@ -157,7 +157,7 @@ public class Window extends PropertyBase
      */
     protected void updated(final String property, final Object value)
     {
-	Blackboard.getInstance(Window.class).broadcastMessage(new Window.Message(this, property));
+	Blackboard.getInstance(Window.class).broadcastMessage(new Window.PropertyMessage(this, property));
     }
     
 }

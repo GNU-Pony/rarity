@@ -212,7 +212,7 @@ public class Screen extends PropertyBase
      */
     protected void updated(final String property, final Object value)
     {
-	Blackboard.getInstance(Screen.class).broadcastMessage(new Screen.Message(this, property));
+	Blackboard.getInstance(Screen.class).broadcastMessage(new Screen.PropertyMessage(this, property));
     }
     
 }
