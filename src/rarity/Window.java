@@ -92,7 +92,7 @@ public class Window extends PropertyBase
 	 * @param  window    The updated window
 	 * @param  property  The updated property
 	 */
-	public PropertyMessage(final Window window, final String property)
+	protected PropertyMessage(final Window window, final String property)
 	{
 	    this.window = window;
 	    this.property = property;
@@ -121,6 +121,57 @@ public class Window extends PropertyBase
 	 * The updated property
 	 */
 	public final String property;
+	
+    }
+    
+    
+    /**
+     * Blackboard message for {@link Window} existance updates
+     * 
+     * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
+     */
+    public static class ExistanceMessage implements Blackboard.BlackboardMessage
+    {
+	/**
+	 * A new window has been added
+	 */
+	public static final int ADDED = 0;
+	
+	/**
+	 * A window is being removed
+	 */
+	public static final int REMOVING = 1;
+	
+	/**
+	 * A window has been removed
+	 */
+	public static final int REMOVED = 2;
+	
+	
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param  action  Either {@link #ADDED}, {@link #REMOVING} or {@link #REMOVED}
+	 * @param  index   The index of the window in question
+	 */
+	protected ExistanceMessage(final int action, final int index)
+	{
+	    this.action = action;
+	    this.index = index;
+	}
+	
+	
+	
+	/**
+	 * Either {@link #ADDED}, {@link #REMOVING} or {@link #REMOVED}
+	 */
+	public final int action;
+	
+	/**
+	 * The index of the window in question
+	 */
+	public final int index;
 	
     }
     

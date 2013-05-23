@@ -147,7 +147,7 @@ public class Screen extends PropertyBase
 	 * @param  screen    The updated screen
 	 * @param  property  The updated property
 	 */
-	public PropertyMessage(final Screen screen, final String property)
+	protected PropertyMessage(final Screen screen, final String property)
 	{
 	    this.screen = screen;
 	    this.property = property;
@@ -176,6 +176,57 @@ public class Screen extends PropertyBase
 	 * The updated property
 	 */
 	public final String property;
+	
+    }
+    
+    
+    /**
+     * Blackboard message for {@link Screen} existance updates
+     * 
+     * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
+     */
+    public static class ExistanceMessage implements Blackboard.BlackboardMessage
+    {
+	/**
+	 * A new screen has been added
+	 */
+	public static final int ADDED = 0;
+	
+	/**
+	 * A screen is being removed
+	 */
+	public static final int REMOVING = 1;
+	
+	/**
+	 * A screen has been removed
+	 */
+	public static final int REMOVED = 2;
+	
+	
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param  action  Either {@link #ADDED}, {@link #REMOVING} or {@link #REMOVED}
+	 * @param  index   The index of the screen in question
+	 */
+	protected ExistanceMessage(final int action, final int index)
+	{
+	    this.action = action;
+	    this.index = index;
+	}
+	
+	
+	
+	/**
+	 * Either {@link #ADDED}, {@link #REMOVING} or {@link #REMOVED}
+	 */
+	public final int action;
+	
+	/**
+	 * The index of the window in question
+	 */
+	public final int index;
 	
     }
     
