@@ -19,6 +19,7 @@
 package rarity;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 
 /**
@@ -36,6 +37,11 @@ public abstract class PropertyBase
      * Map for the object's properties
      */
     protected HashMap<String, Object> properties = new HashMap<String, Object>();
+    
+    /**
+     * Map for the object's and-properties
+     */
+    protected HashMap<String, Vector<String>> andProperties = new HashMap<String, Vector<String>>();
     
     
     
@@ -113,7 +119,9 @@ public abstract class PropertyBase
      */
     public void set(final String property, final Object value)
     {
-	this.properties.put(property, value);
+	synchronized (this.properties)
+	{   this.properties.put(property, value);
+	}
     }
     
     /**
@@ -124,7 +132,9 @@ public abstract class PropertyBase
      */
     public void set(final String property, final int value)
     {
-	this.set(property, Integer.valueOf(value));
+	synchronized (this.properties)
+	{   this.set(property, Integer.valueOf(value));
+	}
     }
     
     /**
@@ -135,7 +145,68 @@ public abstract class PropertyBase
      */
     public void set(final String property, final boolean value)
     {
-	this.set(property, Boolean.valueOf(value));
+	synchronized (this.properties)
+	{   this.set(property, Boolean.valueOf(value));
+	}
+    }
+    
+    
+    /**
+     * Add, or extend, a boolean property that is true if and only if all its dependency are true
+     * 
+     * @param  property      The property
+     * @param  dependencies  The dependency properties
+     */
+    public void addAndBoolean(final String property, final String... dependencies)
+    {
+	synchronized (this.andProperties)
+	{
+	    Vector<String> vector = this.andProperties.get(property);
+	    if (vector == null)
+		this.andProperties.put(property, vector = new Vector<String>());
+	    for (final String dependency : dependencies)
+		vector.add(dependency);
+	}
+    }
+    
+    /**
+     * Remove dependencies from a boolean property that is true if and only if all its dependency are true
+     * 
+     * @param  property      The property
+     * @param  dependencies  The dependency properties
+     */
+    public void removeAndBoolean(final String property, final String... dependencies)
+    {
+	synchronized (this.andProperties)
+	{
+	    final Vector<String> vector = this.andProperties.get(property);
+	    if (vector != null)
+	    {   for (final String dependency : dependencies)
+		    if (vector.contains(dependency))
+			vector.remove(dependency);
+		if (vector.size() == 0)
+		    this.andProperties.remove(vector);
+	    }
+	}
+    }
+    
+    /**
+     * Evaluate an and-property, that is, a property that is true if and only if all its dependency are true
+     * 
+     * @param   property  The property
+     * @return            Whether all dependencies are true
+     */
+    public boolean getAndBoolean(final String property)
+    {
+	synchronized (this.andProperties)
+	{
+	    final Vector<String> vector = this.andProperties.get(property);
+	    if (vector != null)
+		for (final String dependency : vector)
+		    if (get(dependency) == false)
+			return false;
+	    return true;
+	}
     }
     
 }

@@ -189,7 +189,9 @@ public class Screen extends PropertyBase
      */
     public static Screen getScreen(final int index)
     {
-	return screens.get(index);
+	synchronized (screens)
+	{   return screens.get(index);
+	}
     }
     
     /**
@@ -199,7 +201,9 @@ public class Screen extends PropertyBase
      */
     public static int getScreenCount()
     {
-	return screens.size();
+	synchronized (screens)
+	{   return screens.size();
+	}
     }
     
     
