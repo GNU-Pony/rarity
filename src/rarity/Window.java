@@ -18,6 +18,8 @@
  */
 package rarity;
 
+import java.util.Vector;
+
 
 /**
  * Window instances in the environment
