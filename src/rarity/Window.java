@@ -71,6 +71,13 @@ public class Window extends PropertyBase
     
     
     /**
+     * All windows in index order
+     */
+    static Vector<Window> windows = new Vector<Window>();
+    
+    
+    
+    /**
      * Blackboard message for {@link Window} property updates
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
@@ -87,6 +94,13 @@ public class Window extends PropertyBase
 	{
 	    this.window = window;
 	    this.property = property;
+	    int i = 0;
+	    for (final Window win : Window.windows)
+		if (win == window)
+		    break;
+		else
+		    i++;
+	    this.index = i;
 	}
 	
 	
@@ -97,12 +111,43 @@ public class Window extends PropertyBase
 	public final Window window;
 	
 	/**
+	 * The index of the updated window
+	 */
+	public final int index;
+	
+	/**
 	 * The updated property
 	 */
 	public final String property;
 	
     }
     
+    
+    
+    /**
+     * Gets a window by its index
+     * 
+     * @param   index  The window's index
+     * @return         The window
+     */
+    public static Window getWindow(final int index)
+    {
+	synchronized (windows)
+	{   return windows.get(index);
+	}
+    }
+    
+    /**
+     * Gets the number of windows in the environment
+     * 
+     * @return  The number of windows in the environment
+     */
+    public static int getWindowCount()
+    {
+	synchronized (windows)
+	{   return windows.size();
+	}
+    }
     
     
     /**

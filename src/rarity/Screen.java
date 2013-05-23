@@ -128,7 +128,7 @@ public class Screen extends PropertyBase
     
     
     /**
-     * All screen in index order
+     * All screens in index order
      */
     static Vector<Screen> screens = new Vector<Screen>();
     
