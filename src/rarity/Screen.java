@@ -139,7 +139,7 @@ public class Screen extends PropertyBase
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
      */
-    public static class Message implements Blackboard.BlackboardMessage
+    public static class PropertyMessage implements Blackboard.BlackboardMessage
     {
 	/**
 	 * Constructor
@@ -147,7 +147,7 @@ public class Screen extends PropertyBase
 	 * @param  screen    The updated screen
 	 * @param  property  The updated property
 	 */
-	public Message(final Screen screen, final String property)
+	public PropertyMessage(final Screen screen, final String property)
 	{
 	    this.screen = screen;
 	    this.property = property;

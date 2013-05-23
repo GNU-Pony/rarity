@@ -84,7 +84,7 @@ public class Window extends PropertyBase
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
      */
-    public static class Message implements Blackboard.BlackboardMessage
+    public static class PropertyMessage implements Blackboard.BlackboardMessage
     {
 	/**
 	 * Constructor
@@ -92,7 +92,7 @@ public class Window extends PropertyBase
 	 * @param  window    The updated window
 	 * @param  property  The updated property
 	 */
-	public Message(final Window window, final String property)
+	public PropertyMessage(final Window window, final String property)
 	{
 	    this.window = window;
 	    this.property = property;
