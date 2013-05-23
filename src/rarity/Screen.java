@@ -136,7 +136,7 @@ public class Screen
     /**
      * All screen in index order
      */
-    protected static Vector<Screen> screens = new Vector<Screen>;
+    protected static Vector<Screen> screens = new Vector<Screen>();
     
     
     
@@ -145,7 +145,7 @@ public class Screen
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
      */
-    public static class Message implements BlackboardMessage
+    public static class Message implements Blackboard.BlackboardMessage
     {
 	/**
 	 * Constructor
@@ -247,7 +247,7 @@ public class Screen
 	Object obj = this.properties.get(property);
 	if ((obj == null) || (obj instanceof Integer == false))
 	    return 0;
-	return value.intValue();
+	return ((Integer)obj).intValue();
     }
     
     
@@ -259,8 +259,8 @@ public class Screen
      */
     public void set(final String property, final Object value)
     {
-	this.properties.set(property, value);
-	Blackboard.broadcastMessage(new Screen.Message(this, property));
+	this.properties.put(property, value);
+	Blackboard.getInstance(Screen.class).broadcastMessage(new Screen.Message(this, property));
     }
     
     /**
@@ -271,7 +271,7 @@ public class Screen
      */
     public void set(final String property, final int value)
     {
-	this.set(property, (Integer)(Integer.valueOf(value)));
+	this.set(property, Integer.valueOf(value));
     }
     
 }

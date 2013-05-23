@@ -74,7 +74,7 @@ JAVA_SRC=$(shell find src | grep '\.java$$')
 JAVA_CLASS=$(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
-JNI_H=$(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.h/g')
+JNI_H=
 
 # so files
 LIB_PREFIX=
@@ -82,7 +82,8 @@ LIB_RARITY=$(LIB_PREFIX)$(LIB)$(LIB_EXT)
 
 
 # compile
-all: $(JAVA_CLASS) $(JNI_H) $(LIB_RARITY)
+all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h)
+# $(LIB_RARITY)
 
 # generate .h
 h: $(JNI_H)
