@@ -126,5 +126,19 @@ public class X11
     public static native void flush();
     // XFlush(display);
     
+    /**
+     * Perform actions to active a screen
+     * 
+     * @param  index  The index of the screen
+     */
+    public static native void activateScreen(int index);
+    
+    /**
+     * Perform actions to deactive a screen
+     * 
+     * @param  index  The index of the screen
+     */
+    public static native void deactivateScreen(int index);
+    
 }
 
