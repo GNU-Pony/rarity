@@ -115,10 +115,16 @@ public class X11
     }
     
     /**
-     * Synchronised the display without discarding events
+     * Flushes synchronises the display without discarding events
      */
     public static native void sync();
     // XSync(display, 0);
+    
+    /**
+     * Flushes the display
+     */
+    public static native void flush();
+    // XFlush(display);
     
 }
 
