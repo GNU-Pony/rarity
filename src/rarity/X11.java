@@ -27,18 +27,28 @@ package rarity;
 public class X11
 {
     /**
+     * Constructor hiding
+     */
+    private X11()
+    {
+	/* do nothing */
+    }
+    
+    
+    
+    /**
      * Open X display
      * 
      * @return  Whether the actions as successful
      */
-    public native boolean openDisplay();
+    public static native boolean openDisplay();
     // Display* display = XOpenDisplay(0);
     // return display != 0;
     
     /**
      * Close X display
      */
-    public native void closeDisplay();
+    public static native void closeDisplay();
     // XCloseDisplay(display);
     
     /**
@@ -46,7 +56,7 @@ public class X11
      * 
      * @return  The number of X screens
      */
-    public native int screenCount();
+    public static native int screenCount();
     // return ScreenCount(display);
     
     /**
@@ -54,7 +64,7 @@ public class X11
      * 
      * @return  The number of X screens
      */
-    public native int defaultScreen();
+    public static native int defaultScreen();
     // return DisplayScreen(display);
     
     /**
@@ -63,7 +73,7 @@ public class X11
      * @param   index  The index of the screen
      * @return         The width of the screen
      */
-    public native int screenWidth(int index);
+    public static native int screenWidth(int index);
     // return DisplayScreen(display, index);
     
     /**
@@ -72,7 +82,7 @@ public class X11
      * @param   index  The index of the screen
      * @return         The height of the screen
      */
-    public native int screenHeight(int index);
+    public static native int screenHeight(int index);
     // return DisplayScreen(display, index);
     
     /**
@@ -81,7 +91,7 @@ public class X11
      * @param   index  The index of the screen
      * @return         The width of the screen, in millimetres
      */
-    public native int screenWidthMM(int index);
+    public static native int screenWidthMM(int index);
     // return DisplayScreen(display, index);
     
     /**
@@ -90,7 +100,7 @@ public class X11
      * @param   index  The index of the screen
      * @return         The height of the screen, in millimetres
      */
-    public native int screenHeightMM(int index);
+    public static native int screenHeightMM(int index);
     // return DisplayScreen(display, index);
     
     /**
@@ -99,7 +109,7 @@ public class X11
      * @param   index  The index of the screen
      * @return         The height of the screen, in millimetres
      */
-    public int dotsPerInch(int index)
+    public static int dotsPerInch(int index)
     {
 	return (int)(25.4 * ScreenHeight(index) / ScreenHeightMM(index));
     }
@@ -107,7 +117,7 @@ public class X11
     /**
      * Synchronised the display without discarding events
      */
-    public native void sync();
+    public static native void sync();
     // XSync(display, 0);
     
 }
