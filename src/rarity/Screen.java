@@ -49,11 +49,6 @@ public class Screen extends PropertyBase
     public static final String OFFSET_Y = "offsetY";
     
     /**
-     * The screen's dots per inch setting
-     */
-    public static final String DOTS_PER_INCH = "dotsPerInch";
-    
-    /**
      * The left margin of the screen, that is how much on the left side that is occupied by docked windows
      */
     public static final String MARGIN_LEFT = "marginLeft";
@@ -92,15 +87,13 @@ public class Screen extends PropertyBase
      * @param  height       The screen's virtual resolution on the Y-axis
      * @param  left         The screen's offset on the X-axis
      * @param  top          The screen's offset on the Y-axis
-     * @param  dotsPerInch  The screen's dots per inch setting
      */
-    protected Screen(final int width, final int height, final int left, final int top, final int dotsPerInch)
+    protected Screen(final int width, final int height, final int left, final int top)
     {
 	this.set(RESOLUTION_X, width);
 	this.set(RESOLUTION_Y, height);
 	this.set(OFFSET_X, left);
 	this.set(OFFSET_Y, top);
-	this.set(DOTS_PER_INCH, dotsPerInch);
 	this.set(MARGIN_LEFT, 0);
 	this.set(MARGIN_RIGHT, 0);
 	this.set(MARGIN_TOP, 0);
