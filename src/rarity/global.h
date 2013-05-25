@@ -50,7 +50,7 @@ Atom xa_utf8_string;
 /* wm atoms */
 
 Atom wm_name;
-Atom wm_stat;
+Atom wm_state;
 Atom wm_change_state;
 Atom wm_protocols;
 Atom wm_delete;
