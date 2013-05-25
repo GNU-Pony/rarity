@@ -19,10 +19,6 @@
 #include "Rarity.h"
 #include "global.h"
 
-#include <stdlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xlocale.h>
-
 
 
 /**

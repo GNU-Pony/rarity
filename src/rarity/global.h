@@ -16,7 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <stdlib.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xatom.h>
+#include <X11/Xlocale.h>
 
 
 /* X11 display and screen variables */

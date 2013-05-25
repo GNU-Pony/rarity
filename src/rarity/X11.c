@@ -22,6 +22,29 @@
 
 
 /**
+ * Gets the root window for a screen
+ * 
+ * @param   index:int  The screen's index
+ * @return  :Window    The root window
+ */
+#define __root(index)  RootWindow(display, (index))
+
+/**
+ * Replace mode for XChangeProperty
+ */
+#define ATOM_REPLACE  PropModeReplace
+
+/**
+ * Cast a text to type wanted by XChangeProperty
+ * 
+ * @param   text:char*       The text
+ * @return  :unsigned char*  The text casted
+ */
+#define ATOM_TEXT(text)  ((unsigned char*)text)
+
+
+
+/**
  * Open X display
  * 
  * @return  Whether the actions as successful
@@ -159,6 +182,8 @@ void Java_rarity_X11_activateScreen(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  XChangeProperty(display, __root(index), _net_supported, XA_ATOM, 32, ATOM_REPLACE, ATOM_TEXT(&_net_wm_pid), 1);
+  XChangeProperty(display, __root(index), _net_wm_name, xa_utf8_string, 8, ATOM_REPLACE, ATOM_TEXT("rarity"), 6);
 }
 
 
@@ -171,5 +196,7 @@ void Java_rarity_X11_deactivateScreen(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  XDeleteProperty(display, __root(index), _net_supported);
+  XDeleteProperty(display, __root(index), _net_wm_name);
 }
 
