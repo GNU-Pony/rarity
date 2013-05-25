@@ -200,3 +200,20 @@ void Java_rarity_X11_deactivateScreen(JNIEnv* env, jclass class, jint index)
   XDeleteProperty(display, __root(index), _net_wm_name);
 }
 
+
+/**
+ * Select input for a screen's root window
+ * 
+ * @param  index  The index of the screen
+ */
+void Java_rarity_X11_selectRootInput(JNIEnv* env, jclass class, jint index)
+{
+  (void) env;
+  (void) class;
+  XSelectInput(display, __root(index), PropertyChangeMask
+	                             | ColormapChangeMask
+	                             | SubstructureRedirectMask
+	                             | SubstructureNotifyMask
+	                             | StructureNotifyMask);
+}
+

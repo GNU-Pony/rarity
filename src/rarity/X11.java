@@ -140,5 +140,12 @@ public class X11
      */
     public static native void deactivateScreen(int index);
     
+    /**
+     * Select input for a screen's root window
+     * 
+     * @param  index  The index of the screen
+     */
+    public static native void selectRootInput(int index);
+    
 }
 
