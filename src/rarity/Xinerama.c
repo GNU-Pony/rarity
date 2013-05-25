@@ -34,10 +34,12 @@
  */
 int have_xinerama = 0;
 
-/**
- * Our Xinerama screens
- */
-static XineramaScreenInfo* xinerama_screens = 0;
+#ifdef XINERAMA
+  /**
+   * Our Xinerama screens
+   */
+  static XineramaScreenInfo* xinerama_screens = 0;
+#endif
 
 /**
  * The number of Xinerama screens we have
@@ -51,7 +53,7 @@ int xinerama_screen_count = 0;
  * 
  * @return  Whether Xinerama support is enable
  */
-jboolean Java_rarity_Xinerama_initialise(JNIEnv* env, jclass class);
+jboolean Java_rarity_Xinerama_initialise(JNIEnv* env, jclass class)
 {
   (void) env;
   (void) class;

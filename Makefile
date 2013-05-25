@@ -48,10 +48,10 @@ CFLAGS = $(C_WARNINGS) $(C_OPTIMISATION) -std=$(C_STD) $(shell "$(PKG_CONFIG)" -
 CPPFLAGS =
 LDFLAGS = $(shell "$(PKG_CONFIG)" --libs x11)
 ifdef NO_XINERAMA
-CPPFLAGS += NO_XINERAMA
+  CPPFLAGS += NO_XINERAMA
 else
-CFLAGS += $(shell "$(PKG_CONFIG)" --cflags xinerama)
-LDFLAGS += $(shell "$(PKG_CONFIG)" --libs xinerama)
+  CFLAGS += $(shell "$(PKG_CONFIG)" --cflags xinerama)
+  LDFLAGS += $(shell "$(PKG_CONFIG)" --libs xinerama)
 endif
 
 # cc flags for jni

@@ -18,6 +18,7 @@
  */
 #include "X11.h"
 
+#include <X11/Xlib.h>
 
 
 /**
@@ -34,6 +35,8 @@ Display* display = 0;
  */
 jboolean Java_rarity_X11_openDisplay(JNIEnv* env, jclass class)
 {
+  (void) env;
+  (void) class;
   display = XOpenDisplay(0);
   return display != 0;
 }
@@ -44,6 +47,8 @@ jboolean Java_rarity_X11_openDisplay(JNIEnv* env, jclass class)
  */
 void Java_rarity_X11_closeDisplay(JNIEnv* env, jclass class)
 {
+  (void) env;
+  (void) class;
   XCloseDisplay(display);
 }
 
@@ -55,6 +60,8 @@ void Java_rarity_X11_closeDisplay(JNIEnv* env, jclass class)
  */
 jint Java_rarity_X11_screenCount(JNIEnv* env, jclass class)
 {
+  (void) env;
+  (void) class;
   return ScreenCount(display);
 }
 
@@ -66,7 +73,9 @@ jint Java_rarity_X11_screenCount(JNIEnv* env, jclass class)
  */
 jint Java_rarity_X11_defaultScreen(JNIEnv* env, jclass class)
 {
-  return DisplayScreen(display);
+  (void) env;
+  (void) class;
+  return DefaultScreen(display);
 }
 
 
@@ -78,7 +87,9 @@ jint Java_rarity_X11_defaultScreen(JNIEnv* env, jclass class)
  */
 jint Java_rarity_X11_screenWidth(JNIEnv* env, jclass class, jint index)
 {
-  return DisplayScreen(display, index);
+  (void) env;
+  (void) class;
+  return DisplayWidth(display, index);
 }
 
 
@@ -90,7 +101,9 @@ jint Java_rarity_X11_screenWidth(JNIEnv* env, jclass class, jint index)
  */
 jint Java_rarity_X11_screenHeight(JNIEnv* env, jclass class, jint index)
 {
-  return DisplayScreen(display, index);
+  (void) env;
+  (void) class;
+  return DisplayHeight(display, index);
 }
 
 
@@ -102,7 +115,9 @@ jint Java_rarity_X11_screenHeight(JNIEnv* env, jclass class, jint index)
  */
 jint Java_rarity_X11_screenWidthMM(JNIEnv* env, jclass class, jint index)
 {
-  return DisplayScreen(display, index);
+  (void) env;
+  (void) class;
+  return DisplayWidthMM(display, index);
 }
 
 
@@ -114,7 +129,9 @@ jint Java_rarity_X11_screenWidthMM(JNIEnv* env, jclass class, jint index)
  */
 jint Java_rarity_X11_screenHeightMM(JNIEnv* env, jclass class, jint index)
 {
-  return DisplayScreen(display, index);
+  (void) env;
+  (void) class;
+  return DisplayHeightMM(display, index);
 }
 
 
@@ -123,6 +140,8 @@ jint Java_rarity_X11_screenHeightMM(JNIEnv* env, jclass class, jint index)
  */
 void Java_rarity_X11_sync(JNIEnv* env, jclass class)
 {
+  (void) env;
+  (void) class;
   XSync(display, 0);
 }
 
@@ -132,6 +151,8 @@ void Java_rarity_X11_sync(JNIEnv* env, jclass class)
  */
 void Java_rarity_X11_flush(JNIEnv* env, jclass class)
 {
+  (void) env;
+  (void) class;
   XFlush(display);
 }
 
@@ -142,6 +163,10 @@ void Java_rarity_X11_flush(JNIEnv* env, jclass class)
  * @param  index  The index of the screen
  */
 void Java_rarity_X11_activateScreen(JNIEnv* env, jclass class, jint index)
+{
+  (void) env;
+  (void) class;
+}
 
 
 /**
@@ -150,5 +175,8 @@ void Java_rarity_X11_activateScreen(JNIEnv* env, jclass class, jint index)
  * @param  index  The index of the screen
  */
 void Java_rarity_X11_deactivateScreen(JNIEnv* env, jclass class, jint index)
-
+{
+  (void) env;
+  (void) class;
+}
 

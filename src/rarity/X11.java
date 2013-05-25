@@ -65,7 +65,7 @@ public class X11
      * @return  The number of X screens
      */
     public static native int defaultScreen();
-    // return DisplayScreen(display);
+    // return DefaultScreen(display);
     
     /**
      * Gets the width of a screen in pixels
@@ -74,7 +74,7 @@ public class X11
      * @return         The width of the screen
      */
     public static native int screenWidth(int index);
-    // return DisplayScreen(display, index);
+    // return DisplayWidth(display, index);
     
     /**
      * Gets the height of a screen in pixels
@@ -83,7 +83,7 @@ public class X11
      * @return         The height of the screen
      */
     public static native int screenHeight(int index);
-    // return DisplayScreen(display, index);
+    // return DisplayHeight(display, index);
     
     /**
      * Gets the width of a screen in millimetres
@@ -92,7 +92,7 @@ public class X11
      * @return         The width of the screen, in millimetres
      */
     public static native int screenWidthMM(int index);
-    // return DisplayScreen(display, index);
+    // return DisplayWidthMM(display, index);
     
     /**
      * Gets the height of a screen in millimetres
@@ -101,7 +101,7 @@ public class X11
      * @return         The height of the screen, in millimetres
      */
     public static native int screenHeightMM(int index);
-    // return DisplayScreen(display, index);
+    // return DisplayHeightMM(display, index);
     
     /**
      * Gets the dots per inch for a screen
