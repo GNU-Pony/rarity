@@ -19,12 +19,15 @@
 #include <X11/Xlib.h>
 
 
+/* X11 display and screen variables */
 
 /**
  * The X11 display we are using
  */
 Display* display = 0;
 
+
+/* Xinerama variables */
 
 /**
  * Whether we have Xinerama enabled
@@ -35,4 +38,31 @@ int have_xinerama = 0;
  * The number of Xinerama screens we have
  */
 int xinerama_screen_count = 0;
+
+
+/* text atoms */
+
+Atom xa_string;
+Atom xa_compound_text;
+Atom xa_utf8_string;
+
+
+/* wm atoms */
+
+Atom wm_name;
+Atom wm_stat;
+Atom wm_change_state;
+Atom wm_protocols;
+Atom wm_delete;
+Atom wm_take_focus;
+Atom wm_colormaps;
+
+
+/* _net_wm atoms */
+
+Atom _net_wm_pid;
+Atom _net_supported;
+Atom _net_wm_window_type;
+Atom _net_wm_window_type_dialog;
+Atom _net_wm_name;
 
