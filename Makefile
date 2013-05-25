@@ -74,7 +74,7 @@ JAVA_SRC=$(shell find src | grep '\.java$$')
 JAVA_CLASS=$(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
-JNI_H=X11
+JNI_H=X11 Xinerama
 
 # so files
 LIB_PREFIX=
