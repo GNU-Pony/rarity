@@ -43,15 +43,23 @@ public class Rarity
      */
     public static void main(final String... args)
     {
+	boolean abort = false;
 	try
 	{
 	    setLocale();
 	    setXAtoms();
+	    X11.openDisplay();
 	}
 	catch (final Throwable err)
 	{
 	    err.printStackTrace(System.err);
-	    abort();
+	    abort = true;
+	}
+	finally
+	{
+	    X11.closeDisplay();
+	    if (abort)
+		abort();
 	}
     }
     
