@@ -111,7 +111,7 @@ public class X11
      */
     public static int dotsPerInch(int index)
     {
-	return (int)(25.4 * ScreenHeight(index) / ScreenHeightMM(index));
+	return (int)(25.4 * screenHeight(index) / screenHeightMM(index));
     }
     
     /**
