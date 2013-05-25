@@ -12,5 +12,6 @@ __pycache__/
 *.class
 *.o
 *.gch
+[A-Z]*.h
 *~
 
