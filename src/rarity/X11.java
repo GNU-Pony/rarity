@@ -143,9 +143,11 @@ public class X11
     /**
      * Select input for a screen's root window
      * 
-     * @param  index  The index of the screen
+     * @param  index   The index of the screen
+     * @param  events  Event mask
      */
-    public static native void selectRootInput(int index);
+    public static native void selectRootInput(int index, int events);
+    // XSelectInput(dpy, RootWindow(display, index), events);
     
 }
 

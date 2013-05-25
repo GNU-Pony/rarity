@@ -205,15 +205,12 @@ void Java_rarity_X11_deactivateScreen(JNIEnv* env, jclass class, jint index)
  * Select input for a screen's root window
  * 
  * @param  index  The index of the screen
+ * @param  events  Event mask
  */
-void Java_rarity_X11_selectRootInput(JNIEnv* env, jclass class, jint index)
+void Java_rarity_X11_selectRootInput(JNIEnv* env, jclass class, jint index, jint events)
 {
   (void) env;
   (void) class;
-  XSelectInput(display, __root(index), PropertyChangeMask
-	                             | ColormapChangeMask
-	                             | SubstructureRedirectMask
-	                             | SubstructureNotifyMask
-	                             | StructureNotifyMask);
+  XSelectInput(display, __root(index), (long)events);
 }
 
