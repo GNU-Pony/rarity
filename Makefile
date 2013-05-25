@@ -84,7 +84,7 @@ LIB_RARITY=$(LIB_PREFIX)$(LIB)$(LIB_EXT)
 
 
 # compile
-all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h)
+all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ)
 # $(LIB_RARITY)
 
 # generate .h
