@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Xinerama.h"
+#include "global.h"
 
 
 
@@ -29,22 +30,12 @@
 
 
 
-/**
- * Whether we have Xinerama enabled
- */
-int have_xinerama = 0;
-
 #ifdef XINERAMA
   /**
    * Our Xinerama screens
    */
   static XineramaScreenInfo* xinerama_screens = 0;
 #endif
-
-/**
- * The number of Xinerama screens we have
- */
-int xinerama_screen_count = 0;
 
 
 

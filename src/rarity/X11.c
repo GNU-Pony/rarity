@@ -17,14 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "X11.h"
-
-#include <X11/Xlib.h>
-
-
-/**
- * The X11 display we are using
- */
-Display* display = 0;
+#include "global.h"
 
 
 
