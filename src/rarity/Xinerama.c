@@ -20,9 +20,11 @@
 
 
 
-#ifdef HAVE_X11_EXTENSIONS_XINERAMA_H
-#  include <X11/extensions/Xinerama.h>
-#  define XINERAMA
+#ifndef NO_XINERAMA
+#  ifdef HAVE_X11_EXTENSIONS_XINERAMA_H
+#    include <X11/extensions/Xinerama.h>
+#    define XINERAMA
+#  endif
 #endif
 
 

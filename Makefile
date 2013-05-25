@@ -43,6 +43,8 @@ C_OPTIMISATION=$(OPTIMISATION)
 CFLAGS=$(C_WARNINGS) $(C_OPTIMISATION) -std=$(C_STD)
 CPPFLAGS=
 LDFLAGS=
+# Optional CPPFLAGS:
+#     NO_XINERAMA  --  Do not compile with Xinerama support
 
 # cc flags for jni
 JNI_INCLUDE=-I$(shell echo $${JAVA_HOME})/include
