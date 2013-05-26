@@ -18,6 +18,7 @@
 
 #Optional definitions:
 #    NO_XINERAMA  --  Do not compile with Xinerama support
+#    TESTING      --  Compile for testing
 
 
 # settings
@@ -28,17 +29,18 @@ JAR_COMPRESS = 0
 PKGNAME = rarity
 SHEBANG = /bin/sh
 JAVA = java
-JARPATH = .
-LIBPATH = 
+ifdef TESTING
+  JARPATH = .
+  LIBPATH = 
+else
+  JARPATH=$(PREFIX)/share/misc
+  LIBPATH=$(PREFIX)/lib
+endif
 PREFIX = /usr
 BINPATH = $(PREFIX)/bin
 LICENSEPATH = $(PREFIX)/share/licenses/$(PKGNAME)
 INFOPATH = $(PREFIX)/share/info
 COMMAND = rarity
-install: JARPATH=$(PREFIX)/share/misc
-install: LIBPATH=$(PREFIX)/lib
-uninstall: JARPATH=$(PREFIX)/share/misc
-uninstall: LIBPATH=$(PREFIX)/lib
 
 # PLATFORM DEPENDENT: the file extension for library files
 LIB_EXT = .so
