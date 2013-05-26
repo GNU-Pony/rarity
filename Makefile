@@ -23,6 +23,10 @@
 # settings
 OPTIMISATION = -g
 JAR_COMPRESS = 0
+SHEBANG = /bin/sh
+JAVA = java
+JARPATH = 
+LIBPATH = 
 
 # PLATFORM DEPENDENT: the file extension for library files
 LIB_EXT = .so
@@ -97,7 +101,7 @@ JAR_RARITY = bin/$(LIB).jar
 
 
 # compile
-all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY)
+all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
 
 # generate .h
 h: $(JNI_H)
@@ -135,9 +139,17 @@ src/%.h: src/%.java
 $(JAR_RARITY): $(JAVA_CLASS) META-INF/MANIFEST.MF
 	jar cfm$(JAR_COMPRESS) "$@" META-INF/MANIFEST.MF $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g')
 
+# command file
+bin/rarity.sh: src/rarity.sh
+	cp "$<" "$@"
+	sed -i 's|%SHEBANG|$(SHEBANG)|g' "$@"
+	sed -i 's|%LIBPATH|$(LIBPATH)|g' "$@"
+	sed -i 's|%JARPATH|$(JARPATH)|g' "$@"
+	sed -i 's|%JAVA|$(JAVA)|g' "$@"
+
 
 # clean up
 .PHONY: clean
 clean:
-	-@rm -r bin obj $(LIB_RARITY) $(JAR_RARITY) $$(find src | egrep '/[A-Z].*\.h') 2>/dev/null
+	-@rm -r bin obj $$(find src | egrep '/[A-Z].*\.h') 2>/dev/null
 
