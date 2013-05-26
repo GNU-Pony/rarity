@@ -76,6 +76,9 @@ public class Rarity
 	    }   }
 	    
 	    X11.sync();
+	    
+	    for (;;)
+		Thread.sleep(10000);
 	}
 	catch (final Throwable err)
 	{
