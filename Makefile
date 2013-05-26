@@ -25,7 +25,7 @@ OPTIMISATION = -g
 JAR_COMPRESS = 0
 SHEBANG = /bin/sh
 JAVA = java
-JARPATH = 
+JARPATH = .
 LIBPATH = 
 
 # PLATFORM DEPENDENT: the file extension for library files
