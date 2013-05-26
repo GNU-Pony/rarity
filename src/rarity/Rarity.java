@@ -27,6 +27,13 @@ package rarity;
 public class Rarity
 {
     /**
+     * Whether Xinerama is used
+     */
+    public static boolean usingXinerama = false;
+    
+    
+    
+    /**
      * Constructor hiding
      */
     private Rarity()
@@ -63,7 +70,7 @@ public class Rarity
 	    setLocale();
 	    X11.openDisplay();
 	    setXAtoms();
-	    Xinerama.initialise();
+	    usingXinerama = Xinerama.initialise();
 	    
 	    int screenCount;
 	    synchronized (Screen.screens)
