@@ -23,12 +23,13 @@
 #include <X11/Xlocale.h>
 
 
+
 /* X11 display and screen variables */
 
 /**
  * The X11 display we are using
  */
-Display* display = 0;
+Display* display;
 
 
 /* Xinerama variables */
@@ -36,12 +37,12 @@ Display* display = 0;
 /**
  * Whether we have Xinerama enabled
  */
-int have_xinerama = 0;
+int have_xinerama;
 
 /**
  * The number of Xinerama screens we have
  */
-int xinerama_screen_count = 0;
+int xinerama_screen_count;
 
 
 /* text atoms */

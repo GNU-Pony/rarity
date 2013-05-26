@@ -20,6 +20,22 @@
 #include "global.h"
 
 
+/**
+ * The X11 display we are using
+ */
+Display* display = 0;
+
+/**
+ * Whether we have Xinerama enabled
+ */
+int have_xinerama = 0;
+
+/**
+ * The number of Xinerama screens we have
+ */
+int xinerama_screen_count = 0;
+
+
 
 /**
  * Set locale stuff

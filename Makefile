@@ -92,8 +92,7 @@ LIB_RARITY = $(LIB_PREFIX)$(LIB)$(LIB_EXT)
 
 
 # compile
-all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ)
-# $(LIB_RARITY)
+all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY)
 
 # generate .h
 h: $(JNI_H)
@@ -105,7 +104,7 @@ obj/%.o: src/%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(JNI_C_CFLAGS) "$<" -c -o "$@"
 
 # .so file
-$(LIB_JAVAGTK): $(C_OBJ)
+$(LIB_RARITY): $(C_OBJ)
 	@if [ ! "$@" = "$$(echo "$@" | sed -e s_/__g)" ]; then     \
 	     mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_')";  \
 	 fi

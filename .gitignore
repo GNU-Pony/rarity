@@ -12,6 +12,7 @@ __pycache__/
 *.class
 *.o
 *.gch
+*.so
 [A-Z]*.h
 *~
 
