@@ -23,10 +23,22 @@
 # settings
 OPTIMISATION = -g
 JAR_COMPRESS = 0
+
+# install settings
+PKGNAME = rarity
 SHEBANG = /bin/sh
 JAVA = java
 JARPATH = .
 LIBPATH = 
+PREFIX = /usr
+BINPATH = $(PREFIX)/bin
+LICENSEPATH = $(PREFIX)/share/licenses/$(PKGNAME)
+INFOPATH = $(PREFIX)/share/info
+COMMAND = rarity
+install: JARPATH=$(PREFIX)/share/misc
+install: LIBPATH=$(PREFIX)/lib
+uninstall: JARPATH=$(PREFIX)/share/misc
+uninstall: LIBPATH=$(PREFIX)/lib
 
 # PLATFORM DEPENDENT: the file extension for library files
 LIB_EXT = .so
@@ -146,6 +158,31 @@ bin/rarity.sh: src/rarity.sh
 	sed -i 's|%LIBPATH|$(LIBPATH)|g' "$@"
 	sed -i 's|%JARPATH|$(JARPATH)|g' "$@"
 	sed -i 's|%JAVA|$(JAVA)|g' "$@"
+
+
+# install package to $(DESTDIR)
+install: $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
+	mkdir -p -- "$(DESTDIR)$(LIBPATH)"
+	mkdir -p -- "$(DESTDIR)$(JARPATH)"
+	mkdir -p -- "$(DESTDIR)$(BINPATH)"
+	mkdir -p -- "$(DESTDIR)$(LICENSEPATH)"
+	install -m755 -- "$(LIB_RARITY)" "$(DESTDIR)$(LIBPATH)"
+	install -m755 -- "$(JAR_RARITY)" "$(DESTDIR)$(JARPATH)"
+	install -m755 -- "bin/rarity.sh" "$(DESTDIR)$(BINPATH)/$(COMMAND)"
+	install -m644 -- "COPYING" "$(DESTDIR)$(LICENSEPATH)"
+	install -m644 -- "LICENSE" "$(DESTDIR)$(LICENSEPATH)"
+
+# uninstall package to $(DESTDIR)
+uninstall:
+	-unlink -- "$(DESTDIR)$(LIBPATH)/$(LIB_PREFIX)$(LIB)$(LIB_EXT)"
+	-unlink -- "$(DESTDIR)$(JARPATH)/$(LIB).jar"
+	-unlink -- "$(DESTDIR)$(BINPATH)/$(COMMAND)"
+	-unlink -- "$(DESTDIR)$(LICENSEPATH)/COPYING"
+	-unlink -- "$(DESTDIR)$(LICENSEPATH)/LICENSE"
+	-rmdir -- "$(DESTDIR)$(LIBPATH)"
+	-rmdir -- "$(DESTDIR)$(JARPATH)"
+	-rmdir -- "$(DESTDIR)$(BINPATH)"
+	-rmdir -- "$(DESTDIR)$(LICENSEPATH)"
 
 
 # clean up
