@@ -22,6 +22,7 @@
 
 # settings
 OPTIMISATION = -g
+JAR_COMPRESS = 0
 
 # PLATFORM DEPENDENT: the file extension for library files
 LIB_EXT = .so
@@ -33,6 +34,7 @@ LIB = rarity
 PKG_CONFIG = pkg-config
 JAVAC = javac
 JAVAH = javah
+JAR = jar
 
 # language versions
 C_STD = gnu11
@@ -90,9 +92,12 @@ JNI_H = X11 Xinerama Rarity
 LIB_PREFIX = 
 LIB_RARITY = bin/$(LIB_PREFIX)$(LIB)$(LIB_EXT)
 
+# jar file
+JAR_RARITY = bin/$(LIB).jar
+
 
 # compile
-all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY)
+all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY)
 
 # generate .h
 h: $(JNI_H)
@@ -126,9 +131,13 @@ src/%.h: src/%.java
 	     echo -e '\e[01;32m$@ has been updated\e[00m';								  \
 	 fi
 
+# .jar file
+$(JAR_RARITY): $(JAVA_CLASS) META-INF/MANIFEST.MF
+	jar cfm$(JAR_COMPRESS) "$@" META-INF/MANIFEST.MF $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g')
+
 
 # clean up
 .PHONY: clean
 clean:
-	-@rm -r bin obj $(LIB_RARITY) $$(find src | egrep '/[A-Z].*\.h') 2>/dev/null
+	-@rm -r bin obj $(LIB_RARITY) $(JAR_RARITY) $$(find src | egrep '/[A-Z].*\.h') 2>/dev/null
 
