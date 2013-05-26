@@ -43,6 +43,18 @@ public class Rarity
      */
     public static void main(final String... args)
     {
+	try
+	{   System.loadLibrary("rarity");
+	}
+	catch (final Throwable err1)
+	{   try
+	    {   System.load("rarity.so");
+	    }
+	    catch (final Throwable err2)
+	    {   System.err.println("Rarity: Unable to load librarity: rarity");
+		abort();
+	}   }
+	
 	final int SCREEN_INPUT = X11.EventMask.PROPERTY_CHANGE
 	                       | X11.EventMask.COLORMAP_CHANGE
 	                       | X11.EventMask.SUBSTRUCTURE_REDIRECT
