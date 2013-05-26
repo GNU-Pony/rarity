@@ -63,6 +63,7 @@ public class Rarity
 	    setLocale();
 	    X11.openDisplay();
 	    setXAtoms();
+	    Xinerama.initialise();
 	    
 	    int screenCount;
 	    synchronized (Screen.screens)
@@ -99,6 +100,7 @@ public class Rarity
 		    e = new Screen.ExistanceMessage(Screen.ExistanceMessage.REMOVED, i);
 		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
 	    }   }
+	    Xinerama.terminate();
 	    X11.closeDisplay();
 	    if (abort)
 	    	abort();
