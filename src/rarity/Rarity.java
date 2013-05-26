@@ -85,8 +85,7 @@ public class Rarity
 	    
 	    X11.sync();
 	    
-	    for (;;)
-		Thread.sleep(10000);
+	    eventLoop();
 	}
 	catch (final Throwable err)
 	{
@@ -153,6 +152,12 @@ public class Rarity
      */
     public static native void abort();
     // abort();
+    
+    
+    /**
+     * Start event loop
+     */
+    public static native void eventLoop();
     
 }
 

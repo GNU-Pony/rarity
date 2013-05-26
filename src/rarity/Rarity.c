@@ -88,3 +88,33 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
   abort();
 }
 
+
+/**
+ * Start event loop
+ */
+void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  
+  XEvent e;
+  int x_fd = ConnectionNumber(display);
+  fd_set fd_set;
+  FD_ZERO(&fd_set);
+  
+  for (;;)
+    {
+      /* TODO handle graceful exit */
+      
+      FD_SET(x_fd, &fd_set);
+      XFlush(display);
+      
+      if ((QLength(display) > 0) || (select(x_fd + 1, &fd_set, 0, 0, 0) == 1))
+        {
+          XNextEvent(display, &e);
+          /* TODO handle_event(&e); */
+          XSync(display, 0);
+	}
+    }
+}
+
