@@ -49,6 +49,9 @@ public class Rarity
 	    setLocale();
 	    setXAtoms();
 	    X11.openDisplay();
+	    
+	    // Events for root windows:
+	    // PROPERTY_CHANGE | COLORMAP_CHANGE | SUBSTRUCTURE_REDIRECT | SUBSTRUCTURE_NOTIFY | STRUCTURE_NOTIFY
 	}
 	catch (final Throwable err)
 	{
