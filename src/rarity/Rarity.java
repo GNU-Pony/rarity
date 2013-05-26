@@ -61,8 +61,8 @@ public class Rarity
 	try
 	{
 	    setLocale();
-	    setXAtoms();
 	    X11.openDisplay();
+	    setXAtoms();
 	    
 	    int screenCount;
 	    synchronized (Screen.screens)
