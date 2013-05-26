@@ -87,8 +87,8 @@ JAVA_CLASS = $(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' 
 JNI_H = X11 Xinerama Rarity
 
 # so files
-LIB_PREFIX =
-LIB_RARITY = $(LIB_PREFIX)$(LIB)$(LIB_EXT)
+LIB_PREFIX = 
+LIB_RARITY = bin/$(LIB_PREFIX)$(LIB)$(LIB_EXT)
 
 
 # compile
