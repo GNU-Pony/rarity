@@ -43,6 +43,12 @@ public class Rarity
      */
     public static void main(final String... args)
     {
+	final int SCREEN_INPUT = X11.EventMask.PROPERTY_CHANGE
+	                       | X11.EventMask.COLORMAP_CHANGE
+	                       | X11.EventMask.SUBSTRUCTURE_REDIRECT
+	                       | X11.EventMask.SUBSTRUCTURE_NOTIFY
+	                       | X11.EventMask.STRUCTURE_NOTIFY;
+	
 	boolean abort = false;
 	try
 	{
@@ -50,8 +56,18 @@ public class Rarity
 	    setXAtoms();
 	    X11.openDisplay();
 	    
-	    // Events for root windows:
-	    // PROPERTY_CHANGE | COLORMAP_CHANGE | SUBSTRUCTURE_REDIRECT | SUBSTRUCTURE_NOTIFY | STRUCTURE_NOTIFY
+	    int screenCount;
+	    synchronized (Screen.screens)
+	    {   screenCount = X11.screenCount();
+		for (int i = 0; i < screenCount; i++)
+		{   X11.activateScreen(i);
+		    X11.selectRootInput(i, SCREEN_INPUT);
+		    Screen.screens.add(new Screen(X11.screenWidth(i), X11.screenHeight(i), 0, 0));
+		    Screen.ExistanceMessage e = new Screen.ExistanceMessage(Screen.ExistanceMessage.ADDED, i);
+		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+	    }   }
+	    
+	    X11.sync();
 	}
 	catch (final Throwable err)
 	{
@@ -60,6 +76,18 @@ public class Rarity
 	}
 	finally
 	{
+	    synchronized (Screen.screens)
+	    {   Screen.ExistanceMessage e;
+		int screenCount = X11.screenCount();
+		for (int i = 0; i < screenCount; i++)
+		{   e = new Screen.ExistanceMessage(Screen.ExistanceMessage.REMOVING, i);
+		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+		    X11.selectRootInput(i, 0);
+		    X11.deactivateScreen(i);
+		    Screen.screens.remove(0);
+		    e = new Screen.ExistanceMessage(Screen.ExistanceMessage.REMOVED, i);
+		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+	    }   }
 	    X11.closeDisplay();
 	    if (abort)
 		abort();
