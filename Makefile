@@ -151,7 +151,7 @@ src/%.h: src/%.java
 
 # .jar file
 $(JAR_RARITY): $(JAVA_CLASS) META-INF/MANIFEST.MF
-	jar cfm$(JAR_COMPRESS) "$@" META-INF/MANIFEST.MF $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g')
+	jar cfm$(JAR_COMPRESS) "$@" META-INF/MANIFEST.MF $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g' -e 's_\$$_"\$$"_g')
 
 # command file
 bin/rarity.sh: src/rarity.sh
