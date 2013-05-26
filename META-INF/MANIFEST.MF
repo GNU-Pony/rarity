@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: Mattias Andrée, maandree@member.fsf.org
+Main-Class: rarity.Rarity
+Name: GNU+Pony/rarity/
+Sealed: true
