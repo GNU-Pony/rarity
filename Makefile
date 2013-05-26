@@ -31,7 +31,7 @@ SHEBANG = /bin/sh
 JAVA = java
 ifdef TESTING
   JARPATH = .
-  LIBPATH = 
+  LIBPATH = .
 else
   JARPATH=$(PREFIX)/share/misc
   LIBPATH=$(PREFIX)/lib
@@ -160,6 +160,8 @@ bin/rarity.sh: src/rarity.sh
 	sed -i 's|%LIBPATH|$(LIBPATH)|g' "$@"
 	sed -i 's|%JARPATH|$(JARPATH)|g' "$@"
 	sed -i 's|%JAVA|$(JAVA)|g' "$@"
+	sed -i 's|%LIB|$(LIB_PREFIX)$(LIB)$(LIB_EXT)|g' "$@"
+	sed -i 's|%JAR|$(LIB).jar|g' "$@"
 
 
 # install package to $(DESTDIR)

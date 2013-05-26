@@ -39,21 +39,17 @@ public class Rarity
     /**
      * Mane method
      * 
-     * @param  args  Command line arguments excluding program name
+     * @param  args  Command line arguments excluding program name, the first is the library to load
      */
     public static void main(final String... args)
     {
 	try
-	{   System.loadLibrary("rarity");
+	{   System.load(args[0]);
 	}
-	catch (final Throwable err1)
-	{   try
-	    {   System.load("rarity.so");
-	    }
-	    catch (final Throwable err2)
-	    {   System.err.println("Rarity: Unable to load librarity: rarity");
-		abort();
-	}   }
+	catch (final Throwable err)
+	{   System.err.println("Rarity: Unable to load library: rarity");
+	    abort();
+	}
 	
 	final int SCREEN_INPUT = X11.EventMask.PROPERTY_CHANGE
 	                       | X11.EventMask.COLORMAP_CHANGE
@@ -102,7 +98,7 @@ public class Rarity
 	    }   }
 	    X11.closeDisplay();
 	    if (abort)
-		abort();
+	    	abort();
 	}
     }
     
