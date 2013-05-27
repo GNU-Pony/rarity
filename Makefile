@@ -53,6 +53,7 @@ PKG_CONFIG = pkg-config
 JAVAC = javac
 JAVAH = javah
 JAR = jar
+JPP = jpp
 
 # language versions
 C_STD = gnu11
@@ -101,6 +102,7 @@ C_OBJ = $(shell find src | grep '\.c$$' | sed -e 's/\.c$$/\.o/g' -e 's/^src\//ob
 
 # java files
 JAVA_SRC = $(shell find src | grep '\.java$$')
+JAVA_PRAECLASS = $(shell find src | grep '\.java$$' | sed -e 's/^src\//bin\//g')
 JAVA_CLASS = $(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
@@ -133,9 +135,13 @@ $(LIB_RARITY): $(C_OBJ)
 	 fi
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(JNI_C_CFLAGS) $(JNI_C_LDFLAGS) $^ -o "$@"
 
-# .class files
-bin/%.class: src/%.java
+# jpp resolved .java files
+bin/%.java: src/%.java
 	@mkdir -p "bin"
+	$(JPP) -s "src" -o "bin" "$<"
+
+# .class files
+bin/%.class: bin/%.java
 	$(JAVAC) $(JAVA_FLAGS) "$<"
 
 # .h files
