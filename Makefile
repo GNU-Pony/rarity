@@ -106,7 +106,7 @@ JAVA_PRAECLASS = $(shell find src | grep '\.java$$' | sed -e 's/^src\//bin\//g')
 JAVA_CLASS = $(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
-JNI_H = X11 Xinerama Rarity
+JNI_H = X11 Xinerama Rarity Signals
 
 # so files
 LIB_PREFIX = 
@@ -115,9 +115,12 @@ LIB_RARITY = bin/$(LIB_PREFIX)$(LIB)$(LIB_EXT)
 # jar file
 JAR_RARITY = bin/$(LIB).jar
 
+# misc files
+MANIFEST = META-INF/MANIFEST.MF
+
 
 # compile
-all: $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
+all: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
 
 # generate .h
 h: $(JNI_H)
@@ -146,18 +149,18 @@ bin/%.class: bin/%.java
 
 # .h files
 src/%.h: src/%.java
-	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									  \
+	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									 \
 	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";  \
-	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";	  \
-	 if [ "$$(grep -v '^#' "$@" | wc -l | cut -d ' ' -f 1)" = 5 ]; then						  \
-	     rm "$@";													  \
-	 elif [ ! "$$(md5sum "$@" 2>/dev/null || echo)" = "$$sum" ]; then						  \
-	     echo -e '\e[01;32m$@ has been updated\e[00m';								  \
+	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";	 \
+	 if [ "$$(grep -v '^#' "$@" | wc -l | cut -d ' ' -f 1)" = 5 ]; then						 \
+	     rm "$@";													 \
+	 elif [ ! "$$(md5sum "$@" 2>/dev/null || echo)" = "$$sum" ]; then						 \
+	     echo -e '\e[01;32m$@ has been updated\e[00m';								 \
 	 fi
 
 # .jar file
-$(JAR_RARITY): $(JAVA_CLASS) META-INF/MANIFEST.MF
-	jar cfm$(JAR_COMPRESS) "$@" META-INF/MANIFEST.MF $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g' -e 's_\$$_"\$$"_g')
+$(JAR_RARITY): $(JAVA_CLASS) $(MANIFEST)
+	jar cfm$(JAR_COMPRESS) "$@" $(MANIFEST) $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g' -e 's_\$$_"\$$"_g')
 
 # command file
 bin/rarity.sh: src/rarity.sh
