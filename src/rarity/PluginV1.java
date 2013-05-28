@@ -18,6 +18,8 @@
  */
 package rarity;
 
+import javax.swing.ImageIcon;
+
 
 /**
  * Plug-ins must implement this interface or a newer version.<br/>

@@ -83,7 +83,7 @@ public class PluginHandler
      */
     public static int getPluginCount()
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   return pluginInstances.size();
 	}
     }
@@ -97,7 +97,7 @@ public class PluginHandler
      */
     public static PluginV1 getPlugin(final int index)
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   return pluginInstances.get(index);
 	}
     }
@@ -111,7 +111,7 @@ public class PluginHandler
      */
     public static boolean isActive(final int plugin)
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   return activePlugins.contains(pluginInstances.get(plugin));
 	}
     }
@@ -125,7 +125,7 @@ public class PluginHandler
      */
     public static void setActive(final int plugin, final boolean active)
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   try
 	    {   if (activePlugins.contains(pluginInstances.get(plugin)) ^ active)
 		    if (active)  {  activePlugins.add   (pluginInstances.get(plugin));  pluginInstances.get(plugin).initialise();  }
@@ -144,7 +144,7 @@ public class PluginHandler
      */
     public static void updatePlugin(final int plugin)
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   try
 	    {   {   final PluginV1 _plugin = pluginInstances.get(plugin);
 		    if (activePlugins.contains(_plugin))
@@ -172,7 +172,7 @@ public class PluginHandler
 	final URL url = (new File(path)).toURI().toURL();
 	String name = path.substring(path.lastIndexOf('/') + 1);
 	name = name.substring(0, name.length() - 3) + PLUGIN_CLASS_NAME;
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   try (URLClassLoader classLoader = new URLClassLoader(new URL[]{url}))
 	    {
 		@SuppressWarnings("unchecked")
@@ -187,7 +187,7 @@ public class PluginHandler
      */
     public static void restartPlugins()
     {
-	synchronized (PluginHander.class)
+	synchronized (PluginHandler.class)
 	{   try
 	    {
 		final Vector<String> newFiles = new Vector<String>();
@@ -201,15 +201,16 @@ public class PluginHandler
 		    gotHash.add(line);
 		}
 		
+		String file;
 		for (int i = 0, n = pluginFiles.size(); i < n; i++)
-		    if (gotHash.contains(pluginFiles.get(i)) == false)
+		    if (gotHash.contains(file = pluginFiles.get(i)) == false)
 		    {
 			if (activePlugins.contains(pluginInstances.get(i)))
 			{   setActive(i, false);
 			    activePlugins.remove(pluginInstances.get(i));
 			}
-			pluginHash.remove(pluginFiles.get(i));
-			pluginMDates.remove(pluginFiles.get(i));
+			pluginHash.remove(file);
+			pluginMDates.remove(file);
 			pluginFiles.remove(i);
 			pluginInstances.remove(i);
 			n--;
@@ -217,11 +218,11 @@ public class PluginHandler
 		    }
 		    else if (isActive(i))
 		    {
-			long newMDate = (new File(newFile)).lastModified();
-			long oldMDate = pluginMDates.get(newFile).longValue();
+			long newMDate = (new File(file)).lastModified();
+			long oldMDate = pluginMDates.get(file).longValue();
 			if (newMDate != oldMDate)
 			{
-			    pluginMDates.put(newFile, Long.valueOf(newMDate));
+			    pluginMDates.put(file, Long.valueOf(newMDate));
 			    updatePlugin(i);
 			}
 		    }

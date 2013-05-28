@@ -83,7 +83,9 @@ public class Rarity
 		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
 	    }   }
 	    
-	    scanForWindows();
+	    for (int i = 0, n = usingXinerama ? Xinerama.screenCount() : X11.screenCount(); i < n; i++)
+		scanForWindows(i);
+	    
 	    X11.sync();
 	    eventLoop();
 	}
