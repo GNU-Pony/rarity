@@ -83,8 +83,8 @@ public class Rarity
 		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
 	    }   }
 	    
+	    scanForWindows();
 	    X11.sync();
-	    
 	    eventLoop();
 	}
 	catch (final Throwable err)
@@ -282,6 +282,45 @@ public class Rarity
      */
     public static native long getAtomPointer_NET_WM_NAME();
     // return (jlong)(void*)&_net_wm_name;
+    
+    
+    /**
+     * Scan for existing windows
+     * 
+     * @param  screen  The index of the screen to scan
+     */
+    private static native void scanForWindows(int screen);
+    // unsigned int i, n;
+    // Window _root, _parent, *windows;
+    // XQueryTree(display, RootWindow(display, screen), &_root, &_parent, &windows, &n);
+    // for (i = 0; i < n; i++)
+    //   {
+    //     unsigned int width, height, _border, _depth;
+    //     int _x, _y;
+    //     XGetGeometry(display, *(windows + i), _root, &_x, &_y, &width, &height, _border, _depth);
+    //     $invoke$ rarity.Rarity.newWindow((jint)*(windows + i), (jint)width, (jint)height);
+    //   }
+    // XFree(windows);
+    
+    
+    /**
+     * Invoked by native code when a new window has been found
+     * 
+     * @param  pointer  The pointer to the window
+     * @param  width    The width of the window
+     * @param  height   The height of the window
+     */
+    public static void newWindow(final int pointer, final int width, final int height)
+    {
+	final Window window = new Window(width, height, pointer);
+	synchronized (Window.windows)
+	{
+	    final int index = Window.windows.size();
+	    Window.windows.add(window);
+	    Window.ExistanceMessage e = new Window.ExistanceMessage(Window.ExistanceMessage.ADDED, index);
+	    Blackboard.getInstance(Window.class).broadcastMessage(e);
+	}
+    }
     
 }
 

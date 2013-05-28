@@ -316,3 +316,27 @@ jlong Java_rarity_Rarity_getAtomPointer_1NET_1WM_1NAME(JNIEnv* env, jclass class
   return (jlong)(void*)&_net_wm_name;
 }
 
+
+/**
+ * Scan for existing windows
+ * 
+ * @param  screen  The index of the screen to scan
+ */
+void Java_rarity_Rarity_scanForWindows(JNIEnv* env, jclass class, jint screen)
+{
+  (void) class;
+  unsigned int i, n;
+  Window _root, _parent, *windows;
+  XQueryTree(display, RootWindow(display, screen), &_root, &_parent, &windows, &n);
+  for (i = 0; i < n; i++)
+    {
+      unsigned int width, height, _border, _depth;
+      int _x, _y;
+      XGetGeometry(display, *(windows + i), &_root, &_x, &_y, &width, &height, &_border, &_depth);
+      jclass classSignals = (*env)->FindClass(env, "rarity.Rarity");
+      jmethodID method = (*env)->GetStaticMethodID(env, classSignals, "newWindow", "(III)V");
+      (*env)->CallStaticVoidMethod(env, classSignals, method, (jint)*(windows + i), (jint)width, (jint)height);
+    }
+  XFree(windows);
+}
+
