@@ -214,3 +214,16 @@ void Java_rarity_X11_selectRootInput(JNIEnv* env, jclass class, jint index, jint
   XSelectInput(display, __root(index), (long)events);
 }
 
+
+/**
+ * Gets the address for the display which can be used in native code
+ * 
+ * @return  The address for the display
+ */
+jlong Java_rarity_X11_getDisplayPointer(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)display;
+}
+

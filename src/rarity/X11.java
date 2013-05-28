@@ -193,5 +193,13 @@ public class X11
     public static native void selectRootInput(int index, int events);
     // XSelectInput(dpy, RootWindow(display, index), events);
     
+    /**
+     * Gets the address for the display which can be used in native code
+     * 
+     * @return  The address for the display
+     */
+    public static native long getDisplayPointer();
+    // return (jlong)(void*)display;
+    
 }
 
