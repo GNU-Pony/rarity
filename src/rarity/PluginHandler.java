@@ -50,6 +50,11 @@ public class PluginHandler
     
     
     /**
+     * The plugin list file
+     */
+    public static String pluginFile;
+    
+    /**
      * The plug-ins instanciated
      */
     private static Vector<PluginV1> pluginInstances = new Vector<PluginV1>();
@@ -73,6 +78,56 @@ public class PluginHandler
      * Map from plug-in file to last modification date
      */
     private static HashMap<String, Long> pluginMDates = new HashMap<String, Long>();
+    
+    
+    
+    /**
+     * Type initialiser
+     */
+    static
+    {
+	pluginFile = "/dev/null";
+	
+	String HOME             = System.getProperty("user.home", null);
+	String $HOME            = System.getenv("HOME");
+	String $CONFDIR         = System.getenv("CONFDIR");
+	String $confdir         = System.getenv("confdir");
+	String $XDG_CONFIG_HOME = System.getenv("XDG_CONFIG_HOME");
+	String $XDG_CONFIG_DIRS = System.getenv("XDG_CONFIG_DIRS");
+	String $RARITY_DIR      = System.getenv("RARITY_DIR");
+	
+	if ((HOME             != null) && (HOME            .length() == 0))  HOME             = null;
+	if (($HOME            != null) && ($HOME           .length() == 0))  $HOME            = null;
+	if (($CONFDIR         != null) && ($CONFDIR        .length() == 0))  $CONFDIR         = null;
+	if (($confdir         != null) && ($confdir        .length() == 0))  $confdir         = null;
+	if (($XDG_CONFIG_HOME != null) && ($XDG_CONFIG_HOME.length() == 0))  $XDG_CONFIG_HOME = null;
+	if (($XDG_CONFIG_DIRS != null) && ($XDG_CONFIG_DIRS.length() == 0))  $XDG_CONFIG_DIRS = null;
+	if (($RARITY_DIR      != null) && ($RARITY_DIR     .length() == 0))  $RARITY_DIR      = null;
+	
+	final Vector<String> filenames = new Vector<String>();
+	if ($RARITY_DIR      != null)  filenames.add("$RARITY_DIR/%rc".replace("$RARITY_DIR", $RARITY_DIR));
+	
+	if ($XDG_CONFIG_DIRS != null)
+	    for (final String path : $XDG_CONFIG_DIRS.split(":"))
+		if (path.length() > 0)
+		    filenames.add(path + "/%rc");
+	
+	if ($XDG_CONFIG_HOME != null)  filenames.add("$XDG_CONFIG_HOME/%/%rc".replace("$XDG_CONFIG_HOME", $XDG_CONFIG_HOME));
+	if ($HOME            != null)  filenames.add("$HOME/.config/%/%rc"   .replace("$HOME",            $HOME));
+	if (HOME             != null)  filenames.add("~/.config/%/%rc"       .replace("~",                HOME));
+	if ($HOME            != null)  filenames.add("$HOME/.%rc"            .replace("$HOME",            $HOME));
+	if (HOME             != null)  filenames.add("~/.%rc"                .replace("~",                HOME));
+	if ($CONFDIR         != null)  filenames.add("$CONFDIR/%rc"          .replace("$CONFDIR",         $CONFDIR));
+	if ($confdir         != null)  filenames.add("$confdir/%rc"          .replace("$confdir",         $CONFDIR));
+	filenames.add("/etc/%rc");
+	
+	for (String filename : filenames)
+	{   final File file = new File(filename.replace("%", "rarity"));
+	    if (file.exists() && (file.isDirectory() == false))
+	    {   pluginFile = filename;
+		break;
+	}   }
+    }
     
     
     
@@ -193,7 +248,7 @@ public class PluginHandler
 		final Vector<String> newFiles = new Vector<String>();
 		final HashSet<String> gotHash = new HashSet<String>();
 		
-		for (final String line : readFile(pluginFile).replace('\t', ' ').split('\n'))
+		for (final String line : readFile(pluginFile).replace('\r', '\n').replace('\f', '\n').replace('\t', ' ').split("\n"))
 		{   if ((line.length() == 0) || line.replace(" ", "").startsWith("#"))
 			continue;
 		    if (pluginHash.contains(line) == false)
