@@ -106,7 +106,7 @@ JAVA_PRAECLASS = $(shell find src | grep '\.java$$' | sed -e 's/^src\//bin\//g')
 JAVA_CLASS = $(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
-JNI_H = X11 Xinerama Rarity Signals
+JNI_H = X11 Xinerama Rarity Signals XKeyboard
 
 # so files
 LIB_PREFIX = 

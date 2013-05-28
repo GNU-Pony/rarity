@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Signals.h"
-
-#include <signal.h>
+#include "global.h"
 
 
 

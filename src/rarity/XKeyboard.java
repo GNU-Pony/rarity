@@ -27,6 +27,23 @@ package rarity;
 public class XKeyboard
 {
     /**
+     * Shift XOR alphabetic caps lock modifer, modifier level 1
+     */
+    public static final int MODIFIER_SHIFT = 1;
+    
+    /**
+     * Alernative graph (also known as right alternative) modifier, modifier level 2
+     */
+    public static final int MODIFIER_ALTERNATIVE_GRAPH = 2;
+    
+    /**
+     * Modifier level 4
+     */
+    public static final int MODIFIER_MOD_4 = 4;
+    
+    
+    
+    /**
      * Void symbol
      */
     public static final int VOID_SYMBOL = 0xffffff;
@@ -815,6 +832,41 @@ public class XKeyboard
        #done < "src/keysyms"
 	return 0x1000000 | character;
     }
+    
+    
+    /**
+     * Gets the key symbol from a key code
+     * 
+     * @param   keycode    The key code
+     * @param   group      The group
+     * @param   modifiers  The modifers
+     * @return             The key symbol
+     */
+    public static native int toKeySymbol(byte keycode, int group, int modifiers);
+    
+    /**
+     * Gets a key code from a key symbol
+     * 
+     * @param   keysym  The key symbol
+     * @return          The key code
+     */
+    public static native byte toKeyCode(int keysym);
+    
+    /**
+     * Gets the lower case key symbol from a key symbol
+     * 
+     * @param   keysym  The key symbol
+     * @return          The lower case key symbol
+     */
+    public static native int toLowerKeySymbol(int keysym);
+    
+    /**
+     * Gets the upper case key symbol from a key symbol
+     * 
+     * @param   keysym  The key symbol
+     * @return          The upper case key symbol
+     */
+    public static native int toUpperKeySymbol(int keysym);
     
 }
 
