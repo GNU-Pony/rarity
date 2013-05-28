@@ -58,16 +58,18 @@ public class Window extends PropertyBase
     /**
      * Constructor
      * 
-     * @param  width   The window's width
-     * @param  height  The window's height
+     * @param  width    The window's width
+     * @param  height   The window's height
+     * @parma  pointer  Pointer to the window object in native code
      */
-    protected Window(final int width, final int height)
+    protected Window(final int width, final int height, final long pointer)
     {
 	this.set(WIDTH, width);
 	this.set(HEIGHT, height);
 	this.set(LEFT, 0);
 	this.set(TOP, 0);
 	this.set(VISIBLE, true);
+	this.pointer = pointer;
     }
     
     
@@ -76,6 +78,11 @@ public class Window extends PropertyBase
      * All windows in index order
      */
     static Vector<Window> windows = new Vector<Window>();
+    
+    /**
+     * Pointer to the window object in native code
+     */
+    public final long pointer;
     
     
     
