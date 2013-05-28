@@ -159,5 +159,129 @@ public class Rarity
      */
     public static native void eventLoop();
     
+    
+    
+    /**
+     * Gets the pointer to the atom for XA_STRING
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerXA_STRING();
+    // return (jlong)(void*)&xa_string;
+    
+    /**
+     * Gets the pointer to the atom for XA_COMPOUND_TEXT
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerXA_COMPOUND_TEXT();
+    // return (jlong)(void*)&xa_compound_text;
+    
+    /**
+     * Gets the pointer to the atom for XA_UTF8_STRING
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerXA_UTF8_STRING();
+    // return (jlong)(void*)&xa_utf8_string;
+    
+    
+    /**
+     * Gets the pointer to the atom for WM_NAME
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_NAME();
+    // return (jlong)(void*)&wm_name;
+    
+    /**
+     * Gets the pointer to the atom for WM_STATE
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_STATE();
+    // return (jlong)(void*)&wm_state;
+    
+    /**
+     * Gets the pointer to the atom for WM_CHANGE_STATE
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_CHANGE_STATE();
+    // return (jlong)(void*)&wm_change_state;
+    
+    /**
+     * Gets the pointer to the atom for WM_PROTOCOLS
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_PROTOCOLS();
+    // return (jlong)(void*)&wm_protocols;
+    
+    /**
+     * Gets the pointer to the atom for WM_DELETE
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_DELETE();
+    // return (jlong)(void*)&wm_delete;
+    
+    /**
+     * Gets the pointer to the atom for WM_TAKE_FOCUS
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_TAKE_FOCUS();
+    // return (jlong)(void*)&wm_take_focus;
+    
+    /**
+     * Gets the pointer to the atom for WM_COLORMAPS
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointerWM_COLORMAPS();
+    // return (jlong)(void*)&wm_colormaps;
+    
+    
+    /**
+     * Gets the pointer to the atom for _NET_WM_PID
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointer_NET_WM_PID();
+    // return (jlong)(void*)&_net_wm_pid;
+    
+    /**
+     * Gets the pointer to the atom for _NET_SUPPORTED
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointer_NET_SUPPORTED();
+    // return (jlong)(void*)&_net_supported;
+    
+    /**
+     * Gets the pointer to the atom for _NET_WM_WINDOW_TYPE
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointer_NET_WM_WINDOW_TYPE();
+    // return (jlong)(void*)&_net_wm_window_type;
+    
+    /**
+     * Gets the pointer to the atom for _NET_WM_WINDOW_TYPE_DIALOG
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointer_NET_WM_WINDOW_TYPE_DIALOG();
+    // return (jlong)(void*)&_net_wm_window_type_dialog;
+    
+    /**
+     * Gets the pointer to the atom for _NET_WM_NAME
+     * 
+     * @param  The pointer to the atom
+     */
+    public static native long getAtomPointer_NET_WM_NAME();
+    // return (jlong)(void*)&_net_wm_name;
+    
 }
 

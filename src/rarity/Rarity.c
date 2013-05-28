@@ -118,3 +118,201 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
     }
 }
 
+
+
+/**
+ * Gets the pointer to the atom for XA_STRING
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerXA_1STRING(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&xa_string;
+}
+
+
+/**
+ * Gets the pointer to the atom for XA_COMPOUND_TEXT
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerXA_1COMPOUND_1TEXT(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&xa_compound_text;
+}
+
+
+/**
+ * Gets the pointer to the atom for XA_UTF8_STRING
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerXA_1UTF8_1STRING(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&xa_utf8_string;
+}
+
+ 
+
+/**
+ * Gets the pointer to the atom for WM_NAME
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1NAME(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_name;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_STATE
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1STATE(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_state;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_CHANGE_STATE
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1CHANGE_1STATE(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_change_state;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_PROTOCOLS
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1PROTOCOLS(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_protocols;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_DELETE
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1DELETE(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_delete;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_TAKE_FOCUS
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1TAKE_1FOCUS(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_take_focus;
+}
+
+
+/**
+ * Gets the pointer to the atom for WM_COLORMAPS
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointerWM_1COLORMAPS(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&wm_colormaps;
+}
+
+
+
+/**
+ * Gets the pointer to the atom for _NET_WM_PID
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointer_1NET_1WM_1PID(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&_net_wm_pid;
+}
+
+
+/**
+ * Gets the pointer to the atom for _NET_SUPPORTED
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointer_1NET_1SUPPORTED(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&_net_supported;
+}
+
+
+/**
+ * Gets the pointer to the atom for _NET_WM_WINDOW_TYPE
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointer_1NET_1WM_1WINDOW_1TYPE(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&_net_wm_window_type;
+}
+
+
+/**
+ * Gets the pointer to the atom for _NET_WM_WINDOW_TYPE_DIALOG
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointer_1NET_1WM_1WINDOW_1TYPE_1DIALOG(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&_net_wm_window_type_dialog;
+}
+
+
+/**
+ * Gets the pointer to the atom for _NET_WM_NAME
+ * 
+ * @param  The pointer to the atom
+ */
+jlong Java_rarity_Rarity_getAtomPointer_1NET_1WM_1NAME(JNIEnv* env, jclass class)
+{
+  (void) env;
+  (void) class;
+  return (jlong)(void*)&_net_wm_name;
+}
+

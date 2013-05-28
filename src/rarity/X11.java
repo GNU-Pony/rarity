@@ -199,7 +199,7 @@ public class X11
      * @return  The address for the display
      */
     public static native long getDisplayPointer();
-    // return (jlong)(void*)display;
+    // return (jlong)(void*)&display;
     
 }
 
