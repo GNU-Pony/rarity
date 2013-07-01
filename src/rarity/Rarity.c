@@ -120,29 +120,29 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
 	*(event_handlers + i) = 0;
       
       /* TODO fill with function pointers */
+      *(event_handlers + ClientMessage)    = 0;
+      *(event_handlers + CirculateRequest) = 0;
+      *(event_handlers + ColormapNotify)   = 0;
+      *(event_handlers + ConfigureNotify)  = 0;
       *(event_handlers + ConfigureRequest) = 0;
       *(event_handlers + CreateNotify)     = 0;
       *(event_handlers + DestroyNotify)    = 0;
-      *(event_handlers + ClientMessage)    = 0;
-      *(event_handlers + ColormapNotify)   = 0;
-      *(event_handlers + PropertyNotify)   = 0;
-      *(event_handlers + MapRequest)       = 0;
-      *(event_handlers + KeyPress)         = 0;
-      *(event_handlers + UnmapNotify)      = 0;
-      *(event_handlers + FocusOut)         = 0;
-      *(event_handlers + FocusIn)          = 0;
-      *(event_handlers + MappingNotify)    = 0;
-      *(event_handlers + SelectionRequest) = 0;
-      *(event_handlers + SelectionClear)   = 0;
-      *(event_handlers + ConfigureNotify)  = 0;
-      *(event_handlers + MapNotify)        = 0;
-      *(event_handlers + Expose)           = 0;
-      *(event_handlers + MotionNotify)     = 0;
-      *(event_handlers + KeyRelease)       = 0;
-      *(event_handlers + ReparentNotify)   = 0;
       *(event_handlers + EnterNotify)      = 0;
+      *(event_handlers + Expose)           = 0;
+      *(event_handlers + FocusIn)          = 0;
+      *(event_handlers + FocusOut)         = 0;
+      *(event_handlers + KeyPress)         = 0;
+      *(event_handlers + KeyRelease)       = 0;
+      *(event_handlers + MapNotify)        = 0;
+      *(event_handlers + MappingNotify)    = 0;
+      *(event_handlers + MapRequest)       = 0;
+      *(event_handlers + MotionNotify)     = 0;
+      *(event_handlers + PropertyNotify)   = 0;
+      *(event_handlers + ReparentNotify)   = 0;
+      *(event_handlers + SelectionClear)   = 0;
       *(event_handlers + SelectionNotify)  = 0;
-      *(event_handlers + CirculateRequest) = 0;
+      *(event_handlers + SelectionRequest) = 0;
+      *(event_handlers + UnmapNotify)      = 0;
     }
   
   for (;;)
