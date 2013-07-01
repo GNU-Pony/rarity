@@ -35,6 +35,16 @@ int have_xinerama = 0;
  */
 int xinerama_screen_count = 0;
 
+/**
+ * Whether the event handlers have been set
+ */
+long event_handlers_initialised = 0;
+
+/**
+ * Event handlers
+ */
+void (*event_handlers[32])(XEvent*);
+
 
 
 /**
@@ -102,6 +112,39 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
   fd_set fd_set;
   FD_ZERO(&fd_set);
   
+  if (event_handlers_initialised == 0)
+    {
+      long i;
+      event_handlers_initialised = 1;
+      for (i = 0; i < 32; i++)
+	*(event_handlers + i) = 0;
+      
+      /* TODO fill with function pointers */
+      *(event_handlers + ConfigureRequest) = 0;
+      *(event_handlers + CreateNotify)     = 0;
+      *(event_handlers + DestroyNotify)    = 0;
+      *(event_handlers + ClientMessage)    = 0;
+      *(event_handlers + ColormapNotify)   = 0;
+      *(event_handlers + PropertyNotify)   = 0;
+      *(event_handlers + MapRequest)       = 0;
+      *(event_handlers + KeyPress)         = 0;
+      *(event_handlers + UnmapNotify)      = 0;
+      *(event_handlers + FocusOut)         = 0;
+      *(event_handlers + FocusIn)          = 0;
+      *(event_handlers + MappingNotify)    = 0;
+      *(event_handlers + SelectionRequest) = 0;
+      *(event_handlers + SelectionClear)   = 0;
+      *(event_handlers + ConfigureNotify)  = 0;
+      *(event_handlers + MapNotify)        = 0;
+      *(event_handlers + Expose)           = 0;
+      *(event_handlers + MotionNotify)     = 0;
+      *(event_handlers + KeyRelease)       = 0;
+      *(event_handlers + ReparentNotify)   = 0;
+      *(event_handlers + EnterNotify)      = 0;
+      *(event_handlers + SelectionNotify)  = 0;
+      *(event_handlers + CirculateRequest) = 0;
+    }
+  
   for (;;)
     {
       /* TODO handle graceful exit */
@@ -112,7 +155,12 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
       if ((QLength(display) > 0) || (select(x_fd + 1, &fd_set, 0, 0, 0) == 1))
         {
           XNextEvent(display, &e);
-          /* TODO handle_event(&e); */
+	  if (e.type < 32)
+	    {
+	      void (*function)(XEvent*) = *(event_handlers + e.type);
+	      if (function != 0)
+		function(&e);
+	    }
           XSync(display, 0);
 	}
     }
