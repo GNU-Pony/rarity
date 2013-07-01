@@ -37,9 +37,12 @@ else
   LIBPATH=$(PREFIX)/lib
 endif
 PREFIX = /usr
-BINPATH = $(PREFIX)/bin
-LICENSEPATH = $(PREFIX)/share/licenses/$(PKGNAME)
-INFOPATH = $(PREFIX)/share/info
+BINDIR = /bin
+DATADIR = /share
+BINPATH = $(PREFIX)$(BIDIR)
+DATAPATH= $(PREFIX)$(DATADIR)
+LICENSEPATH = $(DATAPATH)/licenses/$(PKGNAME)
+INFOPATH = $(DATAPATH)/info
 COMMAND = rarity
 
 # PLATFORM DEPENDENT: the file extension for library files
