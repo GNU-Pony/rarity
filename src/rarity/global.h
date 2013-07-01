@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stdlib.h>
+#include <stdio.h> /* Useful for debugging */
 #include <signal.h>
 #include <X11/Xlib.h>
 #include <X11/XKBlib.h>
