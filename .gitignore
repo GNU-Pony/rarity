@@ -5,6 +5,7 @@ __pycache__/
 \#*\#
 .*
 !.git*
+*.log
 *.gz
 *.xz
 *.pyo
