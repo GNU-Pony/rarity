@@ -102,167 +102,167 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 
 void eventButtonPress(XEvent* xe)
 {
-  //XButtonPressedEvent = XButtonEvent = .xbutton
+  XButtonEvent e = xe->xbutton;
 }
 
 void eventButtonRelease(XEvent* xe)
 {
-  //XButtonReleasedEvent = XButtonEvent = .xbutton
+  XButtonEvent e = xe->xbutton;
 }
 
 void eventClientMessage(XEvent* xe)
 {
-  //XClientMessageEvent = .xclient
+  XClientMessageEvent e = xe->xclient;
 }
 
 void eventCirculateNotify(XEvent* xe)
 {
-  //XCirculateEvent = .xcirculate
+  XCirculateEvent e = xe->xcirculate;
 }
 
 void eventCirculateRequest(XEvent* xe)
 {
-  //XCirculateRequestEvent = .xcirculaterequest
+  XCirculateRequestEvent e = xe->xcirculaterequest;
 }
 
 void eventColormapNotify(XEvent* xe)
 {
-  //XColormapEvent = .xcolormap
+  XColormapEvent e = xe->xcolormap;
 }
 
 void eventConfigureNotify(XEvent* xe)
 {
-  //XConfigureEvent = .xconfigure
+  XConfigureEvent e = xe->xconfigure;
 }
 
 void eventConfigureRequest(XEvent* xe)
 {
-  //XConfigureRequestEvent = .xconfigurerequest
+  XConfigureRequestEvent e = xe->xconfigurerequest;
 }
 
 void eventCreateNotify(XEvent* xe)
 {
-  //XCreateWindowEvent = .xcreatewindow
+  XCreateWindowEvent e = xe->xcreatewindow;
 }
 
 void eventDestroyNotify(XEvent* xe)
 {
-  //XDestroyWindowEvent = .xdestroywindow
+  XDestroyWindowEvent e = xe->xdestroywindow;
 }
 
 void eventEnterNotify(XEvent* xe)
 {
-  //XEnterWindowEvent = XCrossingEvent = .xcrossing
+  XCrossingEvent e = xe->xcrossing;
 }
 
 void eventExpose(XEvent* xe)
 {
-  //XExposeEvent = .xexpose
+  XExposeEvent e = xe->xexpose;
 }
 
 void eventFocusIn(XEvent* xe)
 {
-  //XFocusInEvent = XFocusChangeEvent = .xfocus
+  XFocusChangeEvent e = xe->xfocus;
 }
 
 void eventFocusOut(XEvent* xe)
 {
-  //XFocusOutEvent = XFocusChangeEvent = .xfocus
+  XFocusChangeEvent e = xe->xfocus;
 }
 
 void eventGraphicsExpose(XEvent* xe)
 {
-  //XGraphicsExposeEvent = .xgraphicsexpose
+  XGraphicsExposeEvent e = xe->xgraphicsexpose;
 }
 
 void eventGravityNotify(XEvent* xe)
 {
-  //XGravityEvent = .xgravity
+  XGravityEvent e = xe->xgravity;
 }
 
 void eventKeymapNotify(XEvent* xe)
 {
-  //XKeymapEvent = .xkeymap
+  XKeymapEvent e = xe->xkeymap;
 }
 
 void eventKeyPress(XEvent* xe)
 {
-  //XKeyPressedEvent = XKeyEvent = .xkey
+  XKeyEvent e = xe->xkey;
 }
 
 void eventKeyRelease(XEvent* xe)
 {
-  //XKeyReleasedEvent = XKeyEvent = .xkey
+  XKeyEvent e = xe->xkey;
 }
 
 void eventLeaveNotify(XEvent* xe)
 {
-  //XLeaveWindowEvent = XCrossingEvent = .xcrossing
+  XCrossingEvent e = xe->xcrossing;
 }
 
 void eventMapNotify(XEvent* xe)
 {
-  //XMapEvent = .xmap
+  XMapEvent e = xe->xmap;
 }
 
 void eventMappingNotify(XEvent* xe)
 {
-  //XMappingEvent = .xmapping
+  XMappingEvent e = xe->xmapping;
 }
 
 void eventMapRequest(XEvent* xe)
 {
-  //XMapRequestEvent = .xmaprequest
+  XMapRequestEvent e = xe->xmaprequest;
 }
 
 void eventMotionNotify(XEvent* xe)
 {
-  //XPointerMovedEvent = XMotionEvent = .xmotion
+  XMotionEvent e = xe->xmotion;
 }
 
 void eventNoExpose(XEvent* xe)
 {
-  //XNoExposeEvent = .xnoexpose
+  XNoExposeEvent e = xe->xnoexpose;
 }
 
 void eventPropertyNotify(XEvent* xe)
 {
-  //XPropertyEvent = .xproperty
+  XPropertyEvent e = xe->xproperty;
 }
 
 void eventReparentNotify(XEvent* xe)
 {
-  //XReparentEvent = .xreparent
+  XReparentEvent e = xe->xreparent;
 }
 
 void eventResizeRequest(XEvent* xe)
 {
-  //XResizeRequestEvent = .xresizerequest
+  XResizeRequestEvent e = xe->xresizerequest;
 }
 
 void eventSelectionClear(XEvent* xe)
 {
-  //XSelectionClearEvent = .xselectionclear
+  XSelectionClearEvent e = xe->xselectionclear;
 }
 
 void eventSelectionNotify(XEvent* xe)
 {
-  //XSelectionEvent = .xselection
+  XSelectionEvent e = xe->xselection;
 }
 
 void eventSelectionRequest(XEvent* xe)
 {
-  //XSelectionRequestEvent = .xselectionrequest
+  XSelectionRequestEvent e = xe->xselectionrequest;
 }
 
 void eventUnmapNotify(XEvent* xe)
 {
-  //XUnmapEvent = .xunmap
+  XUnmapEvent e = xe->xunmap;
 }
 
 void eventVisibilityNotify(XEvent* xe)
 {
-  //XVisibilityEvent = .xvisibility
+  XVisibilityEvent e = xe->xvisibility;
 }
 
 
