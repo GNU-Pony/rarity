@@ -100,6 +100,11 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 
 
 
+/**
+ * Rat button press
+ * 
+ * @param  xe  The X event
+ */
 void eventButtonPress(XEvent* xe)
 {
   XButtonEvent e = xe->xbutton;
@@ -110,6 +115,11 @@ void eventButtonPress(XEvent* xe)
   int state = e.state, button = e.button, same_screen = e.same_screen;
 }
 
+/**
+ * Rat button release
+ * 
+ * @param  xe  The X event
+ */
 void eventButtonRelease(XEvent* xe)
 {
   XButtonEvent e = xe->xbutton;
@@ -120,6 +130,11 @@ void eventButtonRelease(XEvent* xe)
   int state = e.state, button = e.button, same_screen = e.same_screen;
 }
 
+/**
+ * TODO doc eventClientMessage
+ * 
+ * @param  xe  The X event
+ */
 void eventClientMessage(XEvent* xe)
 {
   XClientMessageEvent e = xe->xclient;
@@ -130,6 +145,11 @@ void eventClientMessage(XEvent* xe)
   char data[20] = e.data.b;
 }
 
+/**
+ * TODO doc eventCirculateNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventCirculateNotify(XEvent* xe)
 {
   XCirculateEvent e = xe->xcirculate;
@@ -138,6 +158,11 @@ void eventCirculateNotify(XEvent* xe)
   int event = e.event, window = e.window, place = e.place;
 }
 
+/**
+ * TODO doc eventCirculateRequest
+ * 
+ * @param  xe  The X event
+ */
 void eventCirculateRequest(XEvent* xe)
 {
   XCirculateRequestEvent e = xe->xcirculaterequest;
@@ -146,6 +171,11 @@ void eventCirculateRequest(XEvent* xe)
   int parent = e.parent, window = e.window, place = e.place;
 }
 
+/**
+ * TODO doc eventColormapNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventColormapNotify(XEvent* xe)
 {
   XColormapEvent e = xe->xcolormap;
@@ -154,6 +184,11 @@ void eventColormapNotify(XEvent* xe)
   int window = e.window, colormap = e.colormap, new = e.new, state = e.state;
 }
 
+/**
+ * TODO doc eventConfigureNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventConfigureNotify(XEvent* xe)
 {
   XConfigureEvent e = xe->xconfigure;
@@ -162,6 +197,11 @@ void eventConfigureNotify(XEvent* xe)
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
 }
 
+/**
+ * TODO doc eventConfigureRequest
+ * 
+ * @param  xe  The X event
+ */
 void eventConfigureRequest(XEvent* xe)
 {
   XConfigureRequestEvent e = xe->xconfigurerequest;
@@ -170,6 +210,11 @@ void eventConfigureRequest(XEvent* xe)
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, detail = e.detail;
 }
 
+/**
+ * A new window has been created
+ * 
+ * @param  xe  The X event
+ */
 void eventCreateNotify(XEvent* xe)
 {
   XCreateWindowEvent e = xe->xcreatewindow;
@@ -178,6 +223,11 @@ void eventCreateNotify(XEvent* xe)
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
 }
 
+/**
+ * A window has been destroyed
+ * 
+ * @param  xe  The X event
+ */
 void eventDestroyNotify(XEvent* xe)
 {
   XDestroyWindowEvent e = xe->xdestroywindow;
@@ -185,6 +235,11 @@ void eventDestroyNotify(XEvent* xe)
   int send_event = e.send_event, event = e.event, window = e.window;
 }
 
+/**
+ * Rat enters window
+ * 
+ * @param  xe  The X event
+ */
 void eventEnterNotify(XEvent* xe)
 {
   XCrossingEvent e = xe->xcrossing;
@@ -194,6 +249,11 @@ void eventEnterNotify(XEvent* xe)
   int same_screen = e.same_screen, focus = e.focus, state = e.state;
 }
 
+/**
+ * TODO doc eventExpose
+ * 
+ * @param  xe  The X event
+ */
 void eventExpose(XEvent* xe)
 {
   XExposeEvent e = xe->xexpose;
@@ -202,6 +262,11 @@ void eventExpose(XEvent* xe)
   int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count;
 }
 
+/**
+ * Window gets focus
+ * 
+ * @param  xe  The X event
+ */
 void eventFocusIn(XEvent* xe)
 {
   XFocusChangeEvent e = xe->xfocus;
@@ -210,6 +275,11 @@ void eventFocusIn(XEvent* xe)
   int mode = e.mode, detail = e.detail;
 }
 
+/**
+ * Window loses focus
+ * 
+ * @param  xe  The X event
+ */
 void eventFocusOut(XEvent* xe)
 {
   XFocusChangeEvent e = xe->xfocus;
@@ -218,6 +288,11 @@ void eventFocusOut(XEvent* xe)
   int mode = e.mode, detail = e.detail;
 }
 
+/**
+ * TODO doc eventGraphicsExpose
+ * 
+ * @param  xe  The X event
+ */
 void eventGraphicsExpose(XEvent* xe)
 {
   XGraphicsExposeEvent e = xe->xgraphicsexpose;
@@ -226,6 +301,11 @@ void eventGraphicsExpose(XEvent* xe)
   int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count, major_code = e.major_code, minor_code = e.minor_code;
 }
 
+/**
+ * TODO doc eventGravityNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventGravityNotify(XEvent* xe)
 {
   XGravityEvent e = xe->xgravity;
@@ -234,6 +314,11 @@ void eventGravityNotify(XEvent* xe)
   int x = e.x, y = e.y;
 }
 
+/**
+ * TODO doc eventKeymapNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventKeymapNotify(XEvent* xe)
 {
   XKeymapEvent e = xe->xkeymap;
@@ -242,6 +327,11 @@ void eventKeymapNotify(XEvent* xe)
   char key_vector[32] = e.key_vector;
 }
 
+/**
+ * Keyboard key pressed
+ * 
+ * @param  xe  The X event
+ */
 void eventKeyPress(XEvent* xe)
 {
   XKeyEvent e = xe->xkey;
@@ -252,6 +342,11 @@ void eventKeyPress(XEvent* xe)
   int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
 }
 
+/**
+ * Keyboard key released
+ * 
+ * @param  xe  The X event
+ */
 void eventKeyRelease(XEvent* xe)
 {
   XKeyEvent e = xe->xkey;
@@ -262,6 +357,11 @@ void eventKeyRelease(XEvent* xe)
   int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
 }
 
+/**
+ * Rat leaves window
+ * 
+ * @param  xe  The X event
+ */
 void eventLeaveNotify(XEvent* xe)
 {
   XCrossingEvent e = xe->xcrossing;
@@ -271,6 +371,11 @@ void eventLeaveNotify(XEvent* xe)
   int same_screen = e.same_screen, focus = e.focus, state = e.state;
 }
 
+/**
+ * TODO doc eventMapNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventMapNotify(XEvent* xe)
 {
   XMapEvent e = xe->xmap;
@@ -279,6 +384,11 @@ void eventMapNotify(XEvent* xe)
   int override_redirect = e.override_redirect;
 }
 
+/**
+ * TODO doc eventMappingNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventMappingNotify(XEvent* xe)
 {
   XMappingEvent e = xe->xmapping;
@@ -287,6 +397,11 @@ void eventMappingNotify(XEvent* xe)
   int override_redirect = e.override_redirect;
 }
 
+/**
+ * TODO doc eventMapRequest
+ * 
+ * @param  xe  The X event
+ */
 void eventMapRequest(XEvent* xe)
 {
   XMapRequestEvent e = xe->xmaprequest;
@@ -294,6 +409,11 @@ void eventMapRequest(XEvent* xe)
   int send_event = e.send_event, parent = e.parent, window = e.window;
 }
 
+/**
+ * Rat moves
+ * 
+ * @param  xe  The X event
+ */
 void eventMotionNotify(XEvent* xe)
 {
   XMotionEvent e = xe->xmotion;
@@ -305,6 +425,11 @@ void eventMotionNotify(XEvent* xe)
   char is_hint = e.is_hint;
 }
 
+/**
+ * TODO doc eventNoExpose
+ * 
+ * @param  xe  The X event
+ */
 void eventNoExpose(XEvent* xe)
 {
   XNoExposeEvent e = xe->xnoexpose;
@@ -313,6 +438,11 @@ void eventNoExpose(XEvent* xe)
   int major_code = e.major_code, minor_code = e.minor_code;
 }
 
+/**
+ * TODO doc eventPropertyNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventPropertyNotify(XEvent* xe)
 {
   XPropertyEvent e = xe->xproperty;
@@ -321,6 +451,11 @@ void eventPropertyNotify(XEvent* xe)
   Atom atom = e.atom;
 }
 
+/**
+ * TODO doc eventReparentNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventReparentNotify(XEvent* xe)
 {
   XReparentEvent e = xe->xreparent;
@@ -329,6 +464,11 @@ void eventReparentNotify(XEvent* xe)
   int x = e.x, y = e.y, override_redirect = e.override_redirect;
 }
 
+/**
+ * TODO doc eventResizeRequest
+ * 
+ * @param  xe  The X event
+ */
 void eventResizeRequest(XEvent* xe)
 {
   XResizeRequestEvent e = xe->xresizerequest;
@@ -337,6 +477,11 @@ void eventResizeRequest(XEvent* xe)
   int width = e.width, height = e.height;
 }
 
+/**
+ * TODO doc eventSelectionClear
+ * 
+ * @param  xe  The X event
+ */
 void eventSelectionClear(XEvent* xe)
 {
   XSelectionClearEvent e = xe->xselectionclear;
@@ -345,6 +490,11 @@ void eventSelectionClear(XEvent* xe)
   Atom selection = e.selection;
 }
 
+/**
+ * TODO doc eventSelectionNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventSelectionNotify(XEvent* xe)
 {
   XSelectionEvent e = xe->xselection;
@@ -353,6 +503,11 @@ void eventSelectionNotify(XEvent* xe)
   Atom selection = e.selection, target = e.target, property = e.property;
 }
 
+/**
+ * TODO doc eventSelectionRequest
+ * 
+ * @param  xe  The X event
+ */
 void eventSelectionRequest(XEvent* xe)
 {
   XSelectionRequestEvent e = xe->xselectionrequest;
@@ -361,6 +516,11 @@ void eventSelectionRequest(XEvent* xe)
   Atom selection = e.selection, target = e.target, property = e.property;
 }
 
+/**
+ * TODO doc eventUnmapNotify
+ * 
+ * @param  xe  The X event
+ */
 void eventUnmapNotify(XEvent* xe)
 {
   XUnmapEvent e = xe->xunmap;
@@ -368,6 +528,11 @@ void eventUnmapNotify(XEvent* xe)
   int send_event = e.send_event, event = e.event, window = e.window, from_configure = from_configure;
 }
 
+/**
+ * 
+ * 
+ * @param  xe  The X event
+ */
 void eventVisibilityNotify(XEvent* xe)
 {
   XVisibilityEvent e = xe->xvisibility;
