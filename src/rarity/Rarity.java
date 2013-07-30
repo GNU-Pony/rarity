@@ -67,6 +67,7 @@ public class Rarity
 	boolean abort = false;
 	try
 	{
+	    staticInit();
 	    setLocale();
 	    X11.openDisplay();
 	    setXAtoms();
@@ -115,6 +116,11 @@ public class Rarity
 	}
     }
     
+    
+    /**
+     * Intialise static variables
+     */
+    private static native void staticInit();
     
     
     /**

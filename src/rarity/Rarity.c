@@ -45,6 +45,26 @@ long event_handlers_initialised = 0;
  */
 void (*event_handlers[32])(XEvent*);
 
+/**
+ * The JNI environment
+ */
+JNIEnv* java_env;
+
+/**
+ * The Java class for this module, namely rarity.Rarity
+ */
+jclass java_class;
+
+
+
+/**
+ * Set locale stuff
+ */
+void Java_rarity_Rarity_staticInit(JNIEnv* env, jclass class)
+{
+  java_env = env;
+  java_class = class;
+}
 
 
 /**
