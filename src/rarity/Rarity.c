@@ -529,7 +529,7 @@ void eventUnmapNotify(XEvent* xe)
 }
 
 /**
- * 
+ * TODO doc eventVisibilityNotify
  * 
  * @param  xe  The X event
  */
