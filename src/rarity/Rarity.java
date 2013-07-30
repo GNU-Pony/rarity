@@ -330,5 +330,170 @@ public class Rarity
 	}
     }
     
+    
+    public static void eventButtonPress(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int button, final boolean sameScreen)
+    {
+    }
+    
+    
+    public static void eventButtonRelease(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int button, final boolean sameScreen)
+    {
+    }
+    
+    
+    public static void eventClientMessage(final long serial, final boolean sendEvent, final int window, final int env, final long messageType, final byte[] data)
+    {
+    }
+    
+    
+    public static void eventCirculateNotify(final long serial, final boolean sendEvent, final int event, final int window, final int place)
+    {
+    }
+    
+    
+    public static void eventCirculateRequest(final long serial, final boolean sendEvent, final int parent, final int window, final int place)
+    {
+    }
+    
+    
+    public static void eventColormapNotify(final long serial, final boolean sendEvent, final int window, final int colormap, final boolean isNew, final int state)
+    {
+    }
+    
+    
+    public static void eventConfigureNotify(final long serial, final boolean sendEvent, final int event, final int window, final int above, final int x, final int y, final int width, final int height, final int borderWidth, final boolean overrideRedirect)
+    {
+    }
+    
+    
+    public static void eventConfigureRequest(final long serial, final boolean sendEvent, final long valueMask, final int parent, final int window, final int above, final int x, final int y, final int width, final int height, final int borderWidth, final int detail)
+    {
+    }
+    
+    
+    public static void eventCreateNotify(final long serial, final boolean sendEvent, final int parent, final int window, final int x, final int y, final int width, final int height, final int borderWidth, final boolean overrideRedirect)
+    {
+    }
+    
+    
+    public static void eventDestroyNotify(final long serial, final boolean sendEvent, final int event, final int window)
+    {
+    }
+    
+    
+    public static void eventEnterNotify(final long serial, final boolean sendEvent, final int window, final int root, final int subwindow, final int time, final int x, final int y, final int xRoot, final int yRoot, final int mode, final int detail, final boolean sameScreen, final boolean focus, final int state)
+    {
+    }
+    
+    
+    public static void eventExpose(final long serial, final boolean sendEvent, final int window, final int x, final int y, final int width, final int height, final int count)
+    {
+    }
+    
+    
+    public static void eventFocusIn(final long serial, final boolean sendEvent, final int window, final int mode, final int detail)
+    {
+    }
+    
+    
+    public static void eventFocusOut(final long serial, final boolean sendEvent, final int window, final int mode, final int detail)
+    {
+    }
+    
+    
+    public static void eventGraphicsExpose(final long serial, final boolean sendEvent, final int drawable, final int x, final int y, final int width, final int height, final int count, final int majorCode, final int minorCode)
+    {
+    }
+    
+    
+    public static void eventGravityNotify(final long serial, final boolean sendEvent, final int event, final int window, final int x, final int y)
+    {
+    }
+    
+    
+    public static void eventKeymapNotify(final long serial, final boolean sendEvent, final int window, final byte[] keyVector)
+    {
+    }
+    
+    
+    public static void eventKeyPress(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int state, final int keycode, final boolean sameScreen)
+    {
+    }
+    
+    
+    public static void eventKeyRelease(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int state, final int keycode, final boolean sameScreen)
+    {
+    }
+    
+    
+    public static void eventLeaveNotify(final long serial, final boolean sendEvent, final int window, final int root, final int subwindow, final int time, final int x, final int y, final int xRoot, final int yRoot, final int mode, final int detail, final boolean sameScreen, final boolean focus, final int state)
+    {
+    }
+    
+    
+    public static void eventMapNotify(final long serial, final boolean sendEvent, final int window, final boolean overrideRedirect)
+    {
+    }
+    
+    
+    public static void eventMappingNotify(final long serial, final boolean sendEvent, final int window, final int request, final int firstKeycode, final int count)
+    {
+    }
+    
+    
+    public static void eventMapRequest(final long serial, final boolean sendEvent, final int parent, final int window)
+    {
+    }
+    
+    
+    public static void eventMotionNotify(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final boolean sameScreen, final boolean isHint)
+    {
+    }
+    
+    
+    public static void eventNoExpose(final long serial, final boolean sendEvent, final int drawable, final int majorCode, final int minorCode)
+    {
+    }
+    
+    
+    public static void eventPropertyNotify(final long serial, final boolean sendEvent, final int window, final int time, final int state, final int atom)
+    {
+    }
+    
+    
+    public static void eventReparentNotify(final long serial, final boolean sendEvent, final int event, final int window, final int parent, final int x, final int y, final boolean overrideRedirect)
+    {
+    }
+    
+    
+    public static void eventResizeRequest(final long serial, final boolean sendEvent, final int event, final int window, final int width, final int height)
+    {
+    }
+    
+    
+    public static void eventSelectionClear(final long serial, final boolean sendEvent, final int window, final int time, final int selection)
+    {
+    }
+    
+    
+    public static void eventSelectionNotify(final long serial, final boolean sendEvent, final int requestor, final int time, final int selection, final int target, final int property)
+    {
+    }
+    
+    
+    public static void eventSelectionRequest(final long serial, final boolean sendEvent, final int owner, final int requestor, final int time, final int selection, final int target, final int property)
+    {
+    }
+    
+    
+    public static void eventUnmapNotify(final long serial, final boolean sendEvent, final int event, final int window, final boolean fromConfigure)
+    {
+    }
+    
+    
+    public static void eventVisibilityNotify(final long serial, final boolean sendEvent, final int window, final boolean state)
+    {
+    }
+    
 }
 
