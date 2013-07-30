@@ -121,8 +121,6 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 
 
 /**
- * Rat button press
- * 
  * @param  xe  The X event
  */
 void eventButtonPress(XEvent* xe)
@@ -139,8 +137,6 @@ void eventButtonPress(XEvent* xe)
 }
 
 /**
- * Rat button release
- * 
  * @param  xe  The X event
  */
 void eventButtonRelease(XEvent* xe)
@@ -157,8 +153,6 @@ void eventButtonRelease(XEvent* xe)
 }
 
 /**
- * TODO doc eventClientMessage
- * 
  * @param  xe  The X event
  */
 void eventClientMessage(XEvent* xe)
@@ -177,8 +171,6 @@ void eventClientMessage(XEvent* xe)
 }
 
 /**
- * TODO doc eventCirculateNotify
- * 
  * @param  xe  The X event
  */
 void eventCirculateNotify(XEvent* xe)
@@ -193,8 +185,6 @@ void eventCirculateNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventCirculateRequest
- * 
  * @param  xe  The X event
  */
 void eventCirculateRequest(XEvent* xe)
@@ -209,8 +199,6 @@ void eventCirculateRequest(XEvent* xe)
 }
 
 /**
- * TODO doc eventColormapNotify
- * 
  * @param  xe  The X event
  */
 void eventColormapNotify(XEvent* xe)
@@ -225,8 +213,6 @@ void eventColormapNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventConfigureNotify
- * 
  * @param  xe  The X event
  */
 void eventConfigureNotify(XEvent* xe)
@@ -241,8 +227,6 @@ void eventConfigureNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventConfigureRequest
- * 
  * @param  xe  The X event
  */
 void eventConfigureRequest(XEvent* xe)
@@ -257,8 +241,6 @@ void eventConfigureRequest(XEvent* xe)
 }
 
 /**
- * A new window has been created
- * 
  * @param  xe  The X event
  */
 void eventCreateNotify(XEvent* xe)
@@ -273,8 +255,6 @@ void eventCreateNotify(XEvent* xe)
 }
 
 /**
- * A window has been destroyed
- * 
  * @param  xe  The X event
  */
 void eventDestroyNotify(XEvent* xe)
@@ -288,8 +268,6 @@ void eventDestroyNotify(XEvent* xe)
 }
 
 /**
- * Rat enters window
- * 
  * @param  xe  The X event
  */
 void eventEnterNotify(XEvent* xe)
@@ -305,8 +283,6 @@ void eventEnterNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventExpose
- * 
  * @param  xe  The X event
  */
 void eventExpose(XEvent* xe)
@@ -321,8 +297,6 @@ void eventExpose(XEvent* xe)
 }
 
 /**
- * Window gets focus
- * 
  * @param  xe  The X event
  */
 void eventFocusIn(XEvent* xe)
@@ -337,8 +311,6 @@ void eventFocusIn(XEvent* xe)
 }
 
 /**
- * Window loses focus
- * 
  * @param  xe  The X event
  */
 void eventFocusOut(XEvent* xe)
@@ -353,8 +325,6 @@ void eventFocusOut(XEvent* xe)
 }
 
 /**
- * TODO doc eventGraphicsExpose
- * 
  * @param  xe  The X event
  */
 void eventGraphicsExpose(XEvent* xe)
@@ -369,8 +339,6 @@ void eventGraphicsExpose(XEvent* xe)
 }
 
 /**
- * TODO doc eventGravityNotify
- * 
  * @param  xe  The X event
  */
 void eventGravityNotify(XEvent* xe)
@@ -385,8 +353,6 @@ void eventGravityNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventKeymapNotify
- * 
  * @param  xe  The X event
  */
 void eventKeymapNotify(XEvent* xe)
@@ -403,8 +369,6 @@ void eventKeymapNotify(XEvent* xe)
 }
 
 /**
- * Keyboard key pressed
- * 
  * @param  xe  The X event
  */
 void eventKeyPress(XEvent* xe)
@@ -421,8 +385,6 @@ void eventKeyPress(XEvent* xe)
 }
 
 /**
- * Keyboard key released
- * 
  * @param  xe  The X event
  */
 void eventKeyRelease(XEvent* xe)
@@ -439,8 +401,6 @@ void eventKeyRelease(XEvent* xe)
 }
 
 /**
- * Rat leaves window
- * 
  * @param  xe  The X event
  */
 void eventLeaveNotify(XEvent* xe)
@@ -456,8 +416,6 @@ void eventLeaveNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventMapNotify
- * 
  * @param  xe  The X event
  */
 void eventMapNotify(XEvent* xe)
@@ -472,8 +430,6 @@ void eventMapNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventMappingNotify
- * 
  * @param  xe  The X event
  */
 void eventMappingNotify(XEvent* xe)
@@ -487,8 +443,6 @@ void eventMappingNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventMapRequest
- * 
  * @param  xe  The X event
  */
 void eventMapRequest(XEvent* xe)
@@ -502,8 +456,6 @@ void eventMapRequest(XEvent* xe)
 }
 
 /**
- * Rat moves
- * 
  * @param  xe  The X event
  */
 void eventMotionNotify(XEvent* xe)
@@ -521,8 +473,6 @@ void eventMotionNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventNoExpose
- * 
  * @param  xe  The X event
  */
 void eventNoExpose(XEvent* xe)
@@ -537,8 +487,6 @@ void eventNoExpose(XEvent* xe)
 }
 
 /**
- * TODO doc eventPropertyNotify
- * 
  * @param  xe  The X event
  */
 void eventPropertyNotify(XEvent* xe)
@@ -553,8 +501,6 @@ void eventPropertyNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventReparentNotify
- * 
  * @param  xe  The X event
  */
 void eventReparentNotify(XEvent* xe)
@@ -569,8 +515,6 @@ void eventReparentNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventResizeRequest
- * 
  * @param  xe  The X event
  */
 void eventResizeRequest(XEvent* xe)
@@ -585,8 +529,6 @@ void eventResizeRequest(XEvent* xe)
 }
 
 /**
- * TODO doc eventSelectionClear
- * 
  * @param  xe  The X event
  */
 void eventSelectionClear(XEvent* xe)
@@ -601,8 +543,6 @@ void eventSelectionClear(XEvent* xe)
 }
 
 /**
- * TODO doc eventSelectionNotify
- * 
  * @param  xe  The X event
  */
 void eventSelectionNotify(XEvent* xe)
@@ -617,8 +557,6 @@ void eventSelectionNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventSelectionRequest
- * 
  * @param  xe  The X event
  */
 void eventSelectionRequest(XEvent* xe)
@@ -633,8 +571,6 @@ void eventSelectionRequest(XEvent* xe)
 }
 
 /**
- * TODO doc eventUnmapNotify
- * 
  * @param  xe  The X event
  */
 void eventUnmapNotify(XEvent* xe)
@@ -648,8 +584,6 @@ void eventUnmapNotify(XEvent* xe)
 }
 
 /**
- * TODO doc eventVisibilityNotify
- * 
  * @param  xe  The X event
  */
 void eventVisibilityNotify(XEvent* xe)
