@@ -103,166 +103,276 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 void eventButtonPress(XEvent* xe)
 {
   XButtonEvent e = xe->xbutton;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, time_ms = e.time;
+  int window = e.window, root = e.root, subwindow = e.subwindow;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
+  int state = e.state, button = e.button, same_screen = e.same_screen;
 }
 
 void eventButtonRelease(XEvent* xe)
 {
   XButtonEvent e = xe->xbutton;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, time_ms = e.time;
+  int window = e.window, root = e.root, subwindow = e.subwindow;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
+  int state = e.state, button = e.button, same_screen = e.same_screen;
 }
 
 void eventClientMessage(XEvent* xe)
 {
   XClientMessageEvent e = xe->xclient;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event;
+  int window = e.window, format = e.format;
+  Atom message_type = e.message_type;
+  char data[20] = e.data.b;
 }
 
 void eventCirculateNotify(XEvent* xe)
 {
   XCirculateEvent e = xe->xcirculate;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event;
+  int event = e.event, window = e.window, place = e.place;
 }
 
 void eventCirculateRequest(XEvent* xe)
 {
   XCirculateRequestEvent e = xe->xcirculaterequest;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event;
+  int parent = e.parent, window = e.window, place = e.place;
 }
 
 void eventColormapNotify(XEvent* xe)
 {
   XColormapEvent e = xe->xcolormap;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event;
+  int window = e.window, colormap = e.colormap, new = e.new, state = e.state;
 }
 
 void eventConfigureNotify(XEvent* xe)
 {
   XConfigureEvent e = xe->xconfigure;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window, above = e.above;
+  int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
 }
 
 void eventConfigureRequest(XEvent* xe)
 {
   XConfigureRequestEvent e = xe->xconfigurerequest;
+  long long serial = (long long)e.serial, value_mask = (long long)e.value_mask;
+  int send_event = e.send_event, parent = e.parent, window = e.window, above = e.above;
+  int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, detail = e.detail;
 }
 
 void eventCreateNotify(XEvent* xe)
 {
   XCreateWindowEvent e = xe->xcreatewindow;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, parent = e.parent, window = e.window;
+  int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
 }
 
 void eventDestroyNotify(XEvent* xe)
 {
   XDestroyWindowEvent e = xe->xdestroywindow;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window;
 }
 
 void eventEnterNotify(XEvent* xe)
 {
   XCrossingEvent e = xe->xcrossing;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window, root = e.root, subwindow = e.subwindow, time = e.time;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root, mode = e.mode, detail = e.detail;
+  int same_screen = e.same_screen, focus = e.focus, state = e.state;
 }
 
 void eventExpose(XEvent* xe)
 {
   XExposeEvent e = xe->xexpose;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window;
+  int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count;
 }
 
 void eventFocusIn(XEvent* xe)
 {
   XFocusChangeEvent e = xe->xfocus;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window;
+  int mode = e.mode, detail = e.detail;
 }
 
 void eventFocusOut(XEvent* xe)
 {
   XFocusChangeEvent e = xe->xfocus;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window;
+  int mode = e.mode, detail = e.detail;
 }
 
 void eventGraphicsExpose(XEvent* xe)
 {
   XGraphicsExposeEvent e = xe->xgraphicsexpose;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, drawable = e.drawable;
+  int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count, major_code = e.major_code, minor_code = e.minor_code;
 }
 
 void eventGravityNotify(XEvent* xe)
 {
   XGravityEvent e = xe->xgravity;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window;
+  int x = e.x, y = e.y;
 }
 
 void eventKeymapNotify(XEvent* xe)
 {
   XKeymapEvent e = xe->xkeymap;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window;
+  char key_vector[32] = e.key_vector;
 }
 
 void eventKeyPress(XEvent* xe)
 {
   XKeyEvent e = xe->xkey;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, time_ms = e.time;
+  int window = e.window, root = e.root, subwindow = e.subwindow;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
+  int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
 }
 
 void eventKeyRelease(XEvent* xe)
 {
   XKeyEvent e = xe->xkey;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, time_ms = e.time;
+  int window = e.window, root = e.root, subwindow = e.subwindow;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
+  int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
 }
 
 void eventLeaveNotify(XEvent* xe)
 {
   XCrossingEvent e = xe->xcrossing;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window, root = e.root, subwindow = e.subwindow, time = e.time;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root, mode = e.mode, detail = e.detail;
+  int same_screen = e.same_screen, focus = e.focus, state = e.state;
 }
 
 void eventMapNotify(XEvent* xe)
 {
   XMapEvent e = xe->xmap;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window;
+  int override_redirect = e.override_redirect;
 }
 
 void eventMappingNotify(XEvent* xe)
 {
   XMappingEvent e = xe->xmapping;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window;
+  int override_redirect = e.override_redirect;
 }
 
 void eventMapRequest(XEvent* xe)
 {
   XMapRequestEvent e = xe->xmaprequest;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, parent = e.parent, window = e.window;
 }
 
 void eventMotionNotify(XEvent* xe)
 {
   XMotionEvent e = xe->xmotion;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, time_ms = e.time;
+  int window = e.window, root = e.root, subwindow = e.subwindow;
+  int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
+  int state = e.state, same_screen = e.same_screen;
+  char is_hint = e.is_hint;
 }
 
 void eventNoExpose(XEvent* xe)
 {
   XNoExposeEvent e = xe->xnoexpose;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, drawable = e.drawable;
+  int major_code = e.major_code, minor_code = e.minor_code;
 }
 
 void eventPropertyNotify(XEvent* xe)
 {
   XPropertyEvent e = xe->xproperty;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window, time = e.time, state = e.state;
+  Atom atom = e.atom;
 }
 
 void eventReparentNotify(XEvent* xe)
 {
   XReparentEvent e = xe->xreparent;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window, parent = e.parent;
+  int x = e.x, y = e.y, override_redirect = e.override_redirect;
 }
 
 void eventResizeRequest(XEvent* xe)
 {
   XResizeRequestEvent e = xe->xresizerequest;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window;
+  int width = e.width, height = e.height;
 }
 
 void eventSelectionClear(XEvent* xe)
 {
   XSelectionClearEvent e = xe->xselectionclear;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window, time = e.time;
+  Atom selection = e.selection;
 }
 
 void eventSelectionNotify(XEvent* xe)
 {
   XSelectionEvent e = xe->xselection;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, requestor = e.requestor, time = e.time;
+  Atom selection = e.selection, target = e.target, property = e.property;
 }
 
 void eventSelectionRequest(XEvent* xe)
 {
   XSelectionRequestEvent e = xe->xselectionrequest;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, owner = e.owner, requestor = e.requestor, time = e.time;
+  Atom selection = e.selection, target = e.target, property = e.property;
 }
 
 void eventUnmapNotify(XEvent* xe)
 {
   XUnmapEvent e = xe->xunmap;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, event = e.event, window = e.window, from_configure = from_configure;
 }
 
 void eventVisibilityNotify(XEvent* xe)
 {
   XVisibilityEvent e = xe->xvisibility;
+  long long serial = (long long)e.serial;
+  int send_event = e.send_event, window = e.window, state = state;
 }
 
 
