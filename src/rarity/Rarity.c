@@ -120,29 +120,39 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
 	*(event_handlers + i) = 0;
       
       /* TODO fill with function pointers */
-      *(event_handlers + ClientMessage)    = 0;
-      *(event_handlers + CirculateRequest) = 0;
-      *(event_handlers + ColormapNotify)   = 0;
-      *(event_handlers + ConfigureNotify)  = 0;
-      *(event_handlers + ConfigureRequest) = 0;
-      *(event_handlers + CreateNotify)     = 0;
-      *(event_handlers + DestroyNotify)    = 0;
-      *(event_handlers + EnterNotify)      = 0;
-      *(event_handlers + Expose)           = 0;
-      *(event_handlers + FocusIn)          = 0;
-      *(event_handlers + FocusOut)         = 0;
-      *(event_handlers + KeyPress)         = 0;
-      *(event_handlers + KeyRelease)       = 0;
-      *(event_handlers + MapNotify)        = 0;
-      *(event_handlers + MappingNotify)    = 0;
-      *(event_handlers + MapRequest)       = 0;
-      *(event_handlers + MotionNotify)     = 0;
-      *(event_handlers + PropertyNotify)   = 0;
-      *(event_handlers + ReparentNotify)   = 0;
-      *(event_handlers + SelectionClear)   = 0;
-      *(event_handlers + SelectionNotify)  = 0;
-      *(event_handlers + SelectionRequest) = 0;
-      *(event_handlers + UnmapNotify)      = 0;
+      *(event_handlers + ButtonPress)      = 0;//XButtonPressedEvent = XButtonEvent = .xbutton
+      *(event_handlers + ButtonRelease)    = 0;//XButtonReleasedEvent = XButtonEvent = .xbutton
+      *(event_handlers + ClientMessage)    = 0;//XClientMessageEvent = .xclient
+      *(event_handlers + CirculateNotify)  = 0;//XCirculateEvent = .xcirculate
+      *(event_handlers + CirculateRequest) = 0;//XCirculateRequestEvent = .xcirculaterequest
+      *(event_handlers + ColormapNotify)   = 0;//XColormapEvent = .xcolormap
+      *(event_handlers + ConfigureNotify)  = 0;//XConfigureEvent = .xconfigure
+      *(event_handlers + ConfigureRequest) = 0;//XConfigureRequestEvent = .xconfigurerequest
+      *(event_handlers + CreateNotify)     = 0;//XCreateWindowEvent = .xcreatewindow
+      *(event_handlers + DestroyNotify)    = 0;//XDestroyWindowEvent = .xdestroywindow
+      *(event_handlers + EnterNotify)      = 0;//XEnterWindowEvent = XCrossingEvent = .xcrossing
+      *(event_handlers + Expose)           = 0;//XExposeEvent = .xexpose
+      *(event_handlers + FocusIn)          = 0;//XFocusInEvent = XFocusChangeEvent = .xfocus
+      *(event_handlers + FocusOut)         = 0;//XFocusOutEvent = XFocusChangeEvent = .xfocus
+      *(event_handlers + GraphicsExpose)   = 0;//XGraphicsExposeEvent = .xgraphicsexpose
+      *(event_handlers + GravityNotify)    = 0;//XGravityEvent = .xgravity
+      *(event_handlers + KeymapNotify)     = 0;//XKeymapEvent = .xkeymap
+      *(event_handlers + KeyPress)         = 0;//XKeyPressedEvent = XKeyEvent = .xkey
+      *(event_handlers + KeyRelease)       = 0;//XKeyReleasedEvent = XKeyEvent = .xkey
+      *(event_handlers + LeaveNotify)      = 0;//XLeaveWindowEvent = XCrossingEvent = .xcrossing
+      *(event_handlers + MapNotify)        = 0;//XMapEvent = .xmap
+      *(event_handlers + MappingNotify)    = 0;//XMappingEvent = .xmapping
+      *(event_handlers + MapRequest)       = 0;//XMapRequestEvent = .xmaprequest
+      *(event_handlers + MotionNotify)     = 0;//XPointerMovedEvent = XMotionEvent = .xmotion
+      *(event_handlers + NoExpose)         = 0;//XNoExposeEvent = .xnoexpose
+      *(event_handlers + PropertyNotify)   = 0;//XPropertyEvent = .xproperty
+      *(event_handlers + ReparentNotify)   = 0;//XReparentEvent = .xreparent
+      *(event_handlers + ResizeRequest)    = 0;//XResizeRequestEvent = .xresizerequest
+      *(event_handlers + SelectionClear)   = 0;//XSelectionClearEvent = .xselectionclear
+      *(event_handlers + SelectionNotify)  = 0;//XSelectionEvent = .xselection
+      *(event_handlers + SelectionRequest) = 0;//XSelectionRequestEvent = .xselectionrequest
+      *(event_handlers + UnmapNotify)      = 0;//XUnmapEvent = .xunmap
+      *(event_handlers + VisibilityNotify) = 0;//XVisibilityEvent = .xvisibility
     }
   
   for (;;)
