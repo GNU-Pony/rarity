@@ -209,6 +209,23 @@ public class Window extends PropertyBase
 	}
     }
     
+    /**
+     * Gets a window by its address
+     * 
+     * @param   address  The window's address
+     * @return           The window, {@code null} if it does not mapped
+     */
+    public static Window getByAddress(final long address)
+    {
+	/* We are going to assume that there are not so many windows that a mash map should be used */
+	synchronized (windows)
+	{   for (final Window window : windows)
+		if (window.pointer == address)
+		    return window
+	    return null;
+	}
+    }
+    
     
     /**
      * {@inheritDoc}
