@@ -99,6 +99,174 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 }
 
 
+
+void eventButtonPress(XEvent* xe)
+{
+  //XButtonPressedEvent = XButtonEvent = .xbutton
+}
+
+void eventButtonRelease(XEvent* xe)
+{
+  //XButtonReleasedEvent = XButtonEvent = .xbutton
+}
+
+void eventClientMessage(XEvent* xe)
+{
+  //XClientMessageEvent = .xclient
+}
+
+void eventCirculateNotify(XEvent* xe)
+{
+  //XCirculateEvent = .xcirculate
+}
+
+void eventCirculateRequest(XEvent* xe)
+{
+  //XCirculateRequestEvent = .xcirculaterequest
+}
+
+void eventColormapNotify(XEvent* xe)
+{
+  //XColormapEvent = .xcolormap
+}
+
+void eventConfigureNotify(XEvent* xe)
+{
+  //XConfigureEvent = .xconfigure
+}
+
+void eventConfigureRequest(XEvent* xe)
+{
+  //XConfigureRequestEvent = .xconfigurerequest
+}
+
+void eventCreateNotify(XEvent* xe)
+{
+  //XCreateWindowEvent = .xcreatewindow
+}
+
+void eventDestroyNotify(XEvent* xe)
+{
+  //XDestroyWindowEvent = .xdestroywindow
+}
+
+void eventEnterNotify(XEvent* xe)
+{
+  //XEnterWindowEvent = XCrossingEvent = .xcrossing
+}
+
+void eventExpose(XEvent* xe)
+{
+  //XExposeEvent = .xexpose
+}
+
+void eventFocusIn(XEvent* xe)
+{
+  //XFocusInEvent = XFocusChangeEvent = .xfocus
+}
+
+void eventFocusOut(XEvent* xe)
+{
+  //XFocusOutEvent = XFocusChangeEvent = .xfocus
+}
+
+void eventGraphicsExpose(XEvent* xe)
+{
+  //XGraphicsExposeEvent = .xgraphicsexpose
+}
+
+void eventGravityNotify(XEvent* xe)
+{
+  //XGravityEvent = .xgravity
+}
+
+void eventKeymapNotify(XEvent* xe)
+{
+  //XKeymapEvent = .xkeymap
+}
+
+void eventKeyPress(XEvent* xe)
+{
+  //XKeyPressedEvent = XKeyEvent = .xkey
+}
+
+void eventKeyRelease(XEvent* xe)
+{
+  //XKeyReleasedEvent = XKeyEvent = .xkey
+}
+
+void eventLeaveNotify(XEvent* xe)
+{
+  //XLeaveWindowEvent = XCrossingEvent = .xcrossing
+}
+
+void eventMapNotify(XEvent* xe)
+{
+  //XMapEvent = .xmap
+}
+
+void eventMappingNotify(XEvent* xe)
+{
+  //XMappingEvent = .xmapping
+}
+
+void eventMapRequest(XEvent* xe)
+{
+  //XMapRequestEvent = .xmaprequest
+}
+
+void eventMotionNotify(XEvent* xe)
+{
+  //XPointerMovedEvent = XMotionEvent = .xmotion
+}
+
+void eventNoExpose(XEvent* xe)
+{
+  //XNoExposeEvent = .xnoexpose
+}
+
+void eventPropertyNotify(XEvent* xe)
+{
+  //XPropertyEvent = .xproperty
+}
+
+void eventReparentNotify(XEvent* xe)
+{
+  //XReparentEvent = .xreparent
+}
+
+void eventResizeRequest(XEvent* xe)
+{
+  //XResizeRequestEvent = .xresizerequest
+}
+
+void eventSelectionClear(XEvent* xe)
+{
+  //XSelectionClearEvent = .xselectionclear
+}
+
+void eventSelectionNotify(XEvent* xe)
+{
+  //XSelectionEvent = .xselection
+}
+
+void eventSelectionRequest(XEvent* xe)
+{
+  //XSelectionRequestEvent = .xselectionrequest
+}
+
+void eventUnmapNotify(XEvent* xe)
+{
+  //XUnmapEvent = .xunmap
+}
+
+void eventVisibilityNotify(XEvent* xe)
+{
+  //XVisibilityEvent = .xvisibility
+}
+
+
+
 /**
  * Start event loop
  */
@@ -119,40 +287,39 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
       for (i = 0; i < 32; i++)
 	*(event_handlers + i) = 0;
       
-      /* TODO fill with function pointers */
-      *(event_handlers + ButtonPress)      = 0;//XButtonPressedEvent = XButtonEvent = .xbutton
-      *(event_handlers + ButtonRelease)    = 0;//XButtonReleasedEvent = XButtonEvent = .xbutton
-      *(event_handlers + ClientMessage)    = 0;//XClientMessageEvent = .xclient
-      *(event_handlers + CirculateNotify)  = 0;//XCirculateEvent = .xcirculate
-      *(event_handlers + CirculateRequest) = 0;//XCirculateRequestEvent = .xcirculaterequest
-      *(event_handlers + ColormapNotify)   = 0;//XColormapEvent = .xcolormap
-      *(event_handlers + ConfigureNotify)  = 0;//XConfigureEvent = .xconfigure
-      *(event_handlers + ConfigureRequest) = 0;//XConfigureRequestEvent = .xconfigurerequest
-      *(event_handlers + CreateNotify)     = 0;//XCreateWindowEvent = .xcreatewindow
-      *(event_handlers + DestroyNotify)    = 0;//XDestroyWindowEvent = .xdestroywindow
-      *(event_handlers + EnterNotify)      = 0;//XEnterWindowEvent = XCrossingEvent = .xcrossing
-      *(event_handlers + Expose)           = 0;//XExposeEvent = .xexpose
-      *(event_handlers + FocusIn)          = 0;//XFocusInEvent = XFocusChangeEvent = .xfocus
-      *(event_handlers + FocusOut)         = 0;//XFocusOutEvent = XFocusChangeEvent = .xfocus
-      *(event_handlers + GraphicsExpose)   = 0;//XGraphicsExposeEvent = .xgraphicsexpose
-      *(event_handlers + GravityNotify)    = 0;//XGravityEvent = .xgravity
-      *(event_handlers + KeymapNotify)     = 0;//XKeymapEvent = .xkeymap
-      *(event_handlers + KeyPress)         = 0;//XKeyPressedEvent = XKeyEvent = .xkey
-      *(event_handlers + KeyRelease)       = 0;//XKeyReleasedEvent = XKeyEvent = .xkey
-      *(event_handlers + LeaveNotify)      = 0;//XLeaveWindowEvent = XCrossingEvent = .xcrossing
-      *(event_handlers + MapNotify)        = 0;//XMapEvent = .xmap
-      *(event_handlers + MappingNotify)    = 0;//XMappingEvent = .xmapping
-      *(event_handlers + MapRequest)       = 0;//XMapRequestEvent = .xmaprequest
-      *(event_handlers + MotionNotify)     = 0;//XPointerMovedEvent = XMotionEvent = .xmotion
-      *(event_handlers + NoExpose)         = 0;//XNoExposeEvent = .xnoexpose
-      *(event_handlers + PropertyNotify)   = 0;//XPropertyEvent = .xproperty
-      *(event_handlers + ReparentNotify)   = 0;//XReparentEvent = .xreparent
-      *(event_handlers + ResizeRequest)    = 0;//XResizeRequestEvent = .xresizerequest
-      *(event_handlers + SelectionClear)   = 0;//XSelectionClearEvent = .xselectionclear
-      *(event_handlers + SelectionNotify)  = 0;//XSelectionEvent = .xselection
-      *(event_handlers + SelectionRequest) = 0;//XSelectionRequestEvent = .xselectionrequest
-      *(event_handlers + UnmapNotify)      = 0;//XUnmapEvent = .xunmap
-      *(event_handlers + VisibilityNotify) = 0;//XVisibilityEvent = .xvisibility
+      *(event_handlers + ButtonPress)      = eventButtonPress;
+      *(event_handlers + ButtonRelease)    = eventButtonRelease;
+      *(event_handlers + ClientMessage)    = eventClientMessage;
+      *(event_handlers + CirculateNotify)  = eventCirculateNotify;
+      *(event_handlers + CirculateRequest) = eventCirculateRequest;
+      *(event_handlers + ColormapNotify)   = eventColormapNotify;
+      *(event_handlers + ConfigureNotify)  = eventConfigureNotify;
+      *(event_handlers + ConfigureRequest) = eventConfigureRequest;
+      *(event_handlers + CreateNotify)     = eventCreateNotify;
+      *(event_handlers + DestroyNotify)    = eventDestroyNotify;
+      *(event_handlers + EnterNotify)      = eventEnterNotify;
+      *(event_handlers + Expose)           = eventExpose;
+      *(event_handlers + FocusIn)          = eventFocusIn;
+      *(event_handlers + FocusOut)         = eventFocusOut;
+      *(event_handlers + GraphicsExpose)   = eventGraphicsExpose;
+      *(event_handlers + GravityNotify)    = eventGravityNotify;
+      *(event_handlers + KeymapNotify)     = eventKeymapNotify;
+      *(event_handlers + KeyPress)         = eventKeyPress;
+      *(event_handlers + KeyRelease)       = eventKeyRelease;
+      *(event_handlers + LeaveNotify)      = eventLeaveNotify;
+      *(event_handlers + MapNotify)        = eventMapNotify;
+      *(event_handlers + MappingNotify)    = eventMappingNotify;
+      *(event_handlers + MapRequest)       = eventMapRequest;
+      *(event_handlers + MotionNotify)     = eventMotionNotify;
+      *(event_handlers + NoExpose)         = eventNoExpose;
+      *(event_handlers + PropertyNotify)   = eventPropertyNotify;
+      *(event_handlers + ReparentNotify)   = eventReparentNotify;
+      *(event_handlers + ResizeRequest)    = eventResizeRequest;
+      *(event_handlers + SelectionClear)   = eventSelectionClear;
+      *(event_handlers + SelectionNotify)  = eventSelectionNotify;
+      *(event_handlers + SelectionRequest) = eventSelectionRequest;
+      *(event_handlers + UnmapNotify)      = eventUnmapNotify;
+      *(event_handlers + VisibilityNotify) = eventVisibilityNotify;
     }
   
   for (;;)
