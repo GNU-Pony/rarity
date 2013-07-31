@@ -166,8 +166,8 @@ void eventClientMessage(XEvent* xe)
   jbyteArray jdata = (*java_env)->NewByteArray(java_env, 20);
   (*java_env)->SetByteArrayRegion(java_env, jdata, 0, 20, (jbyte*)(e.data.b));
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventClientMessage", "(JZIIJ[B)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, format, &message_type, jdata);
+  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventClientMessage", "(JZIJI[B)V");
+  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, &message_type, format, jdata);
 }
 
 /**

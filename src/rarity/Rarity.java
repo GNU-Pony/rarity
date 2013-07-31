@@ -333,166 +333,199 @@ public class Rarity
     
     public static void eventButtonPress(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int button, final boolean sameScreen)
     {
+	(new XEvent.RatButton(serial, sendEvent, time, window, root, subwindow, x, y, xRoot, yRoot, state, button, sameScreen, XEvent.RatButton.PRESSED)).broadcast();
     }
     
     
     public static void eventButtonRelease(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int button, final boolean sameScreen)
     {
+	(new XEvent.RatButton(serial, sendEvent, time, window, root, subwindow, x, y, xRoot, yRoot, state, button, sameScreen, XEvent.RatButton.RELEASED)).broadcast();
     }
     
     
-    public static void eventClientMessage(final long serial, final boolean sendEvent, final int window, final int env, final long messageType, final byte[] data)
+    public static void eventClientMessage(final long serial, final boolean sendEvent, final int window, final long messageType, final int format, final byte[] data)
     {
+	(new XEvent.ClientMessage(serial, sendEvent, window, messageType, format, data)).broadcast();
     }
     
     
     public static void eventCirculateNotify(final long serial, final boolean sendEvent, final int event, final int window, final int place)
     {
+	(new XEvent.Circulate(serial, sendEvent, event, window, place, XEvent.Circulate.NOTIFY)).broadcast();
     }
     
     
     public static void eventCirculateRequest(final long serial, final boolean sendEvent, final int parent, final int window, final int place)
     {
+	(new XEvent.Circulate(serial, sendEvent, parent, window, place, XEvent.Circulate.REQUEST)).broadcast();
     }
     
     
     public static void eventColormapNotify(final long serial, final boolean sendEvent, final int window, final int colormap, final boolean isNew, final int state)
     {
+	(new XEvent.ColormapNotify(serial, sendEvent, window, colormap, isNew, state)).broadcast();
     }
     
     
     public static void eventConfigureNotify(final long serial, final boolean sendEvent, final int event, final int window, final int above, final int x, final int y, final int width, final int height, final int borderWidth, final boolean overrideRedirect)
     {
+	(new XEvent.ConfigureNotify(serial, sendEvent, event, window, above, x, y, width, height, borderWidth, overrideRedirect)).broadcast();
     }
     
     
     public static void eventConfigureRequest(final long serial, final boolean sendEvent, final long valueMask, final int parent, final int window, final int above, final int x, final int y, final int width, final int height, final int borderWidth, final int detail)
     {
+	(new XEvent.ConfigureRequest(serial, sendEvent, valueMask, parent, window, above, x, y, width, height, borderWidth, detail)).broadcast();
     }
     
     
     public static void eventCreateNotify(final long serial, final boolean sendEvent, final int parent, final int window, final int x, final int y, final int width, final int height, final int borderWidth, final boolean overrideRedirect)
     {
+	(new XEvent.CreateWindow(serial, sendEvent, parent, window, x, y, width, height, borderWidth, overrideRedirect)).broadcast();
     }
     
     
     public static void eventDestroyNotify(final long serial, final boolean sendEvent, final int event, final int window)
     {
+	(new XEvent.DestroyWindow(serial, sendEvent, event, window)).broadcast();
     }
     
     
     public static void eventEnterNotify(final long serial, final boolean sendEvent, final int window, final int root, final int subwindow, final int time, final int x, final int y, final int xRoot, final int yRoot, final int mode, final int detail, final boolean sameScreen, final boolean focus, final int state)
     {
+	(new XEvent.RatWindow(serial, sendEvent, window, root, subwindow, time, x, y, xRoot, yRoot, mode, detail, sameScreen, focus, state, XEvent.RatWindow.ENTER)).broadcast();
     }
     
     
     public static void eventExpose(final long serial, final boolean sendEvent, final int window, final int x, final int y, final int width, final int height, final int count)
     {
+	(new XEvent.Expose(serial, sendEvent, window, x, y, width, height, count)).broadcast();
     }
     
     
     public static void eventFocusIn(final long serial, final boolean sendEvent, final int window, final int mode, final int detail)
     {
+	(new XEvent.Focus(serial, sendEvent, window, mode, detail, XEvent.Focus.FOCUS_IN)).broadcast();
     }
     
     
     public static void eventFocusOut(final long serial, final boolean sendEvent, final int window, final int mode, final int detail)
     {
+	(new XEvent.Focus(serial, sendEvent, window, mode, detail, XEvent.Focus.FOCUS_OUT)).broadcast();
     }
     
     
     public static void eventGraphicsExpose(final long serial, final boolean sendEvent, final int drawable, final int x, final int y, final int width, final int height, final int count, final int majorCode, final int minorCode)
     {
+	(new XEvent.GraphicsExpose(serial, sendEvent, drawable, x, y, width, height, count, majorCode, minorCode)).broadcast();
     }
     
     
     public static void eventGravityNotify(final long serial, final boolean sendEvent, final int event, final int window, final int x, final int y)
     {
+	(new XEvent.Gravity(serial, sendEvent, event, window, x, y)).broadcast();
     }
     
     
     public static void eventKeymapNotify(final long serial, final boolean sendEvent, final int window, final byte[] keyVector)
     {
+	(new XEvent.Keymap(serial, sendEvent, window, keyVector)).broadcast();
     }
     
     
-    public static void eventKeyPress(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int state, final int keycode, final boolean sameScreen)
+    public static void eventKeyPress(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int keycode, final boolean sameScreen)
     {
+	(new XEvent.Key(serial, sendEvent, time, window, root, subwindow, x, y, xRoot, yRoot, state, keycode, sameScreen, XEvent.Key.PRESSED)).broadcast();
     }
     
     
-    public static void eventKeyRelease(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int state, final int keycode, final boolean sameScreen)
+    public static void eventKeyRelease(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final int keycode, final boolean sameScreen)
     {
+	(new XEvent.Key(serial, sendEvent, time, window, root, subwindow, x, y, xRoot, yRoot, state, keycode, sameScreen, XEvent.Key.RELEASED)).broadcast();
     }
     
     
     public static void eventLeaveNotify(final long serial, final boolean sendEvent, final int window, final int root, final int subwindow, final int time, final int x, final int y, final int xRoot, final int yRoot, final int mode, final int detail, final boolean sameScreen, final boolean focus, final int state)
     {
+	(new XEvent.RatWindow(serial, sendEvent, window, root, subwindow, time, x, y, xRoot, yRoot, mode, detail, sameScreen, focus, state, XEvent.RatWindow.LEAVE)).broadcast();
     }
     
     
     public static void eventMapNotify(final long serial, final boolean sendEvent, final int window, final boolean overrideRedirect)
     {
+	(new XEvent.MapNotify(serial, sendEvent, window, overrideRedirect)).broadcast();
     }
     
     
     public static void eventMappingNotify(final long serial, final boolean sendEvent, final int window, final int request, final int firstKeycode, final int count)
     {
+	(new XEvent.MappingNotify(serial, sendEvent, window, request, firstKeycode, count)).broadcast();
     }
     
     
     public static void eventMapRequest(final long serial, final boolean sendEvent, final int parent, final int window)
     {
+	(new XEvent.MapRequest(serial, sendEvent, parent, window)).broadcast();
     }
     
     
     public static void eventMotionNotify(final long serial, final boolean sendEvent, final int time, final int window, final int root, final int subwindow, final int x, final int y, final int xRoot, final int yRoot, final int state, final boolean sameScreen, final boolean isHint)
     {
+	(new XEvent.RatMove(serial, sendEvent, time, window, root, subwindow, x, y, xRoot, yRoot, state, sameScreen, isHint)).broadcast();
     }
     
     
     public static void eventNoExpose(final long serial, final boolean sendEvent, final int drawable, final int majorCode, final int minorCode)
     {
+	(new XEvent.NoExpose(serial, sendEvent, drawable, majorCode, minorCode)).broadcast();
     }
     
     
     public static void eventPropertyNotify(final long serial, final boolean sendEvent, final int window, final int time, final int state, final int atom)
     {
+	(new XEvent.PropertyNotify(serial, sendEvent, window, time, state, atom)).broadcast();
     }
     
     
     public static void eventReparentNotify(final long serial, final boolean sendEvent, final int event, final int window, final int parent, final int x, final int y, final boolean overrideRedirect)
     {
+	(new XEvent.ReparentNotify(serial, sendEvent, event, window, parent, x, y, overrideRedirect)).broadcast();
     }
     
     
     public static void eventResizeRequest(final long serial, final boolean sendEvent, final int event, final int window, final int width, final int height)
     {
+	(new XEvent.ResizeRequest(serial, sendEvent, event, window, width, height)).broadcast();
     }
     
     
     public static void eventSelectionClear(final long serial, final boolean sendEvent, final int window, final int time, final int selection)
     {
+	(new XEvent.SelectionClear(serial, sendEvent, window, time, selection)).broadcast();
     }
     
     
     public static void eventSelectionNotify(final long serial, final boolean sendEvent, final int requestor, final int time, final int selection, final int target, final int property)
     {
+	(new XEvent.SelectionNotify(serial, sendEvent, requestor, time, selection, target, property)).broadcast();
     }
     
     
     public static void eventSelectionRequest(final long serial, final boolean sendEvent, final int owner, final int requestor, final int time, final int selection, final int target, final int property)
     {
+	(new XEvent.SelectionRequest(serial, sendEvent, owner, requestor, time, selection, target, property)).broadcast();
     }
     
     
     public static void eventUnmapNotify(final long serial, final boolean sendEvent, final int event, final int window, final boolean fromConfigure)
     {
+	(new XEvent.UnmapNotify(serial, sendEvent, event, window, fromConfigure)).broadcast();
     }
     
     
     public static void eventVisibilityNotify(final long serial, final boolean sendEvent, final int window, final boolean state)
     {
+	(new XEvent.VisibilityNotify(serial, sendEvent, window, state)).broadcast();
     }
     
 }

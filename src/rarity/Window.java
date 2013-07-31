@@ -221,7 +221,7 @@ public class Window extends PropertyBase
 	synchronized (windows)
 	{   for (final Window window : windows)
 		if (window.pointer == address)
-		    return window
+		    return window;
 	    return null;
 	}
     }
