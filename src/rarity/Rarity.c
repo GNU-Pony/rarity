@@ -43,27 +43,17 @@ long event_handlers_initialised = 0;
 /**
  * Event handlers
  */
-void (*event_handlers[32])(XEvent*);
-
-/**
- * The JNI environment
- */
-JNIEnv* java_env;
-
-/**
- * The Java class for this module, namely rarity.Rarity
- */
-jclass java_class;
+void (*event_handlers[32])(XEvent*, JNIEnv*, jclass);
 
 
 
 /**
- * Set locale stuff
+ * Initalise static stuff
  */
 void Java_rarity_Rarity_staticInit(JNIEnv* env, jclass class)
 {
-  java_env = env;
-  java_class = class;
+  (void) env;
+  (void) class;
 }
 
 
@@ -123,7 +113,7 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
 /**
  * @param  xe  The X event
  */
-void eventButtonPress(XEvent* xe)
+void eventButtonPress(XEvent* xe, JNIEnv* env, jclass class)
 {
   XButtonEvent e = xe->xbutton;
   long long serial = (long long)e.serial;
@@ -132,14 +122,14 @@ void eventButtonPress(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
   int state = e.state, button = e.button, same_screen = e.same_screen;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventButtonPress", "(JZIIIIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonPress", "(JZIIIIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventButtonRelease(XEvent* xe)
+void eventButtonRelease(XEvent* xe, JNIEnv* env, jclass class)
 {
   XButtonEvent e = xe->xbutton;
   long long serial = (long long)e.serial;
@@ -148,14 +138,14 @@ void eventButtonRelease(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
   int state = e.state, button = e.button, same_screen = e.same_screen;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventButtonRelease", "(JZIIIIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonRelease", "(JZIIIIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventClientMessage(XEvent* xe)
+void eventClientMessage(XEvent* xe, JNIEnv* env, jclass class)
 {
   XClientMessageEvent e = xe->xclient;
   long long serial = (long long)e.serial;
@@ -163,114 +153,114 @@ void eventClientMessage(XEvent* xe)
   int window = e.window, format = e.format;
   Atom message_type = e.message_type;
   
-  jbyteArray jdata = (*java_env)->NewByteArray(java_env, 20);
-  (*java_env)->SetByteArrayRegion(java_env, jdata, 0, 20, (jbyte*)(e.data.b));
+  jbyteArray jdata = (*env)->NewByteArray(env, 20);
+  (*env)->SetByteArrayRegion(env, jdata, 0, 20, (jbyte*)(e.data.b));
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventClientMessage", "(JZIJI[B)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, &message_type, format, jdata);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventClientMessage", "(JZIJI[B)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, &message_type, format, jdata);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventCirculateNotify(XEvent* xe)
+void eventCirculateNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XCirculateEvent e = xe->xcirculate;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
   int event = e.event, window = e.window, place = e.place;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventButtonRelease", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, place);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonRelease", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, place);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventCirculateRequest(XEvent* xe)
+void eventCirculateRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
   XCirculateRequestEvent e = xe->xcirculaterequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
   int parent = e.parent, window = e.window, place = e.place;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventCirculateRequest", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, parent, window, place);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventCirculateRequest", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window, place);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventColormapNotify(XEvent* xe)
+void eventColormapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XColormapEvent e = xe->xcolormap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
   int window = e.window, colormap = e.colormap, new = e.new, state = e.state;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventColormapNotify", "(JZIIIZI)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, colormap, new, state);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventColormapNotify", "(JZIIIZI)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, colormap, new, state);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventConfigureNotify(XEvent* xe)
+void eventConfigureNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XConfigureEvent e = xe->xconfigure;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, above = e.above;
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventConfigureNotify", "(JZIIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, above, x, y, width, height, border_width, override_redirect);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventConfigureNotify", "(JZIIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, above, x, y, width, height, border_width, override_redirect);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventConfigureRequest(XEvent* xe)
+void eventConfigureRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
   XConfigureRequestEvent e = xe->xconfigurerequest;
   long long serial = (long long)e.serial, value_mask = (long long)e.value_mask;
   int send_event = e.send_event, parent = e.parent, window = e.window, above = e.above;
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, detail = e.detail;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventConfigureRequest", "(JZJIIIIIIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, value_mask, parent, window, above, x, y, width, height, border_width, detail);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventConfigureRequest", "(JZJIIIIIIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, value_mask, parent, window, above, x, y, width, height, border_width, detail);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventCreateNotify(XEvent* xe)
+void eventCreateNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XCreateWindowEvent e = xe->xcreatewindow;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, parent = e.parent, window = e.window;
   int x = e.x, y = e.y, width = e.width, height = e.height, border_width = e.border_width, override_redirect = e.override_redirect;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventCreateNotify", "(JZIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, parent, window, x, y, width, height, border_width, override_redirect);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventCreateNotify", "(JZIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window, x, y, width, height, border_width, override_redirect);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventDestroyNotify(XEvent* xe)
+void eventDestroyNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XDestroyWindowEvent e = xe->xdestroywindow;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventDestroyNotify", "(JZII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventDestroyNotify", "(JZII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventEnterNotify(XEvent* xe)
+void eventEnterNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XCrossingEvent e = xe->xcrossing;
   long long serial = (long long)e.serial;
@@ -278,100 +268,100 @@ void eventEnterNotify(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root, mode = e.mode, detail = e.detail;
   int same_screen = e.same_screen, focus = e.focus, state = e.state;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventEnterNotify", "(JZIIIIIIIIIIZZI)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventEnterNotify", "(JZIIIIIIIIIIZZI)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventExpose(XEvent* xe)
+void eventExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
   XExposeEvent e = xe->xexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
   int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventExpose", "(JZIIIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, x, y, width, height, count);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventExpose", "(JZIIIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, x, y, width, height, count);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventFocusIn(XEvent* xe)
+void eventFocusIn(XEvent* xe, JNIEnv* env, jclass class)
 {
   XFocusChangeEvent e = xe->xfocus;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
   int mode = e.mode, detail = e.detail;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventFocusIn", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, mode, detail);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventFocusIn", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, mode, detail);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventFocusOut(XEvent* xe)
+void eventFocusOut(XEvent* xe, JNIEnv* env, jclass class)
 {
   XFocusChangeEvent e = xe->xfocus;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
   int mode = e.mode, detail = e.detail;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventFocusOut", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, mode, detail);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventFocusOut", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, mode, detail);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventGraphicsExpose(XEvent* xe)
+void eventGraphicsExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
   XGraphicsExposeEvent e = xe->xgraphicsexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, drawable = e.drawable;
   int x = e.x, y = e.y, width = e.width, height = e.height, count = e.count, major_code = e.major_code, minor_code = e.minor_code;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventGraphicsExpose", "(JZIIIIIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, drawable, x, y, width, height, count, major_code, minor_code);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventGraphicsExpose", "(JZIIIIIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, drawable, x, y, width, height, count, major_code, minor_code);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventGravityNotify(XEvent* xe)
+void eventGravityNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XGravityEvent e = xe->xgravity;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
   int x = e.x, y = e.y;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventGravityNotify", "(JZIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, x, y);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventGravityNotify", "(JZIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, x, y);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventKeymapNotify(XEvent* xe)
+void eventKeymapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XKeymapEvent e = xe->xkeymap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
   
-  jbyteArray jkey_vector = (*java_env)->NewByteArray(java_env, 32);
-  (*java_env)->SetByteArrayRegion(java_env, jkey_vector, 0, 32, (jbyte*)(e.key_vector));
+  jbyteArray jkey_vector = (*env)->NewByteArray(env, 32);
+  (*env)->SetByteArrayRegion(env, jkey_vector, 0, 32, (jbyte*)(e.key_vector));
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventKeymapNotify", "(JZI[B)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, jkey_vector);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeymapNotify", "(JZI[B)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, jkey_vector);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventKeyPress(XEvent* xe)
+void eventKeyPress(XEvent* xe, JNIEnv* env, jclass class)
 {
   XKeyEvent e = xe->xkey;
   long long serial = (long long)e.serial;
@@ -380,14 +370,14 @@ void eventKeyPress(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
   int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventKeyPress", "(JZIIIIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeyPress", "(JZIIIIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventKeyRelease(XEvent* xe)
+void eventKeyRelease(XEvent* xe, JNIEnv* env, jclass class)
 {
   XKeyEvent e = xe->xkey;
   long long serial = (long long)e.serial;
@@ -396,14 +386,14 @@ void eventKeyRelease(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root;
   int state = e.state, keycode = e.keycode, same_screen = e.same_screen;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventKeyRelease", "(JZIIIIIIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeyRelease", "(JZIIIIIIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventLeaveNotify(XEvent* xe)
+void eventLeaveNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XCrossingEvent e = xe->xcrossing;
   long long serial = (long long)e.serial;
@@ -411,54 +401,54 @@ void eventLeaveNotify(XEvent* xe)
   int x = e.x, y = e.y, x_root = e.x_root, y_root = e.y_root, mode = e.mode, detail = e.detail;
   int same_screen = e.same_screen, focus = e.focus, state = e.state;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventLeaveNotify", "(JZIIIIIIIIIIZZI)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventLeaveNotify", "(JZIIIIIIIIIIZZI)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventMapNotify(XEvent* xe)
+void eventMapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XMapEvent e = xe->xmap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
   int override_redirect = e.override_redirect;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventMapNotify", "(JZIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, override_redirect);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapNotify", "(JZIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, override_redirect);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventMappingNotify(XEvent* xe)
+void eventMappingNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XMappingEvent e = xe->xmapping;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, request = e.request, first_keycode = e.first_keycode, count = e.count;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventMappingNotify", "(JZIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, request, first_keycode, count);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMappingNotify", "(JZIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, request, first_keycode, count);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventMapRequest(XEvent* xe)
+void eventMapRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
   XMapRequestEvent e = xe->xmaprequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, parent = e.parent, window = e.window;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventMapRequest", "(JZII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, parent, window);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapRequest", "(JZII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventMotionNotify(XEvent* xe)
+void eventMotionNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XMotionEvent e = xe->xmotion;
   long long serial = (long long)e.serial;
@@ -468,132 +458,132 @@ void eventMotionNotify(XEvent* xe)
   int state = e.state, same_screen = e.same_screen;
   char is_hint = e.is_hint;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventMapRequest", "(JZIIIIIIIIIZZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, same_screen, is_hint);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapRequest", "(JZIIIIIIIIIZZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, same_screen, is_hint);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventNoExpose(XEvent* xe)
+void eventNoExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
   XNoExposeEvent e = xe->xnoexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, drawable = e.drawable;
   int major_code = e.major_code, minor_code = e.minor_code;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventNoExpose", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, drawable, major_code, minor_code);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventNoExpose", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, drawable, major_code, minor_code);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventPropertyNotify(XEvent* xe)
+void eventPropertyNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XPropertyEvent e = xe->xproperty;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, time = e.time, state = e.state;
   Atom atom = e.atom;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventPropertyNotify", "(JZIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, time, state, atom);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventPropertyNotify", "(JZIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, time, state, atom);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventReparentNotify(XEvent* xe)
+void eventReparentNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XReparentEvent e = xe->xreparent;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, parent = e.parent;
   int x = e.x, y = e.y, override_redirect = e.override_redirect;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventReparentNotify", "(JZIIIIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, parent, x, y, override_redirect);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventReparentNotify", "(JZIIIIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, parent, x, y, override_redirect);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventResizeRequest(XEvent* xe)
+void eventResizeRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
   XResizeRequestEvent e = xe->xresizerequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
   int width = e.width, height = e.height;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventResizeRequest", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, width, height);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventResizeRequest", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, width, height);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventSelectionClear(XEvent* xe)
+void eventSelectionClear(XEvent* xe, JNIEnv* env, jclass class)
 {
   XSelectionClearEvent e = xe->xselectionclear;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, time = e.time;
   Atom selection = e.selection;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventSelectionClear", "(JZIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, time, selection);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionClear", "(JZIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, time, selection);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventSelectionNotify(XEvent* xe)
+void eventSelectionNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XSelectionEvent e = xe->xselection;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, requestor = e.requestor, time = e.time;
   Atom selection = e.selection, target = e.target, property = e.property;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventSelectionNotify", "(JZIIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, requestor, time, selection, target, property);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionNotify", "(JZIIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, requestor, time, selection, target, property);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventSelectionRequest(XEvent* xe)
+void eventSelectionRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
   XSelectionRequestEvent e = xe->xselectionrequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, owner = e.owner, requestor = e.requestor, time = e.time;
   Atom selection = e.selection, target = e.target, property = e.property;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventSelectionRequest", "(JZIIIIII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, owner, requestor, time, selection, target, property);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionRequest", "(JZIIIIII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, owner, requestor, time, selection, target, property);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventUnmapNotify(XEvent* xe)
+void eventUnmapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XUnmapEvent e = xe->xunmap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, from_configure = from_configure;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventUnmapNotify", "(JZIIZ)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, event, window, from_configure);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventUnmapNotify", "(JZIIZ)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, from_configure);
 }
 
 /**
  * @param  xe  The X event
  */
-void eventVisibilityNotify(XEvent* xe)
+void eventVisibilityNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
   XVisibilityEvent e = xe->xvisibility;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, state = state;
   
-  jmethodID method = (*java_env)->GetStaticMethodID(java_env, java_class, "eventVisibilityNotify", "(JZII)V");
-  (*java_env)->CallStaticVoidMethod(java_env, java_class, method, serial, send_event, window, state);
+  jmethodID method = (*env)->GetStaticMethodID(env, class, "eventVisibilityNotify", "(JZII)V");
+  (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, state);
 }
 
 
@@ -661,16 +651,16 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
       XFlush(display);
       
       if ((QLength(display) > 0) || (select(x_fd + 1, &fd_set, 0, 0, 0) == 1))
-        {
+      {
           XNextEvent(display, &e);
 	  if (e.type < 32)
 	    {
-	      void (*function)(XEvent*) = *(event_handlers + e.type);
+	      void (*function)(XEvent*, JNIEnv*, jclass) = *(event_handlers + e.type);
 	      if (function != 0)
-		function(&e);
+		function(&e, env, class);
 	    }
           XSync(display, 0);
-	}
+      }
     }
 }
 
