@@ -2,7 +2,7 @@ Rarity is an exitensible X window manager written in Java and C.
 
 The base of rarity provides a minimal window manager that is extended
 by plugins, to be accepty how you prefer. Reference plugins are provided
-and builds by personal favourite manager, additions plugins can extend
+and builds my personal favourite manager, additions plugins can extend
 or replace those; reference plugins are provided to gave a reference
 to how plugins should be expected to interroperate.
 
