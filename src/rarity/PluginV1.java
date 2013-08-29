@@ -64,32 +64,32 @@ public interface PluginV1
      * 
      * @return  The plug-in's name
      */
-    public abstract String getName();
+    public String getName();
     
     /**
      * Gets the plug-in's description
      * 
      * @return  The plug-in's description
      */
-    public abstract String getDescription();
+    public String getDescription();
     
     /**
      * Gets the version of the plug-in
      * 
      * @return  The version of the plug-in
      */
-    public abstract String getVersion();
+    public String getVersion();
     
     
     /**
      * Initialises the plug-in
      */
-    public abstract void initialise();
+    public void initialise();
     
     /**
      * Terminates the plug-in
      */
-    public abstract void terminate();
+    public void terminate();
     
     
     /**
@@ -98,21 +98,21 @@ public interface PluginV1
      * @param   dimension  The width and height of the icon
      * @return             The plug-in's icon, {@code null} if vector image is missing
      */
-    public abstract ImageIcon getIcon(final int dimension);
+    public ImageIcon getIcon(final int dimension);
     
     /**
      * Gets the plug-in's icon, should the biggest available raster image
      * 
      * @return  The plug-in's icon, {@code null} if raster image is missing
      */
-    public abstract ImageIcon getBiggestIcon();
+    public ImageIcon getBiggestIcon();
     
     /**
      * Gets an array of all n:s such that a raster icon of size n × n exists,
      * if non-positive number is returned as an element, a vector icon designed for
      * ~n × ~n and larger exists.
      */
-    public abstract int[] getIconDimensions();
+    public int[] getIconDimensions();
     
 }
 
