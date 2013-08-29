@@ -877,10 +877,10 @@ void Java_rarity_Rarity_scanForWindows(JNIEnv* env, jclass class, jint screen)
   for (i = 0; i < n; i++)
     {
       unsigned int width, height, _border, _depth;
-      int _x, _y;
-      XGetGeometry(display, *(windows + i), &_root, &_x, &_y, &width, &height, &_border, &_depth);
-      jmethodID method = (*env)->GetStaticMethodID(env, class, "newWindow", "(III)V");
-      (*env)->CallStaticVoidMethod(env, class, method, (jint)*(windows + i), (jint)width, (jint)height);
+      int x, y;
+      XGetGeometry(display, *(windows + i), &_root, &x, &y, &width, &height, &_border, &_depth);
+      jmethodID method = (*env)->GetStaticMethodID(env, class, "newWindow", "(IIIII)V");
+      (*env)->CallStaticVoidMethod(env, class, method, (jint)*(windows + i), (jint)x, (jint)y, (jint)width, (jint)height);
     }
   XFree(windows);
 }

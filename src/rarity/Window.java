@@ -58,16 +58,18 @@ public class Window extends PropertyBase
     /**
      * Constructor
      * 
+     * @param  left     The left X-axis position of the window
+     * @param  top      The top Y-axis position of the window
      * @param  width    The window's width
      * @param  height   The window's height
      * @parma  pointer  Pointer to the window object in native code
      */
-    protected Window(final int width, final int height, final long pointer)
+    protected Window(final int left, final int top, final int width, final int height, final long pointer)
     {
+	this.set(LEFT, left);
+	this.set(TOP, top);
 	this.set(WIDTH, width);
 	this.set(HEIGHT, height);
-	this.set(LEFT, 0);
-	this.set(TOP, 0);
 	this.set(VISIBLE, true);
 	this.pointer = pointer;
     }
@@ -234,6 +236,61 @@ public class Window extends PropertyBase
     {
 	Blackboard.getInstance(Window.class).broadcastMessage(new Window.PropertyMessage(this, property));
     }
+    
+    
+    /**
+     * Flush position changes to the display
+     */
+    public void updatePosition()
+    {
+	xMoveWindow(this.pointer, getInteger(LEFT), getInteger(TOP));
+    }
+    
+    /**
+     * Flush size changes to the display
+     */
+    public void updateSize()
+    {
+	xResizeWindow(this.pointer, getInteger(WIDTH), getInteger(HEIGHT));
+    }
+    
+    /**
+     * Flush position and size changes to the display
+     */
+    public void updateArea()
+    {
+	xMoveResizeWindow(this.pointer, getInteger(LEFT), getInteger(TOP), getInteger(WIDTH), getInteger(HEIGHT));
+    }
+    
+    
+    /**
+     * Flush position changes to the display
+     * 
+     * @param  address  The memory address of the window
+     * @param  x        The left X-axis position of the window
+     * @param  y        The top Y-axis position of the window
+     */
+    private static native void xMoveWindow(long address, int x, int y);
+    
+    /**
+     * Flush size changes to the display
+     * 
+     * @param  address  The memory address of the window
+     * @param  width    The width of the window
+     * @param  height   The height of the window
+     */
+    private static native void xResizeWindow(long address, int width, int height);
+    
+    /**
+     * Flush position and size changes to the display
+     * 
+     * @param  address  The memory address of the window
+     * @param  x        The left X-axis position of the window
+     * @param  y        The top Y-axis position of the window
+     * @param  width    The width of the window
+     * @param  height   The height of the window
+     */
+    private static native void xMoveResizeWindow(long address, int x, int y, int width, int height);
     
 }
 

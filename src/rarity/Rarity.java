@@ -305,9 +305,9 @@ public class Rarity
     // for (i = 0; i < n; i++)
     //   {
     //     unsigned int width, height, _border, _depth;
-    //     int _x, _y;
-    //     XGetGeometry(display, *(windows + i), _root, &_x, &_y, &width, &height, _border, _depth);
-    //     $invoke$ rarity.Rarity.newWindow((jint)*(windows + i), (jint)width, (jint)height);
+    //     int x, y;
+    //     XGetGeometry(display, *(windows + i), _root, &x, &y, &width, &height, _border, _depth);
+    //     $invoke$ rarity.Rarity.newWindow((jint)*(windows + i), (jint)x, (jint)y, (jint)width, (jint)height);
     //   }
     // XFree(windows);
     
@@ -315,13 +315,15 @@ public class Rarity
     /**
      * Invoked by native code when a new window has been found
      * 
+     * @param  left     The left X-axis position of the window
+     * @param  top      The top Y-axis position of the window
      * @param  pointer  The pointer to the window
      * @param  width    The width of the window
      * @param  height   The height of the window
      */
-    public static void newWindow(final int pointer, final int width, final int height)
+    public static void newWindow(final int pointer, final int left, final int top, final int width, final int height)
     {
-	final Window window = new Window(width, height, pointer);
+	final Window window = new Window(left, top, width, height, pointer);
 	synchronized (Window.windows)
 	{
 	    final int index = Window.windows.size();
