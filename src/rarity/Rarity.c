@@ -646,13 +646,13 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
   for (;;)
     {
       /* TODO handle graceful exit */
-      
+      /* FIXME
       FD_SET(x_fd, &fd_set);
       XFlush(display);
       
       if ((QLength(display) > 0) || (select(x_fd + 1, &fd_set, 0, 0, 0) == 1))
-      {
-          XNextEvent(display, &e);
+      {*/
+          XNextEvent(display, &e);/*
 	  if (e.type < 32)
 	    {
 	      void (*function)(XEvent*, JNIEnv*, jclass) = *(event_handlers + e.type);
@@ -660,7 +660,7 @@ void Java_rarity_Rarity_eventLoop(JNIEnv* env, jclass class)
 		function(&e, env, class);
 	    }
           XSync(display, 0);
-      }
+      }*/
     }
 }
 

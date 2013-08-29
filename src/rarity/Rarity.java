@@ -70,6 +70,7 @@ public class Rarity
 	    staticInit();
 	    setLocale();
 	    X11.openDisplay();
+	    /* FIXME
 	    setXAtoms();
 	    usingXinerama = Xinerama.initialise();
 	    
@@ -88,6 +89,7 @@ public class Rarity
 		scanForWindows(i);
 	    
 	    X11.sync();
+	    */
 	    eventLoop();
 	}
 	catch (final Throwable err)
