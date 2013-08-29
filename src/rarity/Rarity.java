@@ -137,23 +137,6 @@ public class Rarity
      * Sets X atoms
      */
     private static native void setXAtoms();
-    // xa_string                  = XA_STRING;
-    // xa_compound_text           = XInternAtom(dpy, "COMPOUND_TEXT",              False);
-    // xa_utf8_string             = XInternAtom(dpy, "UTF8_STRING",                False);
-    // 
-    // wm_name                    = XInternAtom(dpy, "WM_NAME",                    False);
-    // wm_state                   = XInternAtom(dpy, "WM_STATE",                   False);
-    // wm_change_state            = XInternAtom(dpy, "WM_CHANGE_STATE",            False);
-    // wm_protocols               = XInternAtom(dpy, "WM_PROTOCOLS",               False);
-    // wm_delete                  = XInternAtom(dpy, "WM_DELETE_WINDOW",           False);
-    // wm_take_focus              = XInternAtom(dpy, "WM_TAKE_FOCUS",              False);
-    // wm_colormaps               = XInternAtom(dpy, "WM_COLORMAP_WINDOWS",        False);
-    // 
-    // _net_wm_pid                = XInternAtom(dpy, "_NET_WM_PID",                False);
-    // _net_supported             = XInternAtom(dpy, "_NET_SUPPORTED",             False);
-    // _net_wm_window_type        = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE",        False);
-    // _net_wm_window_type_dialog = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-    // _net_wm_name               = XInternAtom(dpy, "_NET_WM_NAME",               False);
     
     
     /**
