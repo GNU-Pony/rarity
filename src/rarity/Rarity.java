@@ -58,6 +58,8 @@ public class Rarity
 	    abort();
 	}
 	
+	PluginHandler.restartPlugins();
+	
 	final int SCREEN_INPUT = X11.EventMask.PROPERTY_CHANGE
 	                       | X11.EventMask.COLORMAP_CHANGE
 	                       | X11.EventMask.SUBSTRUCTURE_NOTIFY
