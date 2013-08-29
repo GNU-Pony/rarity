@@ -60,7 +60,6 @@ public class Rarity
 	
 	final int SCREEN_INPUT = X11.EventMask.PROPERTY_CHANGE
 	                       | X11.EventMask.COLORMAP_CHANGE
-	                       | X11.EventMask.SUBSTRUCTURE_REDIRECT
 	                       | X11.EventMask.SUBSTRUCTURE_NOTIFY
 	                       | X11.EventMask.STRUCTURE_NOTIFY;
 	
@@ -70,9 +69,9 @@ public class Rarity
 	    staticInit();
 	    setLocale();
 	    X11.openDisplay();
-	    /* FIXME
 	    setXAtoms();
 	    usingXinerama = Xinerama.initialise();
+	    
 	    
 	    int screenCount;
 	    synchronized (Screen.screens)
@@ -85,11 +84,11 @@ public class Rarity
 		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
 	    }   }
 	    
+	    
 	    for (int i = 0, n = usingXinerama ? Xinerama.screenCount() : X11.screenCount(); i < n; i++)
 		scanForWindows(i);
 	    
 	    X11.sync();
-	    */
 	    eventLoop();
 	}
 	catch (final Throwable err)
