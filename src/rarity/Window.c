@@ -60,7 +60,7 @@ void Java_rarity_Window_xResizeWindow(JNIEnv* env, jclass class, jlong address, 
  * @param  width    The width of the window
  * @param  height   The height of the window
  */
-void Java_rarity_Window_xMoveResizeWindow(JNIEnv* env, jclass class, jlong address, jint x, jint y, jint window, jint height)
+void Java_rarity_Window_xMoveResizeWindow(JNIEnv* env, jclass class, jlong address, jint x, jint y, jint width, jint height)
 {
   (void) env;
   (void) class;
