@@ -51,7 +51,7 @@ public class Rarity
     public static void main(final String... args)
     {
 	try
-	{   System.load(args[0]);
+	{   System.load("<"$LIBPATH$">/<"$LIB$">");
 	}
 	catch (final Throwable err)
 	{   System.err.println("Rarity: Unable to load library: rarity");

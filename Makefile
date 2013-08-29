@@ -27,13 +27,14 @@ JAR_COMPRESS = 0
 
 # install settings
 PKGNAME = rarity
-SHEBANG = /bin/sh
+JAVA_PREFIX = /usr
+JAVA_BINDIR = /bin
 JAVA = java
+JAVAPATH = $(JAVA_PREFIX)$(JAVA_BINDIR)/$(JAVA)
+SHEBANG = $(JAVAPATH) -jar
 ifdef TESTING
-  JARPATH = .
   LIBPATH = .
 else
-  JARPATH=$(PREFIX)/share/misc
   LIBPATH=$(PREFIX)/lib
 endif
 PREFIX = /usr
@@ -123,7 +124,7 @@ MANIFEST = META-INF/MANIFEST.MF
 
 
 # compile
-all: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
+all: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
 
 # generate .h
 h: $(JNI_H)
@@ -144,7 +145,7 @@ $(LIB_RARITY): $(C_OBJ)
 # jpp resolved .java files
 bin/%.java: src/%.java
 	@mkdir -p "bin"
-	$(JPP) -s "src" -o "bin" "$<"
+	$(JPP) --export LIBPATH="$(LIBPATH)" --export LIB="$(LIB_PREFIX)$(LIB)$(LIB_EXT)" -s "src" -o "bin" "$<"
 
 # .class files
 bin/%.class: bin/%.java
@@ -166,37 +167,28 @@ $(JAR_RARITY): $(JAVA_CLASS) $(MANIFEST)
 	jar cfm$(JAR_COMPRESS) "$@" $(MANIFEST) $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g' -e 's_\$$_"\$$"_g')
 
 # command file
-bin/rarity.sh: src/rarity.sh
-	cp "$<" "$@"
-	sed -i 's|%SHEBANG|$(SHEBANG)|g' "$@"
-	sed -i 's|%LIBPATH|$(LIBPATH)|g' "$@"
-	sed -i 's|%JARPATH|$(JARPATH)|g' "$@"
-	sed -i 's|%JAVA|$(JAVA)|g' "$@"
-	sed -i 's|%LIB|$(LIB_PREFIX)$(LIB)$(LIB_EXT)|g' "$@"
-	sed -i 's|%JAR|$(LIB).jar|g' "$@"
+bin/rarity.install: $(JAR_RARITY)
+	(echo "#!$(SHEBANG)" ; cat "$<") > "$@"
+	chmod a+x "$@"
 
 
 # install package to $(DESTDIR)
-install: $(LIB_RARITY) $(JAR_RARITY) bin/rarity.sh
+install: $(LIB_RARITY) bin/rarity.install
 	mkdir -p -- "$(DESTDIR)$(LIBPATH)"
-	mkdir -p -- "$(DESTDIR)$(JARPATH)"
 	mkdir -p -- "$(DESTDIR)$(BINPATH)"
 	mkdir -p -- "$(DESTDIR)$(LICENSEPATH)"
 	install -m755 -- "$(LIB_RARITY)" "$(DESTDIR)$(LIBPATH)"
-	install -m755 -- "$(JAR_RARITY)" "$(DESTDIR)$(JARPATH)"
-	install -m755 -- "bin/rarity.sh" "$(DESTDIR)$(BINPATH)/$(COMMAND)"
+	install -m755 -- "bin/rarity.install" "$(DESTDIR)$(BINPATH)/$(COMMAND)"
 	install -m644 -- "COPYING" "$(DESTDIR)$(LICENSEPATH)"
 	install -m644 -- "LICENSE" "$(DESTDIR)$(LICENSEPATH)"
 
 # uninstall package to $(DESTDIR)
 uninstall:
 	-unlink -- "$(DESTDIR)$(LIBPATH)/$(LIB_PREFIX)$(LIB)$(LIB_EXT)"
-	-unlink -- "$(DESTDIR)$(JARPATH)/$(LIB).jar"
 	-unlink -- "$(DESTDIR)$(BINPATH)/$(COMMAND)"
 	-unlink -- "$(DESTDIR)$(LICENSEPATH)/COPYING"
 	-unlink -- "$(DESTDIR)$(LICENSEPATH)/LICENSE"
 	-rmdir -- "$(DESTDIR)$(LIBPATH)"
-	-rmdir -- "$(DESTDIR)$(JARPATH)"
 	-rmdir -- "$(DESTDIR)$(BINPATH)"
 	-rmdir -- "$(DESTDIR)$(LICENSEPATH)"
 
