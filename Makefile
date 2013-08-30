@@ -124,10 +124,16 @@ MANIFEST = META-INF/MANIFEST.MF
 
 
 # compile
-all: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
+.PHONY: all
+all: rarity
 
 # generate .h
+.PHONY: h
 h: $(JNI_H)
+
+# compile rarity
+.PHONY: rarity
+rarity: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
 
 
 # .o files
@@ -173,6 +179,7 @@ bin/rarity.install: $(JAR_RARITY)
 
 
 # install package to $(DESTDIR)
+.PHONY: install
 install: $(LIB_RARITY) bin/rarity.install
 	mkdir -p -- "$(DESTDIR)$(LIBPATH)"
 	mkdir -p -- "$(DESTDIR)$(BINPATH)"
@@ -183,6 +190,7 @@ install: $(LIB_RARITY) bin/rarity.install
 	install -m644 -- "LICENSE" "$(DESTDIR)$(LICENSEPATH)"
 
 # uninstall package to $(DESTDIR)
+.PHONY: uninstall
 uninstall:
 	-unlink -- "$(DESTDIR)$(LIBPATH)/$(LIB_PREFIX)$(LIB)$(LIB_EXT)"
 	-unlink -- "$(DESTDIR)$(BINPATH)/$(COMMAND)"
