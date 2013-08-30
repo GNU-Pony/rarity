@@ -67,10 +67,12 @@ public class Blackboard
     
     /**
      * Multiton constructor
+     * 
+     * @param  name  The name (unique identifier) of the instance, {@code null} is default
      */
-    private Blackboard()
+    private Blackboard(final Object name)
     {
-        // Do nothing
+        this.name = name;
     }
     
     
@@ -86,7 +88,7 @@ public class Blackboard
         if ((instance = instances.get(name)) == null)
             synchronized (instances)
             {   if ((instance = instances.get(name)) == null)
-                    instances.put(name, instance = new Blackboard());
+                    instances.put(name, instance = new Blackboard(name));
             }
         return instance;
     }
@@ -96,6 +98,11 @@ public class Blackboard
      * The instance of this class
      */
     private static final HashMap<Object, Blackboard> instances = new HashMap<>();
+    
+    /**
+     * The name (unique identifier) of the instance, {@code null} is default
+     */
+    private final Object name;
     
     
     
@@ -311,6 +318,7 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
+	    System.err.println("Registrering observer " + observer + " on blackboard " + this.name);
             this.observers.add(observer);
             this.broadcastMessage(new ObserverRegisterMessage(observer, true));
         }
@@ -326,29 +334,12 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
+	    System.err.println("Unregistrering observer " + observer + " from blackboard " + this.name);
             this.observers.remove(observer);
             this.observationThreading.remove(observer);
             this.observationPriorities.remove(observer);
             this.broadcastMessage(new ObserverRegisterMessage(observer, false));
         }
-    }
-    
-    
-    /**
-     * Registers a threading policy for an observer and a message type.<br/>
-     * If a threading policy is registrered for an observer it will only receive message with a registrered threading policy.
-     * 
-     * @param  observer     The observer
-     * @param  messageType  The message type
-     * @param  policy       The threading policy
-     * 
-     * @deprecated  Use overloading {@link #registerThreadingPolicy(BlackboardObserver, ThreadingPolicy, Class...)} instead
-     */
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    public void registerThreadingPolicy(final BlackboardObserver observer, final Class<? extends BlackboardMessage> messageType, final ThreadingPolicy policy)
-    {
-        registerThreadingPolicy(observer, policy, messageType);
     }
     
     
@@ -365,6 +356,9 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
+	    System.err.println("Setting threading policy for observer " + observer + " on blackboard " + this.name);
+	    for (final Class<? extends BlackboardMessage> messageType : messageTypes)
+		System.err.println("  on message type " + messageType);
             HashMap<Class<? extends BlackboardMessage>, ThreadingPolicy> map = this.observationThreading.get(observer);
             if (map == null)
             {
@@ -390,6 +384,9 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
+	    System.err.println("Setting priority for observer " + observer + " to nice value " + nice + " on blackboard " + this.name);
+	    for (final Class<? extends BlackboardMessage> messageType : messageTypes)
+		System.err.println("  on message type " + messageType);
             HashMap<Class<? extends BlackboardMessage>, Integer> map = this.observationPriorities.get(observer);
             if (map == null)
             {
@@ -411,12 +408,16 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
+	    System.err.println("Broadcasting message " + message + " on blackboard " + this.name);
+	    
             final PriorityQueue<Integer> priorities = new PriorityQueue<Integer>();
             final HashMap<Integer, Vector<BlackboardObserver>> prioObservers = new HashMap<>();
             final HashSet<Integer> regdPrioes = new HashSet<Integer>();
             
             for (final BlackboardObserver observer : this.observers)
             {
+		System.err.println("  Queuing observer " + observer);
+		
                 final HashMap<Class<? extends BlackboardMessage>, Integer> map = this.observationPriorities.get(observer);
                 Integer priority = Integer.valueOf(0);
                 if (map != null)
@@ -439,6 +440,8 @@ public class Blackboard
             for (Integer priority; (priority = priorities.poll()) != null;) // iterator messes up order
                 for (final BlackboardObserver observer : prioObservers.get(priority))
                 {
+		    System.err.println("  Polling observer " + observer);
+		    
                     final ThreadingPolicy policy;
                     final Runnable runnable = new Runnable()
                             {
@@ -458,10 +461,14 @@ public class Blackboard
                     else if (map.containsKey(message.getClass()))
                         policy = map.get(message.getClass());
                     else
-                        continue;
+		    {
+			System.err.println("    Skipping observer " + observer);
+			continue;
+		    }
 		    
+			System.err.println("    Cuing observer " + observer);
                     if (policy == null)  runnable.run();
-                    else                 (new Thread(runnable)).start();
+                    else                 policy.createThread(runnable).start();
                 }
         }
     }

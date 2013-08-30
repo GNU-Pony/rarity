@@ -61,11 +61,14 @@ public abstract class PropertyBase
      * @return            The property value as an {@link Object}
      */
     public Object get(final String property)
-    {
+    {	
 	Object obj = this.properties.get(property);
+	System.err.println("Getting property " + property + " on " + this + ", with value " + obj);
 	if ((obj == null) || (obj instanceof Lambda == false))
 	    return obj;
-	return ((Lambda)obj).evaluate(this);
+	obj = ((Lambda)obj).evaluate(this);
+	System.err.println("  Evaluates to " + obj);
+	return obj;
     }
     
     /**
@@ -90,7 +93,7 @@ public abstract class PropertyBase
      */
     public int getInteger(final String property)
     {
-	Object obj = this.properties.get(property);
+	Object obj = get(property);
 	if ((obj == null) || (obj instanceof Integer == false))
 	    return 0;
 	return ((Integer)obj).intValue();
@@ -104,7 +107,7 @@ public abstract class PropertyBase
      */
     public boolean getBoolean(final String property)
     {
-	Object obj = this.properties.get(property);
+	Object obj = get(property);
 	if ((obj == null) || (obj instanceof Boolean == false))
 	    return false;
 	return ((Boolean)obj).booleanValue();
@@ -120,7 +123,8 @@ public abstract class PropertyBase
     public void set(final String property, final Object value)
     {
 	synchronized (this.properties)
-	{   this.properties.put(property, value);
+	{   System.err.println("Setting property " + property + " to " + value + " on " + this);
+	    this.properties.put(property, value);
 	}
     }
     

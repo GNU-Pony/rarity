@@ -83,7 +83,7 @@ public class Rarity
 		    X11.selectRootInput(i, SCREEN_INPUT);
 		    Screen.screens.add(new Screen(X11.screenWidth(i), X11.screenHeight(i), 0, 0));
 		    Screen.ExistanceMessage e = new Screen.ExistanceMessage(Screen.ExistanceMessage.ADDED, i);
-		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+		    Blackboard.getInstance(Screen.ExistanceMessage.class).broadcastMessage(e);
 	    }   }
 	    
 	    
@@ -105,12 +105,12 @@ public class Rarity
 		int screenCount = X11.screenCount();
 		for (int i = 0; i < screenCount; i++)
 		{   e = new Screen.ExistanceMessage(Screen.ExistanceMessage.REMOVING, i);
-		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+		    Blackboard.getInstance(Screen.ExistanceMessage.class).broadcastMessage(e);
 		    X11.selectRootInput(i, 0);
 		    X11.deactivateScreen(i);
 		    Screen.screens.remove(0);
 		    e = new Screen.ExistanceMessage(Screen.ExistanceMessage.REMOVED, i);
-		    Blackboard.getInstance(Screen.class).broadcastMessage(e);
+		    Blackboard.getInstance(Screen.ExistanceMessage.class).broadcastMessage(e);
 	    }   }
 	    Xinerama.terminate();
 	    X11.closeDisplay();
@@ -314,7 +314,7 @@ public class Rarity
 	    final int index = Window.windows.size();
 	    Window.windows.add(window);
 	    Window.ExistanceMessage e = new Window.ExistanceMessage(Window.ExistanceMessage.ADDED, index);
-	    Blackboard.getInstance(Window.class).broadcastMessage(e);
+	    Blackboard.getInstance(Window.ExistanceMessage.class).broadcastMessage(e);
 	}
     }
     

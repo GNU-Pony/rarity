@@ -91,6 +91,7 @@ public class Plugin implements PluginV1
     {
 	System.err.println("Initialising extension: Nightmare");
 	WindowMapper.start();
+	WindowSizer.start();
     }
     
     /**
@@ -99,6 +100,7 @@ public class Plugin implements PluginV1
     public void terminate()
     {
 	System.err.println("Terminating extension: Nightmare");
+	WindowSizer.stop();
 	WindowMapper.stop();
     }
     

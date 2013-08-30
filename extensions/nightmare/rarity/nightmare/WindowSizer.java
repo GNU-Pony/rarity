@@ -21,16 +21,16 @@ import rarity.*;
 
 
 /**
- * Maps and unmaps created and destroyed windows
+ * Sets the size of newly created windows
  * 
  * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
  */
-public class WindowMapper implements Blackboard.BlackboardObserver
+public class WindowSizer implements Blackboard.BlackboardObserver
 {
     /**
      * Private constructor
      */
-    private WindowMapper()
+    private WindowSizer()
     {
 	/* Do nothing */
     }
@@ -40,7 +40,7 @@ public class WindowMapper implements Blackboard.BlackboardObserver
     /**
      * The instance
      */
-    private static WindowMapper instance = null;
+    private static WindowSizer instance = null;
     
     
     
@@ -49,8 +49,8 @@ public class WindowMapper implements Blackboard.BlackboardObserver
      */
     public static void start()
     {
-	instance = new WindowMapper();
-	Blackboard.getInstance(XEvent.class).registerObserver(instance);
+	instance = new WindowSizer();
+	Blackboard.getInstance(Window.ExistanceMessage.class).registerObserver(instance);
     }
     
     /**
@@ -58,7 +58,7 @@ public class WindowMapper implements Blackboard.BlackboardObserver
      */
     public static void stop()
     {
-	Blackboard.getInstance(XEvent.class).unregisterObserver(instance);
+	Blackboard.getInstance(Window.ExistanceMessage.class).unregisterObserver(instance);
 	instance = null;
     }
     
@@ -71,21 +71,27 @@ public class WindowMapper implements Blackboard.BlackboardObserver
      */
     public void messageBroadcasted(final Blackboard.BlackboardMessage message)
     {
-	System.err.println("WindowMapper: recieves message " + message.getClass());
-	if (message instanceof XEvent.CreateWindow)
+	System.err.println("WindowSizer: recieves message " + message.getClass());
+	if (message instanceof Window.ExistanceMessage)
 	{
-	    final XEvent.CreateWindow event = (XEvent.CreateWindow)message;
-	    if (event.overrideRedirect == false)
-	    {
-		System.err.println("  Mapping window " + event.window);
-		Rarity.newWindow((int)(event.window), event.position.x, event.position.y, event.size.width, event.size.height);
-	    }
-	}
-	else if (message instanceof XEvent.DestroyWindow)
-	{
-	    final XEvent.DestroyWindow event = (XEvent.DestroyWindow)message;
-	    System.err.println("  Unmapping window " + event.window);
-	    Window.removeWindow(Window.getByAddress(event.window));
+	    final Window.ExistanceMessage event = (Window.ExistanceMessage)message;
+	    if (event.action != Window.ExistanceMessage.ADDED)
+		return;
+	    final Window window = Window.getWindow(event.index);
+	    if (Screen.getScreenCount() < 1)
+		return;
+	    
+	    final Screen screen = Screen.getScreen(0);
+	    int x = screen.getInteger(Screen.OFFSET_X) + screen.getInteger(Screen.MARGIN_LEFT);
+	    int y = screen.getInteger(Screen.OFFSET_Y) + screen.getInteger(Screen.MARGIN_TOP);
+	    int width = screen.getInteger(Screen.WIDTH);
+	    int height = screen.getInteger(Screen.HEIGHT);
+	    
+	    window.set(Window.LEFT, x);
+	    window.set(Window.TOP, y);
+	    window.set(Window.WIDTH, width);
+	    window.set(Window.HEIGHT, height);
+	    window.updateArea();
 	}
     }
     
