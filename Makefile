@@ -174,11 +174,11 @@ bin/%.class: bin/%.java
 	$(JAVAC) $(JAVA_FLAGS) "$<"
 
 # .h files
-src/%.h: src/%.java
+src/%.h: bin/%.class
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									 \
-	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";  \
-	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";	 \
+	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^bin/__g' -e 's_\.class$$__g' | sed -e 's_/_\._g')";  \
+	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^bin/__g' -e 's_\.class$$__g' | sed -e 's_/_\._g')";	 \
 	 if [ "$$(grep -v '^#' "$@" | wc -l | cut -d ' ' -f 1)" = 5 ]; then						 \
 	     rm "$@";													 \
 	 elif [ ! "$$(md5sum "$@" 2>/dev/null || echo)" = "$$sum" ]; then						 \

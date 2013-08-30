@@ -19,6 +19,7 @@
 package rarity;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
@@ -225,6 +226,14 @@ public class PluginHandler
     private static PluginV1 getPluginInstance(final String path) throws Exception
     {
 	final URL url = (new File(path)).toURI().toURL();
+	
+	URLClassLoader sysloader = (URLClassLoader)(ClassLoader.getSystemClassLoader());
+	Class<URLClassLoader> sysclass = URLClassLoader.class;
+	
+	Method method = sysclass.getDeclaredMethod("addURL", URL.class);
+	method.setAccessible(true);
+	method.invoke(sysloader, url);
+	
 	String name = path.substring(path.lastIndexOf('/') + 1);
 	name = name.substring(0, name.length() - 3) + PLUGIN_CLASS_NAME;
 	synchronized (PluginHandler.class)
@@ -261,9 +270,7 @@ public class PluginHandler
 		    if (gotHash.contains(file = pluginFiles.get(i)) == false)
 		    {
 			if (activePlugins.contains(pluginInstances.get(i)))
-			{   setActive(i, false);
-			    activePlugins.remove(pluginInstances.get(i));
-			}
+			    setActive(i, false);
 			pluginHash.remove(file);
 			pluginMDates.remove(file);
 			pluginFiles.remove(i);
@@ -289,7 +296,6 @@ public class PluginHandler
 		    pluginFiles.add(newFile);
 		    pluginMDates.put(newFile, Long.valueOf((new File(newFile)).lastModified()));
 		    pluginInstances.add(getPluginInstance(newFile));
-		    activePlugins.add(pluginInstances.get(i));
 		    setActive(i, true);
 		    i++;
 		}

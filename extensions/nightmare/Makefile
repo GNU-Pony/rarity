@@ -101,7 +101,7 @@ H_FLAGS = $(H_PATHS)
 
 # c files
 C_SRC = $(shell find . | grep '\.c$$')
-C_OBJ = $(shell find . | grep '\.c$$' | sed -e 's/\.c$$/\.o/g' -e 's/^\.\//$(SED_OBJ)\//g')o
+C_OBJ = $(shell find . | grep '\.c$$' | sed -e 's/\.c$$/\.o/g' -e 's/^\.\//$(SED_OBJ)\//g')
 
 # java files
 SRC = ./$(shell echo $(EXTENSION) | sed -e 's:\.:\/:g')
@@ -138,19 +138,19 @@ $(BIN)/%.java: %.java
 # .class files
 $(BIN)/%.class: $(BIN)/%.java
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
-	$(JAVAC) $(JAVA_FLAGS) $(shell echo "$<" | sed -e 's/^$(SED_BIN)\//.\//g')
+	$(JAVAC) $(JAVA_FLAGS) "$(shell echo "$<" | sed -e 's/^$(SED_BIN)\//\.\//g')"
 
 # compile the .jar file
 $(BIN)/$(EXTENSION).jar: $(JAVA_CLASS)
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
-	jar cf$(JAR_COMPRESS) "$@" $(shell find $(BIN) | grep '\.class$$' | sed -e 's:^$(BIN):-C $(BIN) :g' -e 's_\$$_"\$$"_g')
+	jar cf$(JAR_COMPRESS) "$@" $(shell find $(BIN) | grep '\.class$$' | sed -e 's:^$(BIN)\/:-C $(BIN) :g' -e 's_\$$_"\$$"_g')
 
 # .h files
-%.h: %.java
+%.h: bin/%.class
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									 \
-	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_\.java$$__g' | sed -e 's_/_\._g')";  \
-	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_\.java$$__g' | sed -e 's_/_\._g')";	 \
+	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^bin/__g' -e 's_\.class$$__g' | sed -e 's_/_\._g')";  \
+	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^bin/__g' -e 's_\.class$$__g' | sed -e 's_/_\._g')";	 \
 	 if [ "$$(grep -v '^#' "$@" | wc -l | cut -d ' ' -f 1)" = 5 ]; then						 \
 	     rm "$@";													 \
 	 elif [ ! "$$(md5sum "$@" 2>/dev/null || echo)" = "$$sum" ]; then						 \
