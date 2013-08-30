@@ -89,6 +89,7 @@ public class Plugin implements PluginV1
      */
     public void initialise()
     {
+	System.err.println("Initialising extension: Nightmare");
 	/* FIXME */
     }
     
@@ -97,6 +98,7 @@ public class Plugin implements PluginV1
      */
     public void terminate()
     {
+	System.err.println("Terminating extension: Nightmare");
 	/* FIXME */
     }
     
