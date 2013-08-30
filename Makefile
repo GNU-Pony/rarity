@@ -122,18 +122,29 @@ JAR_RARITY = bin/$(LIB).jar
 # misc files
 MANIFEST = META-INF/MANIFEST.MF
 
+# extensions
+EXTENSIONS = nightmare
+
+
 
 # compile
 .PHONY: all
-all: rarity
+all: rarity extensions
 
 # generate .h
 .PHONY: h
-h: $(JNI_H)
+h: $(foreach H, $(JNI_H), src/rarity/$(H).h)
 
 # compile rarity
 .PHONY: rarity
-rarity: $(JAVA_PRAECLASS) $(JAVA_CLASS) $(foreach H, $(JNI_H), src/rarity/$(H).h) $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
+rarity: $(JAVA_PRAECLASS) $(JAVA_CLASS) h $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
+
+# compile extensions
+.PHONY: extensions
+extensions:
+	@for e in $(EXTENSIONS); do  \
+	     make -C "extensions/$$(E)";  \
+	 done
 
 
 # .o files
