@@ -124,7 +124,7 @@ public class PluginHandler
 	for (String filename : filenames)
 	{   final File file = new File(filename.replace("%", "rarity"));
 	    if (file.exists() && (file.isDirectory() == false))
-	    {   pluginFile = filename;
+	    {   pluginFile = filename.replace("%", "rarity");
 		break;
 	}   }
     }
