@@ -142,18 +142,21 @@ rarity: $(LIB_RARITY) bin/rarity.install
 # compile extensions
 .PHONY: extensions
 extensions:
-	@for e in $(EXTENSIONS); do  \
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
+	@for e in $(EXTENSIONS); do       \
 	     make -C "extensions/$${e}";  \
 	 done
 
 
 # .o files
 obj/%.o: src/%.c src/%.h
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_g')"
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(JNI_C_CFLAGS) "$<" -c -o "$@"
 
 # .so file
 $(LIB_RARITY): $(C_OBJ)
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@if [ ! "$@" = "$$(echo "$@" | sed -e s_/__g)" ]; then     \
 	     mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_')";  \
 	 fi
@@ -161,15 +164,18 @@ $(LIB_RARITY): $(C_OBJ)
 
 # jpp resolved .java files
 bin/%.java: src/%.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@mkdir -p "bin"
 	$(JPP) --export LIBPATH="$(LIBPATH)" --export LIB="$(LIB_PREFIX)$(LIB)$(LIB_EXT)" -s "src" -o "bin" "$<"
 
 # .class files
 bin/%.class: bin/%.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	$(JAVAC) $(JAVA_FLAGS) "$<"
 
 # .h files
 src/%.h: src/%.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									 \
 	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";  \
 	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_^src/__g' -e 's_\.java$$__g' | sed -e 's_/_\._g')";	 \
@@ -181,10 +187,12 @@ src/%.h: src/%.java
 
 # .jar file
 $(JAR_RARITY): $(JAVA_CLASS) $(MANIFEST)
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	jar cfm$(JAR_COMPRESS) "$@" $(MANIFEST) $(shell find bin | grep '\.class$$' | sed -e 's:^bin/:-C bin :g' -e 's_\$$_"\$$"_g')
 
 # command file
 bin/rarity.install: $(JAR_RARITY)
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	(echo "#!$(SHEBANG)" ; cat "$<") > "$@"
 	chmod a+x "$@"
 
@@ -216,4 +224,7 @@ uninstall:
 .PHONY: clean
 clean:
 	-@rm -r bin obj $$(find src | egrep '/[A-Z].*\.h') 2>/dev/null
+	@for e in $(EXTENSIONS); do             \
+	     make -C "extensions/$${e}" clean;  \
+	 done
 

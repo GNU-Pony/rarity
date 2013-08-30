@@ -33,13 +33,23 @@ RARITY_PKGNAME = rarity
 PREFIX =
 EXTDIR = /opt
 EXTPATH = $(PREFIX)$(EXTDIR)/$(RARITY_PKGNAME)
-PATH = $(DESTDIR)$(EXTPATH)
+DESTPATH = $(DESTDIR)$(EXTPATH)
 
 # PLATFORM DEPENDENT: the file extension for library files
 LIB_EXT = .so
 
 # the library file without directory
 LIBFILE = $(LIB_PREFIX)$(EXTENSION)$(LIB_EXT)
+
+# the bin and obj directories
+BIN = bin
+OBJ = obj
+SED_BIN = $(shell echo $(BIN) | sed -e 's:\/:\\/:g' -e 's:\.:\\\.:g')
+SED_OBJ = $(shell echo $(OBJ) | sed -e 's:\/:\\/:g' -e 's:\.:\\\.:g')
+ROOT_BIN = ../../bin
+ROOT_OBJ = ../../obj
+SED_ROOT_BIN = $(shell echo $(ROOT_BIN) | sed -e 's:\/:\\/:g' -e 's:\.:\\\.:g')
+SED_ROOT_OBJ = $(shell echo $(ROOT_OBJ) | sed -e 's:\/:\\/:g' -e 's:\.:\\\.:g')
 
 # commands
 PKG_CONFIG = pkg-config
@@ -78,25 +88,26 @@ JAVA_VERSION = -source $(JAVA_SOURCE) -target $(JAVA_TARGET)
 JAVA_WARNINGS = -Xlint
 JAVA_OPTIMISATION = $(shell echo '$(OPTIMISATION)' | sed -e 's/[1-6]//g' -e 's/-O0//g')
 JAVA_BOOTCLASSPATH =
-JAVA_CLASSPATH = -classpath .:../../bin
-JAVA_SRCPATH = -s .
-JAVA_BINPATH = -d ../../bin
+JAVA_CLASSPATH = -classpath $(BIN):$(ROOT_BIN)/rarity.jar
+JAVA_SRCPATH = -s $(BIN)
+JAVA_BINPATH = -d $(BIN)
 JAVA_PATHS = $(JAVA_BOOTCLASSPATH) $(JAVA_CLASSPATH) $(JAVA_SRCPATH) $(JAVA_BINPATH)
 JAVA_FLAGS = $(JAVA_VERSION) $(JAVA_WARNINGS) $(JAVA_OPTIMISATION) $(JAVA_PATHS)
 
 # javah flags
-H_CLASSPATH = -classpath bin
+H_CLASSPATH = -classpath $(BIN)
 H_PATHS = $(JAVA_BOOTCLASSPATH) $(H_CLASSPATH)
 H_FLAGS = $(H_PATHS)
 
 # c files
 C_SRC = $(shell find . | grep '\.c$$')
-C_OBJ = $(shell find . | grep '\.c$$' | sed -e 's/\.c$$/\.o/g' -e 's/^.\//..\/..\/obj\//g')o
+C_OBJ = $(shell find . | grep '\.c$$' | sed -e 's/\.c$$/\.o/g' -e 's/^\.\//$(SED_OBJ)\//g')o
 
 # java files
-JAVA_SRC = $(shell find . | grep '\.java$$')
-JAVA_PRAECLASS = $(shell find . | grep '\.java$$' | sed -e 's/^.\//..\/..\/bin\//g')
-JAVA_CLASS = $(shell find . | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^.\//..\/..\/bin\//g')
+SRC = ./$(shell echo $(EXTENSION) | sed -e 's:\.:\/:g')
+JAVA_SRC = $(shell find $(SRC) | grep '\.java$$')
+JAVA_PRAECLASS = $(shell find $(SRC) | grep '\.java$$' | sed -e 's/^\.\//$(SED_BIN)\//g')
+JAVA_CLASS = $(shell find $(SRC) | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^\.\//$(SED_BIN)\//g')
 
 # h files
 #JNI_H =
@@ -106,9 +117,6 @@ JAVA_CLASS = $(shell find . | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e
 # compile
 .PHONY: all
 all: $(EXTENSION)
-ifdef JNI_H
-all: h
-endif
 
 # generate .h
 .PHONY: h
@@ -116,26 +124,30 @@ h: $(JNI_H)
 
 # compile the extension
 .PHONY: $(EXTENSION)
-$(EXTENSION): $(EXTENSION).jar
+$(EXTENSION): $(BIN)/$(EXTENSION).jar
 ifdef JNI_H
-$(EXTENSION): $(EXTENSION)$(LIB_EXT)
+$(EXTENSION): $(BIN)/$(EXTENSION)$(LIB_EXT)
 endif
 
 # jpp resolved .java files
-../../bin/%.java: %.java
-	@mkdir -p "bin"
-	$(JPP) --export LIBPATH="$(EXTPATH)" --export LIB="$(LIBFILE)" -s "." -o "../../bin" "$<"
+$(BIN)/%.java: %.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
+	@mkdir -p "$(BIN)"
+	$(JPP) --export LIBPATH="$(EXTPATH)" --export LIB="$(LIBFILE)" -s "." -o "$(BIN)" "$<"
 
 # .class files
-../../bin/%.class: ../../bin/%.java
-	$(JAVAC) $(JAVA_FLAGS) "$<"
+$(BIN)/%.class: $(BIN)/%.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
+	$(JAVAC) $(JAVA_FLAGS) $(shell echo "$<" | sed -e 's/^$(SED_BIN)\//.\//g')
 
 # compile the .jar file
-$(EXTENSION).jar: $(JAVA_CLASS)
-	jar cf$(JAR_COMPRESS) "$@" $(shell find bin | grep '\.class$$' | sed -e 's:^../../bin/:-C ../../bin :g' -e 's_\$$_"\$$"_g')
+$(BIN)/$(EXTENSION).jar: $(JAVA_CLASS)
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
+	jar cf$(JAR_COMPRESS) "$@" $(shell find $(BIN) | grep '\.class$$' | sed -e 's:^$(BIN):-C $(BIN) :g' -e 's_\$$_"\$$"_g')
 
 # .h files
 %.h: %.java
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@sum=$$(md5sum "$@" 2>/dev/null || echo); 									 \
 	 echo $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_\.java$$__g' | sed -e 's_/_\._g')";  \
 	 $(JAVAH) $(H_FLAGS) -o "$@" "$$(echo "$<" | sed -e 's_\.java$$__g' | sed -e 's_/_\._g')";	 \
@@ -146,12 +158,14 @@ $(EXTENSION).jar: $(JAVA_CLASS)
 	 fi
 
 # .o files
-../../obj/%.o: %.c %.h
+$(OBJ)/%.o: %.c %.h
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_g')"
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(JNI_C_CFLAGS) "$*.c" -c -o "$@"
 
 # compile the .so file
-$(EXTENSION)$(LIB_EXT): $(C_OBJ)
+$(BIN)/$(EXTENSION)$(LIB_EXT): $(C_OBJ)
+	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@if [ ! "$@" = "$$(echo "$@" | sed -e s_/__g)" ]; then     \
 	     mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_')";  \
 	 fi
@@ -161,26 +175,26 @@ $(EXTENSION)$(LIB_EXT): $(C_OBJ)
 
 # install package to $(DESTDIR)
 .PHONY: install
-install: "$(EXTENSION).jar"
+install: "$(BIN)/$(EXTENSION).jar"
 	mkdir -p -- "$(DESTDIR)$(EXTPATH)"
-	install -m644 -- "$(EXTENSION).jar" "$(PATH)/$(EXTENSION).jar"
+	install -m644 -- "$(BIN)/$(EXTENSION).jar" "$(DESTPATH)/$(EXTENSION).jar"
 ifdef JNI_H
-install: "$(EXTENSION)$(LIB_EXT)"
-	install -m755 -- "$(EXTENSION)$(LIB_EXT)" "$(PATH)/$(LIBFILE)"
+install: "$(BIN)/$(EXTENSION)$(LIB_EXT)"
+	install -m755 -- "$(BIN)/$(EXTENSION)$(LIB_EXT)" "$(DESTPATH)/$(LIBFILE)"
 endif
 
 # uninstall package to $(DESTDIR)
 .PHONY: uninstall
 uninstall:
-	-unlink -- "$(PATH)/$(EXTENSION).jar"
+	-unlink -- "$(DESTPATH)/$(EXTENSION).jar"
 ifdef JNI_H
-	-unlink -- "$(PATH)/$(LIBFILE)"
+	-unlink -- "$(DESTPATH)/$(LIBFILE)"
 endif
-	-rmdir -- "$(PATH)"
+	-rmdir -- "$(DESTPATH)"
 
 
 # clean up
 .PHONY: clean
 clean:
-	-@rm -r ../../bin ../../obj $$(find . | egrep '/[A-Z].*\.h') 2>/dev/null
+	-@rm -r "$(BIN)" "$(OBJ)" $$(find . | egrep '/[A-Z].*\.h') 2>/dev/null
 
