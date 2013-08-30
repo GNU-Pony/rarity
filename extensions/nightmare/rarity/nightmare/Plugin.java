@@ -60,7 +60,7 @@ public class Plugin implements PluginV1
      */
     public String getName()	
     {
-	return "Nightmare"
+	return "Nightmare";
     }
     
     /**
@@ -70,7 +70,7 @@ public class Plugin implements PluginV1
      */
     public String getDescription()
     {
-	return "Reference window management extension"
+	return "Reference window management extension";
     }
     
     /**
