@@ -137,18 +137,18 @@ h: $(foreach H, $(JNI_H), src/rarity/$(H).h)
 
 # compile rarity
 .PHONY: rarity
-rarity: $(JAVA_PRAECLASS) $(JAVA_CLASS) h $(C_OBJ) $(LIB_RARITY) $(JAR_RARITY) bin/rarity.install
+rarity: $(LIB_RARITY) bin/rarity.install
 
 # compile extensions
 .PHONY: extensions
 extensions:
 	@for e in $(EXTENSIONS); do  \
-	     make -C "extensions/$$(E)";  \
+	     make -C "extensions/$${e}";  \
 	 done
 
 
 # .o files
-obj/%.o: src/%.c
+obj/%.o: src/%.c src/%.h
 	@mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_g')"
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(JNI_C_CFLAGS) "$<" -c -o "$@"
 

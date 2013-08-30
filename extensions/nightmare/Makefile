@@ -78,7 +78,7 @@ JAVA_VERSION = -source $(JAVA_SOURCE) -target $(JAVA_TARGET)
 JAVA_WARNINGS = -Xlint
 JAVA_OPTIMISATION = $(shell echo '$(OPTIMISATION)' | sed -e 's/[1-6]//g' -e 's/-O0//g')
 JAVA_BOOTCLASSPATH =
-JAVA_CLASSPATH = -classpath .
+JAVA_CLASSPATH = -classpath .:../bin
 JAVA_SRCPATH = -s .
 JAVA_BINPATH = -d ../../bin
 JAVA_PATHS = $(JAVA_BOOTCLASSPATH) $(JAVA_CLASSPATH) $(JAVA_SRCPATH) $(JAVA_BINPATH)
@@ -131,7 +131,7 @@ endif
 	$(JAVAC) $(JAVA_FLAGS) "$<"
 
 # compile the .jar file
-$(EXTENSION).jar: $(JAVA_PRAECLASS) $(JAVA_CLASS)
+$(EXTENSION).jar: $(JAVA_CLASS)
 	jar cf$(JAR_COMPRESS) "$@" $(shell find bin | grep '\.class$$' | sed -e 's:^../../bin/:-C ../../bin :g' -e 's_\$$_"\$$"_g')
 
 # .h files
@@ -151,7 +151,7 @@ $(EXTENSION).jar: $(JAVA_PRAECLASS) $(JAVA_CLASS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(JNI_C_CFLAGS) "$*.c" -c -o "$@"
 
 # compile the .so file
-$(EXTENSION)$(LIB_EXT): h $(C_OBJ)
+$(EXTENSION)$(LIB_EXT): $(C_OBJ)
 	@if [ ! "$@" = "$$(echo "$@" | sed -e s_/__g)" ]; then     \
 	     mkdir -p "$$(echo "$@" | sed -e 's_\(.*\)/.*_\1_')";  \
 	 fi
