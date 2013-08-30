@@ -228,6 +228,29 @@ public class Window extends PropertyBase
 	}
     }
     
+    /**
+     * Unlist a window
+     * 
+     * @param  window  The windo to unlist
+     */
+    public static void removeWindow(final Window window)
+    {
+	synchronized (windows)
+	{   int index = 0;
+	    for (final Window canidate : windows)
+		if (canidate == window)
+		    break;
+		else
+		    index++;
+	    if (index == windows.size())
+		return;
+	    final Blackboard blackboard = Blackboard.getInstance(Window.class);
+	    blackboard.broadcastMessage(new Window.ExistanceMessage(Window.ExistanceMessage.REMOVING, index));
+	    windows.remove(index);
+	    blackboard.broadcastMessage(new Window.ExistanceMessage(Window.ExistanceMessage.REMOVED, index));
+	}
+    }
+    
     
     /**
      * {@inheritDoc}

@@ -90,7 +90,7 @@ public class Plugin implements PluginV1
     public void initialise()
     {
 	System.err.println("Initialising extension: Nightmare");
-	/* FIXME */
+	WindowMapper.start();
     }
     
     /**
@@ -99,7 +99,7 @@ public class Plugin implements PluginV1
     public void terminate()
     {
 	System.err.println("Terminating extension: Nightmare");
-	/* FIXME */
+	WindowMapper.stop();
     }
     
     
