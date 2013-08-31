@@ -18,6 +18,7 @@
  */
 #include <stdlib.h>
 #include <stdio.h> /* Useful for debugging */
+#include <stdarg.h>
 #include <signal.h>
 #include <X11/Xlib.h>
 #include <X11/XKBlib.h>
@@ -25,6 +26,18 @@
 #include <X11/Xutil.h>
 #include <X11/Xlocale.h>
 
+
+
+/* Debugging macros */
+#ifdef DEBUG
+#define debug  fprintf
+#else
+inline void debug(void* x, ...)
+{
+  (void) x;
+  /* do nothing */
+}
+#endif
 
 
 /* X11 display and screen variables */

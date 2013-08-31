@@ -115,7 +115,7 @@ void Java_rarity_Rarity_abort(JNIEnv* env, jclass class)
  */
 void eventButtonPress(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventButtonPress\n");
+  debug(stderr, "enters eventButtonPress\n");
   XButtonEvent e = xe->xbutton;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, time_ms = e.time;
@@ -125,7 +125,7 @@ void eventButtonPress(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonPress", "(JZIIIIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
-  fprintf(stderr, "exits eventButtonPress\n");
+  debug(stderr, "exits eventButtonPress\n");
 }
 
 /**
@@ -133,7 +133,7 @@ void eventButtonPress(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventButtonRelease(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventButtonRelease\n");
+  debug(stderr, "enters eventButtonRelease\n");
   XButtonEvent e = xe->xbutton;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, time_ms = e.time;
@@ -143,7 +143,7 @@ void eventButtonRelease(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonRelease", "(JZIIIIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, button, same_screen);
-  fprintf(stderr, "exits eventButtonRelease\n");
+  debug(stderr, "exits eventButtonRelease\n");
 }
 
 /**
@@ -151,7 +151,7 @@ void eventButtonRelease(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventClientMessage(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventClientMessage\n");
+  debug(stderr, "enters eventClientMessage\n");
   XClientMessageEvent e = xe->xclient;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
@@ -163,7 +163,7 @@ void eventClientMessage(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventClientMessage", "(JZIJI[B)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, &message_type, format, jdata);
-  fprintf(stderr, "exits eventClientMessage\n");
+  debug(stderr, "exits eventClientMessage\n");
 }
 
 /**
@@ -171,7 +171,7 @@ void eventClientMessage(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventCirculateNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventCirculateNotify\n");
+  debug(stderr, "enters eventCirculateNotify\n");
   XCirculateEvent e = xe->xcirculate;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
@@ -179,7 +179,7 @@ void eventCirculateNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventButtonRelease", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, place);
-  fprintf(stderr, "exits eventCirculateNotify\n");
+  debug(stderr, "exits eventCirculateNotify\n");
 }
 
 /**
@@ -187,7 +187,7 @@ void eventCirculateNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventCirculateRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventCirculateRequest\n");
+  debug(stderr, "enters eventCirculateRequest\n");
   XCirculateRequestEvent e = xe->xcirculaterequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
@@ -195,7 +195,7 @@ void eventCirculateRequest(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventCirculateRequest", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window, place);
-  fprintf(stderr, "exits eventCirculateRequest\n");
+  debug(stderr, "exits eventCirculateRequest\n");
 }
 
 /**
@@ -203,7 +203,7 @@ void eventCirculateRequest(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventColormapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventColormapNotify\n");
+  debug(stderr, "enters eventColormapNotify\n");
   XColormapEvent e = xe->xcolormap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event;
@@ -211,7 +211,7 @@ void eventColormapNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventColormapNotify", "(JZIIIZI)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, colormap, new, state);
-  fprintf(stderr, "exits eventColormapNotify\n");
+  debug(stderr, "exits eventColormapNotify\n");
 }
 
 /**
@@ -219,7 +219,7 @@ void eventColormapNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventConfigureNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventConfigureNotify\n");
+  debug(stderr, "enters eventConfigureNotify\n");
   XConfigureEvent e = xe->xconfigure;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, above = e.above;
@@ -227,7 +227,7 @@ void eventConfigureNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventConfigureNotify", "(JZIIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, above, x, y, width, height, border_width, override_redirect);
-  fprintf(stderr, "exits eventConfigureNotify\n");
+  debug(stderr, "exits eventConfigureNotify\n");
 }
 
 /**
@@ -235,7 +235,7 @@ void eventConfigureNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventConfigureRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventConfigureRequest\n");
+  debug(stderr, "enters eventConfigureRequest\n");
   XConfigureRequestEvent e = xe->xconfigurerequest;
   long long serial = (long long)e.serial, value_mask = (long long)e.value_mask;
   int send_event = e.send_event, parent = e.parent, window = e.window, above = e.above;
@@ -243,7 +243,7 @@ void eventConfigureRequest(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventConfigureRequest", "(JZJIIIIIIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, value_mask, parent, window, above, x, y, width, height, border_width, detail);
-  fprintf(stderr, "exits eventConfigureRequest\n");
+  debug(stderr, "exits eventConfigureRequest\n");
 }
 
 /**
@@ -251,7 +251,7 @@ void eventConfigureRequest(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventCreateNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventCreateNotify\n");
+  debug(stderr, "enters eventCreateNotify\n");
   XCreateWindowEvent e = xe->xcreatewindow;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, parent = e.parent, window = e.window;
@@ -259,7 +259,7 @@ void eventCreateNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventCreateNotify", "(JZIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window, x, y, width, height, border_width, override_redirect);
-  fprintf(stderr, "exits eventCreateNotify\n");
+  debug(stderr, "exits eventCreateNotify\n");
 }
 
 /**
@@ -267,14 +267,14 @@ void eventCreateNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventDestroyNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventDestroyNotify\n");
+  debug(stderr, "enters eventDestroyNotify\n");
   XDestroyWindowEvent e = xe->xdestroywindow;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventDestroyNotify", "(JZII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window);
-  fprintf(stderr, "exits eventDestroyNotify\n");
+  debug(stderr, "exits eventDestroyNotify\n");
 }
 
 /**
@@ -282,7 +282,7 @@ void eventDestroyNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventEnterNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventEnterNotify\n");
+  debug(stderr, "enters eventEnterNotify\n");
   XCrossingEvent e = xe->xcrossing;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, root = e.root, subwindow = e.subwindow, time = e.time;
@@ -291,7 +291,7 @@ void eventEnterNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventEnterNotify", "(JZIIIIIIIIIIZZI)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
-  fprintf(stderr, "exits eventEnterNotify\n");
+  debug(stderr, "exits eventEnterNotify\n");
 }
 
 /**
@@ -299,7 +299,7 @@ void eventEnterNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventExpose\n");
+  debug(stderr, "enters eventExpose\n");
   XExposeEvent e = xe->xexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
@@ -307,7 +307,7 @@ void eventExpose(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventExpose", "(JZIIIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, x, y, width, height, count);
-  fprintf(stderr, "exits eventExpose\n");
+  debug(stderr, "exits eventExpose\n");
 }
 
 /**
@@ -315,7 +315,7 @@ void eventExpose(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventFocusIn(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventFocusIn\n");
+  debug(stderr, "enters eventFocusIn\n");
   XFocusChangeEvent e = xe->xfocus;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
@@ -323,7 +323,7 @@ void eventFocusIn(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventFocusIn", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, mode, detail);
-  fprintf(stderr, "exits eventFocusIn\n");
+  debug(stderr, "exits eventFocusIn\n");
 }
 
 /**
@@ -331,7 +331,7 @@ void eventFocusIn(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventFocusOut(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventFocusOut\n");
+  debug(stderr, "enters eventFocusOut\n");
   XFocusChangeEvent e = xe->xfocus;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
@@ -339,7 +339,7 @@ void eventFocusOut(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventFocusOut", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, mode, detail);
-  fprintf(stderr, "exits eventFocusOut\n");
+  debug(stderr, "exits eventFocusOut\n");
 }
 
 /**
@@ -347,7 +347,7 @@ void eventFocusOut(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventGraphicsExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventGraphicsExpose\n");
+  debug(stderr, "enters eventGraphicsExpose\n");
   XGraphicsExposeEvent e = xe->xgraphicsexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, drawable = e.drawable;
@@ -355,7 +355,7 @@ void eventGraphicsExpose(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventGraphicsExpose", "(JZIIIIIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, drawable, x, y, width, height, count, major_code, minor_code);
-  fprintf(stderr, "exits eventGraphicsExpose\n");
+  debug(stderr, "exits eventGraphicsExpose\n");
 }
 
 /**
@@ -363,7 +363,7 @@ void eventGraphicsExpose(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventGravityNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventGravityNotify\n");
+  debug(stderr, "enters eventGravityNotify\n");
   XGravityEvent e = xe->xgravity;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
@@ -371,7 +371,7 @@ void eventGravityNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventGravityNotify", "(JZIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, x, y);
-  fprintf(stderr, "exits eventGravityNotify\n");
+  debug(stderr, "exits eventGravityNotify\n");
 }
 
 /**
@@ -379,7 +379,7 @@ void eventGravityNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventKeymapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventKeymapNotify\n");
+  debug(stderr, "enters eventKeymapNotify\n");
   XKeymapEvent e = xe->xkeymap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
@@ -389,7 +389,7 @@ void eventKeymapNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeymapNotify", "(JZI[B)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, jkey_vector);
-  fprintf(stderr, "exits eventKeymapNotify\n");
+  debug(stderr, "exits eventKeymapNotify\n");
 }
 
 /**
@@ -397,7 +397,7 @@ void eventKeymapNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventKeyPress(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventKeyPress\n");
+  debug(stderr, "enters eventKeyPress\n");
   XKeyEvent e = xe->xkey;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, time_ms = e.time;
@@ -407,7 +407,7 @@ void eventKeyPress(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeyPress", "(JZIIIIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
-  fprintf(stderr, "exits eventKeyPress\n");
+  debug(stderr, "exits eventKeyPress\n");
 }
 
 /**
@@ -415,7 +415,7 @@ void eventKeyPress(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventKeyRelease(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventKeyRelease\n");
+  debug(stderr, "enters eventKeyRelease\n");
   XKeyEvent e = xe->xkey;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, time_ms = e.time;
@@ -425,7 +425,7 @@ void eventKeyRelease(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventKeyRelease", "(JZIIIIIIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, keycode, same_screen);
-  fprintf(stderr, "exits eventKeyRelease\n");
+  debug(stderr, "exits eventKeyRelease\n");
 }
 
 /**
@@ -433,7 +433,7 @@ void eventKeyRelease(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventLeaveNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventLeaveNotify\n");
+  debug(stderr, "enters eventLeaveNotify\n");
   XCrossingEvent e = xe->xcrossing;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, root = e.root, subwindow = e.subwindow, time = e.time;
@@ -442,7 +442,7 @@ void eventLeaveNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventLeaveNotify", "(JZIIIIIIIIIIZZI)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, root, subwindow, time, x, y, x_root, y_root, mode, detail, same_screen, focus, state);
-  fprintf(stderr, "exits eventLeaveNotify\n");
+  debug(stderr, "exits eventLeaveNotify\n");
 }
 
 /**
@@ -450,7 +450,7 @@ void eventLeaveNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventMapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventMapNotify\n");
+  debug(stderr, "enters eventMapNotify\n");
   XMapEvent e = xe->xmap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window;
@@ -458,7 +458,7 @@ void eventMapNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapNotify", "(JZIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, override_redirect);
-  fprintf(stderr, "exits eventMapNotify\n");
+  debug(stderr, "exits eventMapNotify\n");
 }
 
 /**
@@ -466,14 +466,14 @@ void eventMapNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventMappingNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventMappingNotify\n");
+  debug(stderr, "enters eventMappingNotify\n");
   XMappingEvent e = xe->xmapping;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, request = e.request, first_keycode = e.first_keycode, count = e.count;
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMappingNotify", "(JZIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, request, first_keycode, count);
-  fprintf(stderr, "exits eventMappingNotify\n");
+  debug(stderr, "exits eventMappingNotify\n");
 }
 
 /**
@@ -481,14 +481,14 @@ void eventMappingNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventMapRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventMapRequest\n");
+  debug(stderr, "enters eventMapRequest\n");
   XMapRequestEvent e = xe->xmaprequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, parent = e.parent, window = e.window;
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapRequest", "(JZII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, parent, window);
-  fprintf(stderr, "exits eventMapRequest\n");
+  debug(stderr, "exits eventMapRequest\n");
 }
 
 /**
@@ -496,7 +496,7 @@ void eventMapRequest(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventMotionNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventMotionNotify\n");
+  debug(stderr, "enters eventMotionNotify\n");
   XMotionEvent e = xe->xmotion;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, time_ms = e.time;
@@ -507,7 +507,7 @@ void eventMotionNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventMapRequest", "(JZIIIIIIIIIZZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, time_ms, window, root, subwindow, x, y, x_root, y_root, state, same_screen, is_hint);
-  fprintf(stderr, "exits eventMotionNotify\n");
+  debug(stderr, "exits eventMotionNotify\n");
 }
 
 /**
@@ -515,7 +515,7 @@ void eventMotionNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventNoExpose(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventNoExpose\n");
+  debug(stderr, "enters eventNoExpose\n");
   XNoExposeEvent e = xe->xnoexpose;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, drawable = e.drawable;
@@ -523,7 +523,7 @@ void eventNoExpose(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventNoExpose", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, drawable, major_code, minor_code);
-  fprintf(stderr, "exits eventNoExpose\n");
+  debug(stderr, "exits eventNoExpose\n");
 }
 
 /**
@@ -531,7 +531,7 @@ void eventNoExpose(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventPropertyNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventPropertyNotify\n");
+  debug(stderr, "enters eventPropertyNotify\n");
   XPropertyEvent e = xe->xproperty;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, time = e.time, state = e.state;
@@ -539,7 +539,7 @@ void eventPropertyNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventPropertyNotify", "(JZIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, time, state, atom);
-  fprintf(stderr, "exits eventPropertyNotify\n");
+  debug(stderr, "exits eventPropertyNotify\n");
 }
 
 /**
@@ -547,7 +547,7 @@ void eventPropertyNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventReparentNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventReparentNotify\n");
+  debug(stderr, "enters eventReparentNotify\n");
   XReparentEvent e = xe->xreparent;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, parent = e.parent;
@@ -555,7 +555,7 @@ void eventReparentNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventReparentNotify", "(JZIIIIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, parent, x, y, override_redirect);
-  fprintf(stderr, "exits eventReparentNotify\n");
+  debug(stderr, "exits eventReparentNotify\n");
 }
 
 /**
@@ -563,7 +563,7 @@ void eventReparentNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventResizeRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventResizeRequest\n");
+  debug(stderr, "enters eventResizeRequest\n");
   XResizeRequestEvent e = xe->xresizerequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window;
@@ -571,7 +571,7 @@ void eventResizeRequest(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventResizeRequest", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, width, height);
-  fprintf(stderr, "exits eventResizeRequest\n");
+  debug(stderr, "exits eventResizeRequest\n");
 }
 
 /**
@@ -579,7 +579,7 @@ void eventResizeRequest(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventSelectionClear(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventSelectionClear\n");
+  debug(stderr, "enters eventSelectionClear\n");
   XSelectionClearEvent e = xe->xselectionclear;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, time = e.time;
@@ -587,7 +587,7 @@ void eventSelectionClear(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionClear", "(JZIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, time, selection);
-  fprintf(stderr, "exits eventSelectionClear\n");
+  debug(stderr, "exits eventSelectionClear\n");
 }
 
 /**
@@ -595,7 +595,7 @@ void eventSelectionClear(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventSelectionNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventSelectionNotify\n");
+  debug(stderr, "enters eventSelectionNotify\n");
   XSelectionEvent e = xe->xselection;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, requestor = e.requestor, time = e.time;
@@ -603,7 +603,7 @@ void eventSelectionNotify(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionNotify", "(JZIIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, requestor, time, selection, target, property);
-  fprintf(stderr, "exits eventSelectionNotify\n");
+  debug(stderr, "exits eventSelectionNotify\n");
 }
 
 /**
@@ -611,7 +611,7 @@ void eventSelectionNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventSelectionRequest(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventSelectionRequest\n");
+  debug(stderr, "enters eventSelectionRequest\n");
   XSelectionRequestEvent e = xe->xselectionrequest;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, owner = e.owner, requestor = e.requestor, time = e.time;
@@ -619,7 +619,7 @@ void eventSelectionRequest(XEvent* xe, JNIEnv* env, jclass class)
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventSelectionRequest", "(JZIIIIII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, owner, requestor, time, selection, target, property);
-  fprintf(stderr, "exits eventSelectionRequest\n");
+  debug(stderr, "exits eventSelectionRequest\n");
 }
 
 /**
@@ -627,14 +627,14 @@ void eventSelectionRequest(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventUnmapNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventUnmapNotify\n");
+  debug(stderr, "enters eventUnmapNotify\n");
   XUnmapEvent e = xe->xunmap;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, event = e.event, window = e.window, from_configure = from_configure;
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventUnmapNotify", "(JZIIZ)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, event, window, from_configure);
-  fprintf(stderr, "exits eventUnmapNotify\n");
+  debug(stderr, "exits eventUnmapNotify\n");
 }
 
 /**
@@ -642,14 +642,14 @@ void eventUnmapNotify(XEvent* xe, JNIEnv* env, jclass class)
  */
 void eventVisibilityNotify(XEvent* xe, JNIEnv* env, jclass class)
 {
-  fprintf(stderr, "enters eventVisibilityNotify\n");
+  debug(stderr, "enters eventVisibilityNotify\n");
   XVisibilityEvent e = xe->xvisibility;
   long long serial = (long long)e.serial;
   int send_event = e.send_event, window = e.window, state = state;
   
   jmethodID method = (*env)->GetStaticMethodID(env, class, "eventVisibilityNotify", "(JZII)V");
   (*env)->CallStaticVoidMethod(env, class, method, serial, send_event, window, state);
-  fprintf(stderr, "exits eventVisibilityNotify\n");
+  debug(stderr, "exits eventVisibilityNotify\n");
 }
 
 
