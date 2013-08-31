@@ -273,12 +273,14 @@ public abstract class XEvent implements Blackboard.BlackboardMessage
     
     public static class MapNotify extends MapEvent
     {
-	public MapNotify(final long serial, final boolean sendEvent, final int window, final boolean overrideRedirect)
+	public MapNotify(final long serial, final boolean sendEvent, final int event, final int window, final boolean overrideRedirect)
 	{
 	    super(serial, sendEvent, window);
+	    this.event = event;
 	    this.overrideRedirect = overrideRedirect;
 	}
 	
+	public final long event;
 	public final boolean overrideRedirect;
     }
     

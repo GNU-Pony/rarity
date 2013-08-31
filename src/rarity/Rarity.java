@@ -439,9 +439,9 @@ public class Rarity
     }
     
     
-    public static void eventMapNotify(final long serial, final boolean sendEvent, final int window, final boolean overrideRedirect)
+    public static void eventMapNotify(final long serial, final boolean sendEvent, final int event, final int window, final boolean overrideRedirect)
     {
-	(new XEvent.MapNotify(serial, sendEvent, window, overrideRedirect)).broadcast();
+	(new XEvent.MapNotify(serial, sendEvent, event, window, overrideRedirect)).broadcast();
     }
     
     
