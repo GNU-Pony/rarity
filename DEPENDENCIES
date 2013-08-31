@@ -8,7 +8,7 @@ RUNTIME DEPENDENCIES:
 BUILD DEPENDENCIES:
 
 	java-environment>=7 : The majority of the program is written in Java 7
-	jpp                 : Small parts of the Java code uses jpp preprocessing
+	jpp>=4.4            : Small parts of the Java code uses jpp preprocessing
 	make                : The build/install script is written for GNU Make
 	coreutils           : corutils is used during the building and cut is used in the jpp code
 	findutils           : find is used during the building
