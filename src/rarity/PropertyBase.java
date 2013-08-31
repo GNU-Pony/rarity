@@ -63,11 +63,11 @@ public abstract class PropertyBase
     public Object get(final String property)
     {	
 	Object obj = this.properties.get(property);
-	System.err.println("Getting property " + property + " on " + this + ", with value " + obj);
+	<"">System.err.println("Getting property " + property + " on " + this + ", with value " + obj);
 	if ((obj == null) || (obj instanceof Lambda == false))
 	    return obj;
 	obj = ((Lambda)obj).evaluate(this);
-	System.err.println("  Evaluates to " + obj);
+	<"">System.err.println("  Evaluates to " + obj);
 	return obj;
     }
     
@@ -123,7 +123,7 @@ public abstract class PropertyBase
     public void set(final String property, final Object value)
     {
 	synchronized (this.properties)
-	{   System.err.println("Setting property " + property + " to " + value + " on " + this);
+	{   <"">System.err.println("Setting property " + property + " to " + value + " on " + this);
 	    this.properties.put(property, value);
 	}
     }

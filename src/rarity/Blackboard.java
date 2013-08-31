@@ -318,7 +318,7 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
-	    System.err.println("Registrering observer " + observer + " on blackboard " + this.name);
+	    <"">System.err.println("Registrering observer " + observer + " on blackboard " + this.name);
             this.observers.add(observer);
             this.broadcastMessage(new ObserverRegisterMessage(observer, true));
         }
@@ -334,7 +334,7 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
-	    System.err.println("Unregistrering observer " + observer + " from blackboard " + this.name);
+	    <"">System.err.println("Unregistrering observer " + observer + " from blackboard " + this.name);
             this.observers.remove(observer);
             this.observationThreading.remove(observer);
             this.observationPriorities.remove(observer);
@@ -356,9 +356,9 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
-	    System.err.println("Setting threading policy for observer " + observer + " on blackboard " + this.name);
-	    for (final Class<? extends BlackboardMessage> messageType : messageTypes)
-		System.err.println("  on message type " + messageType);
+	    <"">System.err.println("Setting threading policy for observer " + observer + " on blackboard " + this.name);
+	    <"">for (final Class<? extends BlackboardMessage> messageType : messageTypes)
+		<"">System.err.println("  on message type " + messageType);
             HashMap<Class<? extends BlackboardMessage>, ThreadingPolicy> map = this.observationThreading.get(observer);
             if (map == null)
             {
@@ -384,9 +384,9 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
-	    System.err.println("Setting priority for observer " + observer + " to nice value " + nice + " on blackboard " + this.name);
-	    for (final Class<? extends BlackboardMessage> messageType : messageTypes)
-		System.err.println("  on message type " + messageType);
+	    <"">System.err.println("Setting priority for observer " + observer + " to nice value " + nice + " on blackboard " + this.name);
+	    <"">for (final Class<? extends BlackboardMessage> messageType : messageTypes)
+		<"">System.err.println("  on message type " + messageType);
             HashMap<Class<? extends BlackboardMessage>, Integer> map = this.observationPriorities.get(observer);
             if (map == null)
             {
@@ -408,7 +408,7 @@ public class Blackboard
     {
         synchronized (this.monitor)
         {
-	    System.err.println("Broadcasting message " + message + " on blackboard " + this.name);
+	    <"">System.err.println("Broadcasting message " + message + " on blackboard " + this.name);
 	    
             final PriorityQueue<Integer> priorities = new PriorityQueue<Integer>();
             final HashMap<Integer, Vector<BlackboardObserver>> prioObservers = new HashMap<>();
@@ -416,7 +416,7 @@ public class Blackboard
             
             for (final BlackboardObserver observer : this.observers)
             {
-		System.err.println("  Queuing observer " + observer);
+		<"">System.err.println("  Queuing observer " + observer);
 		
                 final HashMap<Class<? extends BlackboardMessage>, Integer> map = this.observationPriorities.get(observer);
                 Integer priority = Integer.valueOf(0);
@@ -440,7 +440,7 @@ public class Blackboard
             for (Integer priority; (priority = priorities.poll()) != null;) // iterator messes up order
                 for (final BlackboardObserver observer : prioObservers.get(priority))
                 {
-		    System.err.println("  Polling observer " + observer);
+		    <"">System.err.println("  Polling observer " + observer);
 		    
                     final ThreadingPolicy policy;
                     final Runnable runnable = new Runnable()
@@ -462,11 +462,11 @@ public class Blackboard
                         policy = map.get(message.getClass());
                     else
 		    {
-			System.err.println("    Skipping observer " + observer);
+			<"">System.err.println("    Skipping observer " + observer);
 			continue;
 		    }
 		    
-			System.err.println("    Cuing observer " + observer);
+		    <"">System.err.println("    Cuing observer " + observer);
                     if (policy == null)  runnable.run();
                     else                 policy.createThread(runnable).start();
                 }
