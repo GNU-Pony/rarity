@@ -20,6 +20,19 @@
 #include "global.h"
 
 
+/* Debugging macros */
+#ifdef DEBUG
+#define debug  fprintf
+#else
+static inline void debug(void* x, ...)
+{
+  (void) x;
+  /* do nothing */
+}
+#endif
+
+
+
 /**
  * The X11 display we are using
  */

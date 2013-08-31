@@ -169,9 +169,9 @@ bin/%.java: src/%.java
 	$(JPP) --export LIBPATH="$(LIBPATH)" --export LIB="$(LIB_PREFIX)$(LIB)$(LIB_EXT)" -s "src" -o "bin" "$<"
 
 # .class files
-bin/%.class: bin/%.java
+bin/%.class: $(JAVA_PRAECLASS)
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
-	$(JAVAC) $(JAVA_FLAGS) "$<"
+	$(JAVAC) $(JAVA_FLAGS) "bin/$*.java"
 
 # .h files
 src/%.h: bin/%.class

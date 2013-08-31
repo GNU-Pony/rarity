@@ -136,9 +136,9 @@ $(BIN)/%.java: %.java
 	$(JPP) --export LIBPATH="$(EXTPATH)" --export LIB="$(LIBFILE)" -s "." -o "$(BIN)" "$<"
 
 # .class files
-$(BIN)/%.class: $(BIN)/%.java
+$(BIN)/%.class: $(JAVA_PRAECLASS)
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
-	$(JAVAC) $(JAVA_FLAGS) "$(shell echo "$<" | sed -e 's/^$(SED_BIN)\//\.\//g')"
+	$(JAVAC) $(JAVA_FLAGS) "$(shell echo "$(BIN)/$*.java" | sed -e 's/^$(SED_BIN)\//\.\//g')"
 
 # compile the .jar file
 $(BIN)/$(EXTENSION).jar: $(JAVA_CLASS)
