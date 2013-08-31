@@ -19,6 +19,7 @@
 #Optional definitions:
 #    NO_XINERAMA  --  Do not compile with Xinerama support
 #    TESTING      --  Compile for testing
+#    DEBUG        --  Compile with DEBUG defined
 
 
 # settings
@@ -78,11 +79,23 @@ else
   CFLAGS += $(shell "$(PKG_CONFIG)" --cflags xinerama)
   LDFLAGS += $(shell "$(PKG_CONFIG)" --libs xinerama)
 endif
+ifdef DEBUG
+  CPPFLAGS += -DDEBUG
+endif
 
 # cc flags for jni
 JNI_INCLUDE = -I$(shell echo $${JAVA_HOME})/include
 JNI_C_CFLAGS = $(JNI_INCLUDE) -fPIC
 JNI_C_LDFLAGS = -shared
+
+# jpp flags
+JPP_SRCPATH = -s "src"
+JPP_BINPATH = -o "bin"
+JPP_EXPORTS = --export LIBPATH="$(LIBPATH)" --export LIB="$(LIB_PREFIX)$(LIB)$(LIB_EXT)"
+ifdef DEBUG
+  JPP_EXPORTS += --export DEBUG
+endif
+JPP_FLAGS = $(JPP_EXPORTS) $(JPP_SRCPATH) $(JPP_BINPATH)
 
 # javac flags
 JAVA_VERSION = -source $(JAVA_SOURCE) -target $(JAVA_TARGET)
@@ -166,7 +179,7 @@ $(LIB_RARITY): $(C_OBJ)
 bin/%.java: src/%.java
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@mkdir -p "bin"
-	$(JPP) --export LIBPATH="$(LIBPATH)" --export LIB="$(LIB_PREFIX)$(LIB)$(LIB_EXT)" -s "src" -o "bin" "$<"
+	$(JPP) $(JPP_FLAGS) "$<"
 
 # .class files
 bin/%.class: $(JAVA_PRAECLASS)
