@@ -125,6 +125,7 @@ public abstract class PropertyBase
 	synchronized (this.properties)
 	{   <"">System.err.println("Setting property " + property + " to " + value + " on " + this);
 	    this.properties.put(property, value);
+	    this.updated(property, value);
 	}
     }
     
