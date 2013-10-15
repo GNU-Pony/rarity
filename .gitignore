@@ -14,6 +14,7 @@ obj/
 *.o
 *.gch
 *.so
+*.out
 [A-Z]*.h
 *~
 
