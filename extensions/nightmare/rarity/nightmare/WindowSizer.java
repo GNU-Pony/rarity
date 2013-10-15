@@ -81,11 +81,11 @@ public class WindowSizer implements Blackboard.BlackboardObserver
 	    if (Screen.getScreenCount() < 1)
 		return;
 	    
-	    final Screen screen = Screen.getScreen(0);
-	    int x = screen.getInteger(Screen.OFFSET_X) + screen.getInteger(Screen.MARGIN_LEFT);
-	    int y = screen.getInteger(Screen.OFFSET_Y) + screen.getInteger(Screen.MARGIN_TOP);
-	    int width = screen.getInteger(Screen.WIDTH);
-	    int height = screen.getInteger(Screen.HEIGHT);
+	    final PhysicalScreen screen = PhysicalScreen.getScreen(0);
+	    int x = screen.getInteger(PhysicalScreen.OFFSET_X) + screen.getInteger(PhysicalScreen.MARGIN_LEFT);
+	    int y = screen.getInteger(PhysicalScreen.OFFSET_Y) + screen.getInteger(PhysicalScreen.MARGIN_TOP);
+	    int width = screen.getInteger(PhysicalScreen.WIDTH);
+	    int height = screen.getInteger(PhysicalScreen.HEIGHT);
 	    
 	    window.set(Window.LEFT, x);
 	    window.set(Window.TOP, y);

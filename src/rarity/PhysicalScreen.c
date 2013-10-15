@@ -1,10 +1,5 @@
 #include <stdio.h>
-#include <X11/Xlib.h>
-#include <X11/Xlibint.h>
-#include <X11/Xproto.h>
-#include <X11/Xatom.h>
 #include <X11/extensions/Xrandr.h>
-#include <X11/extensions/Xrender.h>
 
 
 #define false  0
@@ -36,11 +31,33 @@ int main()
     {
       Window root = RootWindow(display, screen);
       XRRScreenResources* res;
+      int outputs, output;
+      
+      RROutput primary = XRRGetOutputPrimary(display, root);
       
       if ((res = XRRGetScreenResources(display, root)) == false)
 	{
 	  fprintf(stderr, "Cannot get screen resources\n");
 	  return 1;
+	}
+      
+      outputs = res->noutput;
+      for (output = 0; output < outputs; output++)
+	{
+	  XRROutputInfo* output_info = XRRGetOutputInfo(display, res, res->outputs[output]);
+	  if (output_info->connection == 1)
+	    continue; /* not connected */
+	  
+	  XRRCrtcInfo* output_crtc = XRRGetCrtcInfo(display, res, output_info->crtc);
+	  XRRModeInfo* output_mode = res->modes + output;
+	  
+	  if (primary == res->outputs[output])
+	    printf("* ");
+	  
+	  printf("%s:%i @ %i : %ix%i+%i+%i\n",
+		 output_info->name, output, screen,
+		 output_mode->width, output_mode->height,
+		 output_crtc->x, output_crtc->y);
 	}
     }
   

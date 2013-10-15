@@ -70,9 +70,9 @@ C_WARNINGS = -Wall -Wextra -pedantic
 C_OPTIMISATION = $(OPTIMISATION)
 
 # cc flags in stages
-CFLAGS = $(C_WARNINGS) $(C_OPTIMISATION) -std=$(C_STD) $(shell "$(PKG_CONFIG)" --cflags x11)
+CFLAGS = $(C_WARNINGS) $(C_OPTIMISATION) -std=$(C_STD) $(shell "$(PKG_CONFIG)" --cflags x11 xrandr)
 CPPFLAGS =
-LDFLAGS = $(shell "$(PKG_CONFIG)" --libs x11)
+LDFLAGS = $(shell "$(PKG_CONFIG)" --libs x11 xrandr)
 ifdef NO_XINERAMA
   CPPFLAGS += -DNO_XINERAMA
 else
