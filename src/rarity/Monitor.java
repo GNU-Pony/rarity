@@ -30,57 +30,62 @@ import java.util.Vector;
 public class Monitor extends PropertyBase
 {
     /**
-     * The screen's virtual resolution on the X-axis
+     * The index of the screen the monitor is allocated to
+     */
+    public static final String SCREEN = "screen";
+    
+    /**
+     * The monitor's virtual resolution on the X-axis
      */
     public static final String RESOLUTION_X = "resolutionX";
     
     /**
-     * The screen's virtual resolution on the Y-axis
+     * The monitor's virtual resolution on the Y-axis
      */
     public static final String RESOLUTION_Y = "resolutionY";
     
     /**
-     * The screen's offset on the X-axis
+     * The monitor's offset on the X-axis
      */
     public static final String OFFSET_X = "offsetX";
     
     /**
-     * The screen's offset on the Y-axis
+     * The monitor's offset on the Y-axis
      */
     public static final String OFFSET_Y = "offsetY";
     
     /**
-     * The left margin of the screen, that is how much on the left side that is occupied by docked windows
+     * The left margin of the monitor, that is how much on the left side that is occupied by docked windows
      */
     public static final String MARGIN_LEFT = "marginLeft";
     
     /**
-     * The right margin of the screen, that is how much on the right side that is occupied by docked windows
+     * The right margin of the monitor, that is how much on the right side that is occupied by docked windows
      */
     public static final String MARGIN_RIGHT = "marginRight";
     
     /**
-     * The top margin of the screen, that is how much on the top side that is occupied by docked windows
+     * The top margin of the monitor, that is how much on the top side that is occupied by docked windows
      */
     public static final String MARGIN_TOP = "marginTop";
     
     /**
-     * The bottom margin of the screen, that is how much on the bottom side that is occupied by docked windows
+     * The bottom margin of the monitor, that is how much on the bottom side that is occupied by docked windows
      */
     public static final String MARGIN_BOTTOM = "marginBottom";
     
     /**
-     * The unoccupied screen width
+     * The unoccupied monitor width
      */
     public static final String WIDTH = "width";
     
     /**
-     * The unoccupied screen height
+     * The unoccupied monitor height
      */
     public static final String HEIGHT = "height";
     
     /**
-     * Whether the screen is the primary screen
+     * Whether the monitor is the primary monitor
      */
     public static final String PRIMARY = "primary";
     
@@ -89,14 +94,16 @@ public class Monitor extends PropertyBase
     /**
      * Constructor
      * 
-     * @param  width        The screen's virtual resolution on the X-axis
-     * @param  height       The screen's virtual resolution on the Y-axis
-     * @param  left         The screen's offset on the X-axis
-     * @param  top          The screen's offset on the Y-axis
-     * @param  primary      Whether the screen is the primary screen
+     * @param  screen       The index of the screen the monitor is allocated to
+     * @param  width        The monitor's virtual resolution on the X-axis
+     * @param  height       The monitor's virtual resolution on the Y-axis
+     * @param  left         The monitor's offset on the X-axis
+     * @param  top          The monitor's offset on the Y-axis
+     * @param  primary      Whether the monitor is the primary monitor
      */
-    protected Monitor(final int width, final int height, final int left, final int top, final boolean primary)
+    protected Monitor(final int screen, final int width, final int height, final int left, final int top, final boolean primary)
     {
+	this.set(SCREEN, screen);
 	this.set(PRIMARY, primary);
 	this.set(RESOLUTION_X, width);
 	this.set(RESOLUTION_Y, height);
@@ -111,8 +118,8 @@ public class Monitor extends PropertyBase
 		@Override
 		public Object evaluate(final Object... params)
 		{
-		    final Monitor screen = (Monitor)(params[0]);
-		    return screen.getInteger(RESOLUTION_X) - screen.getInteger(MARGIN_LEFT) - screen.getInteger(MARGIN_RIGHT);
+		    final Monitor monitor = (Monitor)(params[0]);
+		    return monitor.getInteger(RESOLUTION_X) - monitor.getInteger(MARGIN_LEFT) - monitor.getInteger(MARGIN_RIGHT);
 		}
 	    });
 	this.set(HEIGHT, new Lambda()
@@ -120,8 +127,8 @@ public class Monitor extends PropertyBase
 		@Override
 		public Object evaluate(final Object... params)
 		{
-		    final Monitor screen = (Monitor)(params[0]);
-		    return screen.getInteger(RESOLUTION_Y) - screen.getInteger(MARGIN_TOP) - screen.getInteger(MARGIN_BOTTOM);
+		    final Monitor monitor = (Monitor)(params[0]);
+		    return monitor.getInteger(RESOLUTION_Y) - monitor.getInteger(MARGIN_TOP) - monitor.getInteger(MARGIN_BOTTOM);
 		}
 	    });
     }
@@ -129,11 +136,59 @@ public class Monitor extends PropertyBase
     
     
     /**
-     * All screens in index order
+     * All monitors in index order
      */
-    static Vector<Monitor> screens = new Vector<Monitor>();
+    static Vector<Monitor> monitors = new Vector<Monitor>();
     
     
+    
+    /**
+     * Blackboard message for {@link Monitor} collective property and existance updates synchronisation
+     * 
+     * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
+     */
+    public static class SynchronisationMessage implements Blackboard.BlackboardMessage
+    {
+	/**
+	 * Update is beginning
+	 */
+	public final static int BEGIN = 0;
+	
+	/**
+	 * An entire monitor has been update, added, or removed
+	 */
+	public final static int MONITOR_DONE = 1;
+	
+	/**
+	 * All monitor in a screen has been completed, however exclucind removal of monitors
+	 */
+	public final static int SCREEN_DONE = 2;
+	
+	/**
+	 * Update is complete
+	 */
+	public final static int DONE = 3;
+	
+	
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param  state  The update state
+	 */
+	protected SynchronisationMessage(final int state)
+	{
+	    this.state = state;
+	}
+	
+	
+	
+	/**
+	 * The updated state
+	 */
+	public final int state;
+	
+    }
     
     /**
      * Blackboard message for {@link Monitor} property updates
@@ -145,16 +200,16 @@ public class Monitor extends PropertyBase
 	/**
 	 * Constructor
 	 * 
-	 * @param  screen    The updated screen
+	 * @param  monitor   The updated monitor
 	 * @param  property  The updated property
 	 */
-	protected PropertyMessage(final Monitor screen, final String property)
+	protected PropertyMessage(final Monitor monitor, final String property)
 	{
-	    this.screen = screen;
+	    this.monitor = monitor;
 	    this.property = property;
 	    int i = 0;
-	    for (final Monitor scr : Monitor.screens)
-		if (scr == screen)
+	    for (final Monitor scr : Monitor.monitors)
+		if (scr == monitor)
 		    break;
 		else
 		    i++;
@@ -164,12 +219,12 @@ public class Monitor extends PropertyBase
 	
 	
 	/**
-	 * The updated screen
+	 * The updated monitor
 	 */
-	public final Monitor screen;
+	public final Monitor monitor;
 	
 	/**
-	 * The index of the updated screen
+	 * The index of the updated monitor
 	 */
 	public final int index;
 	
@@ -189,17 +244,17 @@ public class Monitor extends PropertyBase
     public static class ExistanceMessage implements Blackboard.BlackboardMessage
     {
 	/**
-	 * A new screen has been added
+	 * A new monitor has been added
 	 */
 	public static final int ADDED = 0;
 	
 	/**
-	 * A screen is being removed
+	 * A monitor is being removed
 	 */
 	public static final int REMOVING = 1;
 	
 	/**
-	 * A screen has been removed
+	 * A monitor has been removed
 	 */
 	public static final int REMOVED = 2;
 	
@@ -209,7 +264,7 @@ public class Monitor extends PropertyBase
 	 * Constructor
 	 * 
 	 * @param  action  Either {@link #ADDED}, {@link #REMOVING} or {@link #REMOVED}
-	 * @param  index   The index of the screen in question
+	 * @param  index   The index of the monitor in question
 	 */
 	protected ExistanceMessage(final int action, final int index)
 	{
@@ -234,40 +289,167 @@ public class Monitor extends PropertyBase
     
     
     /**
-     * Refresh the screen vector
+     * Refresh the monitor vector
      */
     public static void refresh()
     {
-	synchronized (screens)
-	{
-	    final Blackboard blackboard = Blackboard.getInstance(Monitor.class);
-	    /* FIXME */
+	synchronized (monitors)
+	{   final Blackboard blackboard = Blackboard.getInstance(Monitor.class);
+	    blackboard.broadcastMessage(new Monitor.SynchronisationMessage(Monitor.SynchronisationMessage.BEGIN));
+	    
+	    int index = 0;
+	    int count = monitors.size();
+	    
+	    begin();
+	    final int screenCount = getScreenCount();
+	    for (int screen = 0; screen < screenCount; screen++)
+	    {
+		selectScreen(screen);
+		final int monitorCount = getScreenMonitorCount();
+		for (int monitor = 0; monitor < monitorCount; monitor++)
+		{
+		    selectMonitor(monitor);
+		    if (isConnected() == false)
+			continue;
+		    
+		    final int width = getWidth();
+		    final int height = getHeight();
+		    final int left = getXOffset();
+		    final int top = getYOffset();
+		    final boolean primary = isPrimary();
+		    
+		    if (index < count)
+		    {	final Monitor mon = monitors.get(index);
+			mon.set(WIDTH, width);
+			mon.set(HEIGHT, height);
+			mon.set(OFFSET_X, left);
+			mon.set(OFFSET_Y, top);
+			mon.set(SCREEN, screen);
+			mon.set(PRIMARY, primary);
+		    }
+		    else
+		    {	monitors.add(new Monitor(screen, width, height, left, top, primary));
+			blackboard.broadcastMessage(new Monitor.ExistanceMessage(Monitor.ExistanceMessage.ADDED, index));
+		    }
+		    
+		    index++;
+		    blackboard.broadcastMessage(new Monitor.SynchronisationMessage(Monitor.SynchronisationMessage.MONITOR_DONE));
+		}
+		blackboard.broadcastMessage(new Monitor.SynchronisationMessage(Monitor.SynchronisationMessage.SCREEN_DONE));
+	    }
+	    
+	    while (count-- > index)
+	    {
+		blackboard.broadcastMessage(new Monitor.ExistanceMessage(Monitor.ExistanceMessage.REMOVING, index));
+		monitors.remove(index);
+		blackboard.broadcastMessage(new Monitor.ExistanceMessage(Monitor.ExistanceMessage.REMOVED, index));
+	    }
+	    
+	    blackboard.broadcastMessage(new Monitor.SynchronisationMessage(Monitor.SynchronisationMessage.DONE));
 	}
     }
     
     
+    
     /**
-     * Gets a screen by its index
-     * 
-     * @param   index  The screen's index
-     * @return         The screen
+     * Initialise update process
      */
-    public static Monitor getScreen(final int index)
+    private static native void begin();
+    
+    /**
+     * The number of screens in the environment
+     * 
+     * @return  The number of screens in the environment
+     */
+    private static native int getScreenCount();
+    
+    /**
+     * Select a screen
+     * 
+     * @param  screen  The index of the screen
+     */
+    private static native void selectScreen(int screen);
+    
+    /**
+     * The number of monitors in the environment for the selected screen
+     * 
+     * @return  The number of monitors in the environment for the selected screen
+     */
+    private static native int getScreenMonitorCount();
+    
+    /**
+     * Select a monitor
+     * 
+     * @param  monitor  The index of the monitor under the selected screen
+     */
+    private static native void selectMonitor(int monitor);
+    
+    /**
+     * Checks whether the selected monitor is connected
+     * 
+     * @return  Whether the selected monitor is connected
+     */
+    private static native boolean isConnected();
+    
+    /**
+     * Checks whether the selected monitor is the primary monitor its screen
+     * 
+     * @return  Whether the selected monitor is the primary monitor its screen
+     */
+    private static native boolean isPrimary();
+    
+    /**
+     * Gets the selected monitor's virtual resolution width
+     * 
+     * @return  The selected monitor's virtual resolution width
+     */
+    private static native int getWidth();
+    
+    /**
+     * Gets the selected monitor's virtual resolution height
+     * 
+     * @return  The selected monitor's virtual resolution height
+     */
+    private static native int getHeight();
+    
+    /**
+     * Gets the selected monitor's offset on the X-axis from its screens top left corner
+     * 
+     * @return  The selected monitor's offset on the X-axis from its screens top left corner
+     */
+    private static native int getXOffset();
+    
+    /**
+     * Gets the selected monitor's offset on the Y-axis from its screens top left corner
+     * 
+     * @return  The selected monitor's offset on the Y-axis from its screens top left corner
+     */
+    private static native int getYOffset();
+    
+    
+    
+    /**
+     * Gets a monitor by its index
+     * 
+     * @param   index  The monitor's index
+     * @return         The monitor
+     */
+    public static Monitor getMonitor(final int index)
     {
-	synchronized (screens)
-	{   return screens.get(index);
+	synchronized (monitors)
+	{   return monitors.get(index);
 	}
     }
     
     /**
-     * Gets the number of screens on the system
+     * Gets the number of monitors on the system
      * 
-     * @return  The number of screens on the system
+     * @return  The number of monitors on the system
      */
-    public static int getScreenCount()
+    public static int getMonitorCount()
     {
-	synchronized (screens)
-	{   return screens.size();
+	synchronized (monitors)
+	{   return monitors.size();
 	}
     }
     

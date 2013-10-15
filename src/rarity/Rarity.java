@@ -90,6 +90,8 @@ public class Rarity
 	    for (int i = 0, n = usingXinerama ? Xinerama.screenCount() : X11.screenCount(); i < n; i++)
 		scanForWindows(i);
 	    
+	    Monitor.refresh();
+	    
 	    X11.sync();
 	    eventLoop();
 	}
