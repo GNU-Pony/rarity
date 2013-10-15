@@ -23,11 +23,11 @@ import java.util.Vector;
 
 
 /**
- * The class is used to get information about the existing physcial screens in the environment
+ * The class is used to get information about the existing monitor (physcial screens) in the environment
  * 
  * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
  */
-public class PhysicalScreen extends PropertyBase
+public class Monitor extends PropertyBase
 {
     /**
      * The screen's virtual resolution on the X-axis
@@ -95,7 +95,7 @@ public class PhysicalScreen extends PropertyBase
      * @param  top          The screen's offset on the Y-axis
      * @param  primary      Whether the screen is the primary screen
      */
-    protected PhysicalScreen(final int width, final int height, final int left, final int top, final boolean primary)
+    protected Monitor(final int width, final int height, final int left, final int top, final boolean primary)
     {
 	this.set(PRIMARY, primary);
 	this.set(RESOLUTION_X, width);
@@ -111,7 +111,7 @@ public class PhysicalScreen extends PropertyBase
 		@Override
 		public Object evaluate(final Object... params)
 		{
-		    final PhysicalScreen screen = (PhysicalScreen)(params[0]);
+		    final Monitor screen = (Monitor)(params[0]);
 		    return screen.getInteger(RESOLUTION_X) - screen.getInteger(MARGIN_LEFT) - screen.getInteger(MARGIN_RIGHT);
 		}
 	    });
@@ -120,7 +120,7 @@ public class PhysicalScreen extends PropertyBase
 		@Override
 		public Object evaluate(final Object... params)
 		{
-		    final PhysicalScreen screen = (PhysicalScreen)(params[0]);
+		    final Monitor screen = (Monitor)(params[0]);
 		    return screen.getInteger(RESOLUTION_Y) - screen.getInteger(MARGIN_TOP) - screen.getInteger(MARGIN_BOTTOM);
 		}
 	    });
@@ -131,12 +131,12 @@ public class PhysicalScreen extends PropertyBase
     /**
      * All screens in index order
      */
-    static Vector<PhysicalScreen> screens = new Vector<PhysicalScreen>();
+    static Vector<Monitor> screens = new Vector<Monitor>();
     
     
     
     /**
-     * Blackboard message for {@link PhysicalScreen} property updates
+     * Blackboard message for {@link Monitor} property updates
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
      */
@@ -148,12 +148,12 @@ public class PhysicalScreen extends PropertyBase
 	 * @param  screen    The updated screen
 	 * @param  property  The updated property
 	 */
-	protected PropertyMessage(final PhysicalScreen screen, final String property)
+	protected PropertyMessage(final Monitor screen, final String property)
 	{
 	    this.screen = screen;
 	    this.property = property;
 	    int i = 0;
-	    for (final PhysicalScreen scr : PhysicalScreen.screens)
+	    for (final Monitor scr : Monitor.screens)
 		if (scr == screen)
 		    break;
 		else
@@ -166,7 +166,7 @@ public class PhysicalScreen extends PropertyBase
 	/**
 	 * The updated screen
 	 */
-	public final PhysicalScreen screen;
+	public final Monitor screen;
 	
 	/**
 	 * The index of the updated screen
@@ -182,7 +182,7 @@ public class PhysicalScreen extends PropertyBase
     
     
     /**
-     * Blackboard message for {@link PhysicalScreen} existance updates
+     * Blackboard message for {@link Monitor} existance updates
      * 
      * @author  Mattias Andrée, <a href="mailto:maandree@member.fsf.org">maandree@member.fsf.org</a>
      */
@@ -240,7 +240,7 @@ public class PhysicalScreen extends PropertyBase
     {
 	synchronized (screens)
 	{
-	    final Blackboard blackboard = Blackboard.getInstance(PhysicalScreen.class);
+	    final Blackboard blackboard = Blackboard.getInstance(Monitor.class);
 	    /* FIXME */
 	}
     }
@@ -252,7 +252,7 @@ public class PhysicalScreen extends PropertyBase
      * @param   index  The screen's index
      * @return         The screen
      */
-    public static PhysicalScreen getScreen(final int index)
+    public static Monitor getScreen(final int index)
     {
 	synchronized (screens)
 	{   return screens.get(index);
@@ -277,7 +277,7 @@ public class PhysicalScreen extends PropertyBase
      */
     protected void updated(final String property, final Object value)
     {
-	Blackboard.getInstance(PhysicalScreen.class).broadcastMessage(new PhysicalScreen.PropertyMessage(this, property));
+	Blackboard.getInstance(Monitor.class).broadcastMessage(new Monitor.PropertyMessage(this, property));
     }
     
 }
