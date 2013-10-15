@@ -3,8 +3,6 @@
 
 
 #define false  0
-#define true   1
-
 
 static Display* display;
 static int screen_count;
