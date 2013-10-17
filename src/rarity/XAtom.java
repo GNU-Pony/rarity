@@ -93,7 +93,7 @@ public class XAtom
     #for atom in $(cat /usr/include/X11/Xatom.h | grep -v 'XATOM_H' | grep '^#define XA_' | cut -d ' ' -f 2); do
     #    value="$((cat /usr/include/X11/Xatom.h | grep -v XATOM_H | grep '^#define XA_' ; echo $atom) | cpp | tail -n 1)"
     #    value=$(echo "$value" | grep -o '[0-9]*')
-	 public static final int <"atom"> = <"$value$">;
+	 public static final int <"$atom$"> = <"$value$">;
     #done
     
 }

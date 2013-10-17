@@ -82,7 +82,7 @@ public class Signals
     
     
     #for signal in $(cat /usr/include/asm/signal.h | grep '^#define SIG' | grep -v '^#define SIGRT' | grep -v '^#define SIGSTKSZ' | cut -f 1 | cut -d ' ' -f 2); do
-    #    value=(cat /usr/include/asm/signal.h | grep '#define SIG' ; echo "$signal") | cpp | tail -n 1
+    #    value=$((cat /usr/include/asm/signal.h | grep '#define SIG' ; echo "$signal") | cpp | tail -n 1)
 	 public static final int <"$signal$"> = <"$value$">;
     #done
     
