@@ -78,8 +78,6 @@ public class WindowSizer implements Blackboard.BlackboardObserver
 	    if (event.action != Window.ExistanceMessage.ADDED)
 		return;
 	    final Window window = Window.getWindow(event.index);
-	    if (Monitor.getMonitorCount() < 1)
-		return;
 	    
 	    final Monitor monitor = Monitor.getMonitor(0);
 	    int x = monitor.getInteger(Monitor.OFFSET_X) + monitor.getInteger(Monitor.MARGIN_LEFT);
