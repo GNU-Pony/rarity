@@ -123,7 +123,7 @@ JAVA_PRAECLASS = $(shell find src | grep '\.java$$' | sed -e 's/^src\//bin\//g')
 JAVA_CLASS = $(shell find src | grep '\.java$$' | sed -e 's/\.java$$/\.class/g' -e 's/^src\//bin\//g')
 
 # h files
-JNI_H = X11 Xinerama Rarity Signals XKeyboard Window Monitor
+JNI_H = X11 Xinerama Rarity Signals XKeyboard Window Monitor XAtom
 
 # so files
 LIB_PREFIX = 
@@ -150,7 +150,7 @@ h: $(foreach H, $(JNI_H), src/rarity/$(H).h)
 
 # compile rarity
 .PHONY: rarity
-rarity: $(LIB_RARITY) bin/rarity.install
+rarity: $(LIB_RARITY) $(JAVA_PRAECLASS) bin/rarity.install
 
 # compile extensions
 .PHONY: extensions
