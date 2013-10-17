@@ -71,7 +71,7 @@ public class WindowSizer implements Blackboard.BlackboardObserver
      */
     public void messageBroadcasted(final Blackboard.BlackboardMessage message)
     {
-	System.err.println("WindowSizer: recieves message " + message.getClass());
+	<"">System.err.println("WindowSizer: recieves message " + message.getClass());
 	if (message instanceof Window.ExistanceMessage)
 	{
 	    final Window.ExistanceMessage event = (Window.ExistanceMessage)message;

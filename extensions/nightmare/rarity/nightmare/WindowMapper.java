@@ -71,20 +71,20 @@ public class WindowMapper implements Blackboard.BlackboardObserver
      */
     public void messageBroadcasted(final Blackboard.BlackboardMessage message)
     {
-	System.err.println("WindowMapper: recieves message " + message.getClass());
+	<"">System.err.println("WindowMapper: recieves message " + message.getClass());
 	if (message instanceof XEvent.CreateWindow)
 	{
 	    final XEvent.CreateWindow event = (XEvent.CreateWindow)message;
 	    if (event.overrideRedirect == false)
 	    {
-		System.err.println("  Mapping window " + event.window);
+		<"">System.err.println("  Mapping window " + event.window);
 		Rarity.newWindow((int)(event.window), event.position.x, event.position.y, event.size.width, event.size.height);
 	    }
 	}
 	else if (message instanceof XEvent.DestroyWindow)
 	{
 	    final XEvent.DestroyWindow event = (XEvent.DestroyWindow)message;
-	    System.err.println("  Unmapping window " + event.window);
+	    <"">System.err.println("  Unmapping window " + event.window);
 	    Window.removeWindow(Window.getByAddress(event.window));
 	}
     }
