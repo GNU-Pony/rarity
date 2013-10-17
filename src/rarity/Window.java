@@ -54,6 +54,22 @@ public class Window extends PropertyBase
     public static final String VISIBLE = "visible";
     
     
+    /**
+     * Replace value
+     */
+    public static final int MODE_REPLACE = 0; // PropModeReplace (value does not reflect native value)
+    
+    /**
+     * Prepend to value
+     */
+    public static final int MODE_PREPEND = 1; // PropModePrepend (value does not reflect native value)
+    
+    /**
+     * Append to value
+     */
+    public static final int MODE_APPEND = 2; // PropModeAppend (value does not reflect native value)
+    
+    
     
     /**
      * Constructor
@@ -314,6 +330,33 @@ public class Window extends PropertyBase
      * @param  height   The height of the window
      */
     private static native void xMoveResizeWindow(long address, int x, int y, int width, int height);
+    
+    
+    public void deleteProperty(final XAtom property)
+    {
+    }
+    // BadAtom BadWindow
+    
+    public void rotateProperties(final XAtom[] properties, final int positions)
+    {
+    }
+    // BadAtom BadMatch BadWindow
+    
+    public void setProperty(final XAtom property, final XAtom type, final int format, final int mode, final byte[] data)
+    {
+    }
+    // BadAlloc BadAtom BadMatch BadValue BadWindow
+    
+    public XAtom[] listProperties()
+    {
+	return null;
+    }
+    // use XFree :: BadWindow
+    
+    public void getProperty() //// XGetWindowProperty
+    {
+    }
+    // use XFree :: BadAtom BadValue BadWindow
     
 }
 

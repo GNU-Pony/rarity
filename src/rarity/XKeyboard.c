@@ -32,6 +32,7 @@ jint Java_rarity_XKeyboard_toKeySymbol(JNIEnv* env, jclass class, jbyte keycode,
 {
   (void) env;
   (void) class;
+  
   return (jint)XkbKeycodeToKeysym(display, (KeyCode)keycode, (unsigned int)group, (unsigned int)modifiers);
 }
 
@@ -46,6 +47,7 @@ jbyte Java_rarity_XKeyboard_toKeyCode(JNIEnv* env, jclass class, jint keysym)
 {
   (void) env;
   (void) class;
+  
   return (jbyte)XKeysymToKeycode(display, (KeySym)keysym);
 }
 
@@ -60,6 +62,7 @@ jint Java_rarity_XKeyboard_toLowerKeySymbol(JNIEnv* env, jclass class, jint keys
 {
   (void) env;
   (void) class;
+  
   KeySym lower, upper;
   XConvertCase(keysym, &lower, &upper);
   return (jint)lower;
@@ -76,6 +79,7 @@ jint Java_rarity_XKeyboard_toUpperKeySymbol(JNIEnv* env, jclass class, jint keys
 {
   (void) env;
   (void) class;
+  
   KeySym lower, upper;
   XConvertCase(keysym, &lower, &upper);
   return (jint)upper;

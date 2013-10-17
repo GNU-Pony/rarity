@@ -78,6 +78,7 @@ void Java_rarity_Xinerama_terminate(JNIEnv* env, jclass class)
 {
   (void) env;
   (void) class;
+  
   #ifdef XINERAMA
     if ((xinerama_screens))
       XFree(xinerama_screens);
@@ -94,6 +95,7 @@ jint Java_rarity_Xinerama_screenCount(JNIEnv* env, jclass class)
 {
   (void) env;
   (void) class;
+  
   return xinerama_screen_count;
 } 
 
@@ -108,6 +110,7 @@ jint Java_rarity_Xinerama_screenLeft(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  
   #ifdef XINERAMA
     return xinerama_screens[index].x_org;
   #else
@@ -127,6 +130,7 @@ jint Java_rarity_Xinerama_screenTop(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  
   #ifdef XINERAMA
     return xinerama_screens[index].y_org;
   #else
@@ -146,6 +150,7 @@ jint Java_rarity_Xinerama_screenWidth(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  
   #ifdef XINERAMA
     return xinerama_screens[index].width;
   #else
@@ -165,6 +170,7 @@ jint Java_rarity_Xinerama_screenHeight(JNIEnv* env, jclass class, jint index)
 {
   (void) env;
   (void) class;
+  
   #ifdef XINERAMA
     return xinerama_screens[index].height;
   #else

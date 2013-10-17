@@ -32,7 +32,9 @@ jint Java_rarity_XAtom_internAtom(JNIEnv* env, jclass class, jstring name, jbool
   (void) class;
   
   const char* c_name = (*env)->GetStringUTFChars(env, name, 0);
-  return XInternAtom(display, c_name, onlyIfExists);
+  return (jint)XInternAtom(display, c_name, (Bool)onlyIfExists);
+  
+  // TODO: XInternAtom can generate BadAlloc and BadValue errors.
 }
 
 
@@ -46,7 +48,11 @@ jstring Java_rarity_XAtom_getAtomName(JNIEnv* env, jclass class, jint atom)
 {
   (void) class;
   
-  char* c_name = XGetAtomName(display, atom);
-  return (*env)->NewStringUTF(env, c_name);
+  char* c_name = XGetAtomName(display, (Atom)atom);
+  jstring rc = (*env)->NewStringUTF(env, c_name);
+  XFree(c_name);
+  return rc;
+  
+  // TODO: XGetAtomName can generate a BadAtom error.
 }
 

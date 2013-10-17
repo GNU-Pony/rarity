@@ -32,7 +32,10 @@ void Java_rarity_Window_xMoveWindow(JNIEnv* env, jclass class, jlong address, ji
 {
   (void) env;
   (void) class;
+  
   XMoveWindow(display, (Window)(long)address, x, y);
+  
+  // TODO: XMoveWindow can generate a BadWindow error.
 }
 
 
@@ -47,7 +50,10 @@ void Java_rarity_Window_xResizeWindow(JNIEnv* env, jclass class, jlong address, 
 {
   (void) env;
   (void) class;
+  
   XResizeWindow(display, (Window)(long)address, width, height);
+  
+  // TODO: XResizeWindow can generate BadValue and BadWindow errors.
 }
 
 
@@ -64,6 +70,9 @@ void Java_rarity_Window_xMoveResizeWindow(JNIEnv* env, jclass class, jlong addre
 {
   (void) env;
   (void) class;
+  
   XMoveResizeWindow(display, (Window)(long)address, x, y, width, height);
+  
+  // TODO: XMoveResizeWindow can generate BadValue and BadWindow errors.
 }
 

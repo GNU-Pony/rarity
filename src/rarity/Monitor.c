@@ -102,7 +102,7 @@ void Java_rarity_Monitor_selectScreen(JNIEnv* env, jclass class, jint index)
   root = RootWindow(display, screen);
   primary = XRRGetOutputPrimary(display, root);
   
-  if ((res = XRRGetScreenResources(display, root)) == false)
+  if ((res = XRRGetScreenResources(display, root)) == false) /* TODO: should this be XFree:d? */
     {
       fprintf(stderr, "Cannot get screen resources\n");
       abort();
@@ -133,7 +133,7 @@ void Java_rarity_Monitor_selectMonitor(JNIEnv* env, jclass class, jint index)
   (void) class;
   
   output = index;
-  output_info = XRRGetOutputInfo(display, res, res->outputs[output]);
+  output_info = XRRGetOutputInfo(display, res, res->outputs[output]); /* TODO: should this be XFree:d? */
 }
 
 
@@ -151,7 +151,7 @@ jboolean Java_rarity_Monitor_isConnected(JNIEnv* env, jclass class)
   if (output_info->connection == 1)
     return 0;
   
-  output_crtc = XRRGetCrtcInfo(display, res, output_info->crtc);
+  output_crtc = XRRGetCrtcInfo(display, res, output_info->crtc); /* TODO: should this be XFree:d? */
   output_mode = res->modes + output;
   
   return 1;
