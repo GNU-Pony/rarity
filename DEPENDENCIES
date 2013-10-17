@@ -12,8 +12,8 @@ BUILD DEPENDENCIES:
 	make                : The build/install script is written for GNU Make
 	coreutils           : corutils is used during the building and cut is used in the jpp code
 	findutils           : find is used during the building
-	grep                : grep is used during the building
-	sed                 : sed is used during the building
+	grep                : grep is used during the building and in the jpp code
+	sed                 : sed is used during the building and in the jpp code
 	gcc                 : Parts of the program is written in C gnu11
 	libxinerama>=1<2    : X11 with Xinerama is used as the window system
 
