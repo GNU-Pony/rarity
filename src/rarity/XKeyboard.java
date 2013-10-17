@@ -26,6 +26,8 @@ package rarity;
  */
 public class XKeyboard
 {
+    /* Key values are listed in /usr/include/X11/keysymdef.h */
+    
     /**
      * Shift XOR alphabetic caps lock modifer, modifier level 1
      */

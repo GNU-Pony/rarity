@@ -40,7 +40,7 @@ public class X11
 	}
 	
 	
-	
+	/* Listable with `cat /usr/include/X11/X.h | grep '^#define .*Mask' | grep 'L<<' | head -n 25` */
 	public static final int KEY_PRESS             = 1 << 0;
 	public static final int KEY_RELEASE           = 1 << 1;
 	public static final int BUTTON_PRESS          = 1 << 2;

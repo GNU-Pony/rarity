@@ -26,42 +26,6 @@ package rarity;
  */
 public class Signals
 {
-    public static final int SIGHUP = 1;
-    public static final int SIGINT = 2;
-    public static final int SIGQUIT = 3;
-    public static final int SIGILL = 4;
-    public static final int SIGTRAP = 5;
-    public static final int SIGABRT = 6;
-    public static final int SIGIOT = 6;
-    public static final int SIGBUS = 7;
-    public static final int SIGFPE = 8;
-    public static final int SIGKILL = 9;
-    public static final int SIGUSR1 = 10;
-    public static final int SIGSEGV = 11;
-    public static final int SIGUSR2 = 12;
-    public static final int SIGPIPE = 13;
-    public static final int SIGALRM = 14;
-    public static final int SIGTERM = 15;
-    public static final int SIGSTKFLT = 16;
-    public static final int SIGCHLD = 17;
-    public static final int SIGCONT = 18;
-    public static final int SIGSTOP = 19;
-    public static final int SIGTSTP = 20;
-    public static final int SIGTTIN = 21;
-    public static final int SIGTTOU = 22;
-    public static final int SIGURG = 23;
-    public static final int SIGXCPU = 24;
-    public static final int SIGXFSZ = 25;
-    public static final int SIGVTALRM = 26;
-    public static final int SIGPROF = 27;
-    public static final int SIGWINCH = 28;
-    public static final int SIGIO = 29;
-    public static final int SIGPOLL = 29;
-    public static final int SIGPWR = 30;
-    public static final int SIGSYS = 31;
-    
-    
-    
     /**
      * Constructor hiding
      */
@@ -114,6 +78,13 @@ public class Signals
     {
 	Blackboard.getInstance(Signals.class).broadcastMessage(new Signals.Message(signal));
     }
+    
+    
+    
+    #for signal in $(cat /usr/include/asm/signal.h | grep '^#define SIG' | grep -v '^#define SIGRT' | grep -v '^#define SIGSTKSZ' | cut -f 1 | cut -d ' ' -f 2); do
+    #    value=(cat /usr/include/asm/signal.h | grep '#define SIG' ; echo "$signal") | cpp | tail -n 1
+	 public static final int <"$signal$"> = <"$value$">;
+    #done
     
 }
 
