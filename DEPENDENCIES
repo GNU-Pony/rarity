@@ -14,6 +14,6 @@ BUILD DEPENDENCIES:
 	findutils           : find is used during the building
 	grep                : grep is used during the building and in the jpp code
 	sed                 : sed is used during the building and in the jpp code
-	gcc                 : Parts of the program is written in C gnu11
+	gcc                 : Parts of the program is written in gnu11 C and cpp is used in the jpp code
 	libxinerama>=1<2    : X11 with Xinerama is used as the window system
 
