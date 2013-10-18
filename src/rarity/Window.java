@@ -555,7 +555,7 @@ public class Window extends PropertyBase
     {
 	final PropertyInformation rc = new PropertyInformation();
 	final int requestType_ = requestType == null ? ANY_PROPERTY_TYPE : requestType.atom;
-	final byte[] raw =  xGetWindowProperty(this.pointer, property.atom, false, requestType_);
+	final byte[] raw =  xGetWindowProperty(this.pointer, property.atom, requestType_);
 	
 	rc.format = raw[0] & 255;
 	rc.type = new XAtom(((raw[1] & 255) << 24) | ((raw[2] & 255) << 16) | ((raw[3] & 255) << 8) | (raw[4] & 255));
@@ -563,7 +563,6 @@ public class Window extends PropertyBase
 	
 	return rc;
     }
-    // use XFree :: BadAtom BadValue BadWindow
     
     
     /**
@@ -572,7 +571,7 @@ public class Window extends PropertyBase
      * @param  address   The memory address of the window
      * @param  property  The property
      */
-    private static native void xDeleteProperty(long address, int property); // BadAtom BadWindow
+    private static native void xDeleteProperty(long address, int property);
     
     /**
      * Transfers the value associeted with atom number <i>i</i> to atom
@@ -584,7 +583,7 @@ public class Window extends PropertyBase
      * @param  properties  Array of properties that are to be rotated
      * @param  positions   The rotation amount
      */
-    private static native void xRotateWindowProperties(long address, int[] properties, int positions); // BadAtom BadMatch BadWindow
+    private static native void xRotateWindowProperties(long address, int[] properties, int positions);
     
     /**
      * Sets a property on a window
@@ -597,7 +596,6 @@ public class Window extends PropertyBase
      * @param  data      The value, or the value prependix or appendix, as a byte array
      */
     private static native void xChangeProperty(long address, int property, int type, int format, int mode, byte[] data);
-    // BadAlloc BadAtom BadMatch BadValue BadWindow
     
     /**
      * Gets a list of all properties on a window
@@ -605,19 +603,17 @@ public class Window extends PropertyBase
      * @param   address  The memory address of the window
      * @return           All properties on the window, a zero-length array if none were found, never {@code null}
      */
-    private static native int[] xListProperties(long address); // BadWindow :: XFree()
+    private static native int[] xListProperties(long address);
     
     /**
      * Gets or deletes a property on a window
      * 
      * @param   address      The memory address of the window
      * @param   property     The property
-     * @param   delete       Whether to delete the 
      * @param   requestType  Atom identifier associated with the property type
-     * @return               Format(1 byte) || Type(4 bytes) || Value, or {@code null} if <tt>delete</tt> is true
+     * @return               Format(1 byte) || Type(4 bytes) || Value
      */
-    private static native byte[] xGetWindowProperty(long address, int property, boolean delete, int requestType);
-    // BadAtom BadValue BadWindow :: XFree()
+    private static native byte[] xGetWindowProperty(long address, int property, int requestType);
     
 }
 
