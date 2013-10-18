@@ -191,6 +191,8 @@ jintArray Java_rarity_Window_xListProperties(JNIEnv* env, jclass class, jlong ad
   
   int i, n;
   Atom* properties = XListProperties(display, (Window)(long)address, &n);
+  if (properties == NULL)
+    n = 0;
   jintArray rc = (*env)->NewIntArray(env, n);
   int* data = malloc(n * sizeof(int));
   
