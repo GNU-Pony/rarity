@@ -417,8 +417,8 @@ public class Window extends PropertyBase
     {
 	final byte[] data_ = new byte[data.length * 2];
 	for (int i = 0, n = data.length; i < n; i++)
-	{   data_[(i << 1) | 0] = (data >>> (1 * 8)) & 255;
-	    data_[(i << 1) | 1] = (data >>> (0 * 8)) & 255;
+	{   data_[(i << 1) | 0] = (byte)((data[i] >>> (1 * 8)) & 255);
+	    data_[(i << 1) | 1] = (byte)((data[i] >>> (0 * 8)) & 255);
 	}
 	
 	xChangeProperty(this.pointer, property.atom, type.atom, 16, mode, data_);
@@ -436,10 +436,10 @@ public class Window extends PropertyBase
     {
 	final byte[] data_ = new byte[data.length * 4];
 	for (int i = 0, n = data.length; i < n; i++)
-	{   data_[(i << 2) | 0] = (data >>> (3 * 8)) & 255;
-	    data_[(i << 2) | 1] = (data >>> (2 * 8)) & 255;
-	    data_[(i << 2) | 2] = (data >>> (1 * 8)) & 255;
-	    data_[(i << 2) | 3] = (data >>> (0 * 8)) & 255;
+	{   data_[(i << 2) | 0] = (byte)((data[i] >>> (3 * 8)) & 255);
+	    data_[(i << 2) | 1] = (byte)((data[i] >>> (2 * 8)) & 255);
+	    data_[(i << 2) | 2] = (byte)((data[i] >>> (1 * 8)) & 255);
+	    data_[(i << 2) | 3] = (byte)((data[i] >>> (0 * 8)) & 255);
 	}
 	
 	xChangeProperty(this.pointer, property.atom, type.atom, 32, mode, data_);
@@ -505,8 +505,8 @@ public class Window extends PropertyBase
 	{
 	    final short[] rc = new short[this.value.length >> 1];
 	    for (int i = 0, n = this.value.length >> 1; i < n; i++)
-		rc[i] = ((this.value[(i << 1) | 0] & 255) << 8)
-		      | ((this.value[(i << 1) | 1] & 255) << 0);
+		rc[i] = (short)(((this.value[(i << 1) | 0] & 255) << 8)
+			      | ((this.value[(i << 1) | 1] & 255) << 0));
 	    return rc;
 	}
 	
@@ -539,6 +539,7 @@ public class Window extends PropertyBase
 	    catch (final Throwable err)
 	    {   System.err.println("Unable to decode UTF-8");
 		Rarity.abort();
+		return null;
 	    }
 	}
     }
@@ -564,17 +565,6 @@ public class Window extends PropertyBase
     }
     // use XFree :: BadAtom BadValue BadWindow
     
-    /**
-     * Deletes a property on the window
-     * 
-     * @param  property  The property
-     */
-    public void deleteProperty(final XAtom property)
-    {
-	xGetWindowProperty(this.pointer, property.atom, true, ANY_PROPERTY_TYPE);
-    }
-    // use XFree :: BadAtom BadValue BadWindow
-    
     
     /**
      * Deletes a property only if the property was defined on a window
@@ -594,7 +584,7 @@ public class Window extends PropertyBase
      * @param  properties  Array of properties that are to be rotated
      * @param  positions   The rotation amount
      */
-    private static native void xRotateWindowProperties(long address, int properties, int positions); // BadAtom BadMatch BadWindow
+    private static native void xRotateWindowProperties(long address, int[] properties, int positions); // BadAtom BadMatch BadWindow
     
     /**
      * Sets a property on a window
