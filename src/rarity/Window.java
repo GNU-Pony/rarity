@@ -57,17 +57,27 @@ public class Window extends PropertyBase
     /**
      * Replace value
      */
-    public static final int MODE_REPLACE = 0; // PropModeReplace (value does not reflect native value)
+    #value=$((cat /usr/include/X11/X.h | grep PropModeReplace ; echo PropModeReplace) | cpp | tail -n 1 | sed -e 's:L::g')
+    public static final int MODE_REPLACE = <"$value$">;
     
     /**
      * Prepend to value
      */
-    public static final int MODE_PREPEND = 1; // PropModePrepend (value does not reflect native value)
+    #value=$((cat /usr/include/X11/X.h | grep PropModePrepend ; echo PropModePrepend) | cpp | tail -n 1 | sed -e 's:L::g')
+    public static final int MODE_PREPEND = <"$value$">;
     
     /**
      * Append to value
      */
-    public static final int MODE_APPEND = 2; // PropModeAppend (value does not reflect native value)
+    #value=$((cat /usr/include/X11/X.h | grep PropModeAppend ; echo PropModeAppend) | cpp | tail -n 1 | sed -e 's:L::g')
+    public static final int MODE_APPEND = <"$value$">;
+    
+    
+    /**
+     * Special atom used to accept any property type
+     */
+    #value=$((cat /usr/include/X11/X.h | grep AnyPropertyType ; echo AnyPropertyType) | cpp | tail -n 1 | sed -e 's:L::g')
+    private static final int ANY_PROPERTY_TYPE = <"$value$">;
     
     
     
@@ -332,31 +342,292 @@ public class Window extends PropertyBase
     private static native void xMoveResizeWindow(long address, int x, int y, int width, int height);
     
     
+    /**
+     * Deletes a property only if the property was defined on the window
+     * 
+     * @param  property  The property
+     */
     public void deleteProperty(final XAtom property)
     {
+	xDeleteProperty(this.pointer, property.atom);
     }
-    // BadAtom BadWindow
     
+    /**
+     * Transfers the value associeted with atom number <i>i</i> to atom
+     * number (<i>i</i> + <tt>positions</tt>) mod |<tt>properties</tt>|
+     * for all <i>i</i> &lt; |<tt>properties</tt>|. Where atom number
+     * <i>i</i> is {@code properties[i]}.
+     * 
+     * @param  properties  Array of properties that are to be rotated
+     * @param  positions   The rotation amount
+     */
     public void rotateProperties(final XAtom[] properties, final int positions)
     {
+	final int[] properties_ = new int[properties.length];
+	for (int i = 0, n = properties.length; i < n; i++)
+	    properties_[i] = properties[i].atom;
+	
+	xRotateWindowProperties(this.pointer, properties_, positions);
     }
-    // BadAtom BadMatch BadWindow
     
-    public void setProperty(final XAtom property, final XAtom type, final int format, final int mode, final byte[] data)
+    /**
+     * Sets a property on the window
+     * 
+     * @param  property  The property
+     * @param  type      The property's type
+     * @param  mode      Either {@link #MODE_REPLACE}, {@link #MODE_PREPEND} or {@link #MODE_APPEND}
+     * @param  data      The value, or the value prependix or appendix
+     */
+    public void setProperty(final XAtom property, final XAtom type, final int mode, final byte[] data)
     {
+	xChangeProperty(this.pointer, property.atom, type.atom, 8, mode, data);
     }
-    // BadAlloc BadAtom BadMatch BadValue BadWindow
     
+    /**
+     * Sets a property on the window
+     * 
+     * @param  property  The property
+     * @param  type      The property's type
+     * @param  mode      Either {@link #MODE_REPLACE}, {@link #MODE_PREPEND} or {@link #MODE_APPEND}
+     * @param  data      The value, or the value prependix or appendix
+     */
+    public void setProperty(final XAtom property, final XAtom type, final int mode, final String data)
+    {
+	final byte[] data_;
+	try
+	{   data_ = data.getBytes("UTF-8");
+	}
+	catch (final Throwable err)
+	{   System.err.println("Unable to encode to UTF-8");
+	    Rarity.abort();
+	    return;
+	}
+	xChangeProperty(this.pointer, property.atom, type.atom, 8, mode, data_);
+    }
+    
+    /**
+     * Sets a property on the window
+     * 
+     * @param  property  The property
+     * @param  type      The property's type
+     * @param  mode      Either {@link #MODE_REPLACE}, {@link #MODE_PREPEND} or {@link #MODE_APPEND}
+     * @param  data      The value, or the value prependix or appendix
+     */
+    public void setProperty(final XAtom property, final XAtom type, final int mode, final short[] data)
+    {
+	final byte[] data_ = new byte[data.length * 2];
+	for (int i = 0, n = data.length; i < n; i++)
+	{   data_[(i << 1) | 0] = (data >>> (1 * 8)) & 255;
+	    data_[(i << 1) | 1] = (data >>> (0 * 8)) & 255;
+	}
+	
+	xChangeProperty(this.pointer, property.atom, type.atom, 16, mode, data_);
+    }
+    
+    /**
+     * Sets a property on the window
+     * 
+     * @param  property  The property
+     * @param  type      The property's type
+     * @param  mode      Either {@link #MODE_REPLACE}, {@link #MODE_PREPEND} or {@link #MODE_APPEND}
+     * @param  data      The value, or the value prependix or appendix
+     */
+    public void setProperty(final XAtom property, final XAtom type, final int mode, final int[] data)
+    {
+	final byte[] data_ = new byte[data.length * 4];
+	for (int i = 0, n = data.length; i < n; i++)
+	{   data_[(i << 2) | 0] = (data >>> (3 * 8)) & 255;
+	    data_[(i << 2) | 1] = (data >>> (2 * 8)) & 255;
+	    data_[(i << 2) | 2] = (data >>> (1 * 8)) & 255;
+	    data_[(i << 2) | 3] = (data >>> (0 * 8)) & 255;
+	}
+	
+	xChangeProperty(this.pointer, property.atom, type.atom, 32, mode, data_);
+    }
+    
+    /**
+     * Gets a list of all properties on the window
+     * 
+     * @return  All properties on the window, a zero-length array if none were found, never {@code null}
+     */
     public XAtom[] listProperties()
     {
-	return null;
+	final int[] atoms_ = xListProperties(this.pointer);
+	final XAtom[] atoms = new XAtom[atoms_.length];
+	
+	for (int i = 0, n = atoms.length; i < n; i++)
+	    atoms[i] = new XAtom(atoms_[i]);
+	
+	return atoms;
     }
-    // use XFree :: BadWindow
     
-    public void getProperty() //// XGetWindowProperty
+    /**
+     * Return type for {@link Window#getProperty}
+     */
+    public static class PropertyInformation
     {
+	// Has default constructor
+	
+	
+	/**
+	 * Format, 8 for {@code char} array, 16 for {@code short} array, 32 for {@code int}
+	 */
+	public int format;
+	
+	/**
+	 * Property type
+	 */
+	public XAtom type;
+	
+	/**
+	 * Property value
+	 */
+	public byte[] value;
+	
+	
+	
+	/**
+	 * Returns the value as a {@code byte[]}
+	 * 
+	 * @return  The value as a {@code byte[]}
+	 */
+	public byte[] getByteArray()
+	{
+	    return this.value;
+	}
+	
+	/**
+	 * Returns the value as a {@code short[]}
+	 * 
+	 * @return  The value as a {@code short[]}
+	 */
+	public short[] getShortArray()
+	{
+	    final short[] rc = new short[this.value.length >> 1];
+	    for (int i = 0, n = this.value.length >> 1; i < n; i++)
+		rc[i] = ((this.value[(i << 1) | 0] & 255) << 8)
+		      | ((this.value[(i << 1) | 1] & 255) << 0);
+	    return rc;
+	}
+	
+	/**
+	 * Returns the value as an {@code int[]}
+	 * 
+	 * @return  The value as an {@code int[]}
+	 */
+	public int[] getIntArray()
+	{
+	    final int[] rc = new int[this.value.length >> 2];
+	    for (int i = 0, n = this.value.length >> 2; i < n; i++)
+		rc[i] = ((this.value[(i << 2) | 0] & 255) << 24)
+		      | ((this.value[(i << 2) | 1] & 255) << 16)
+		      | ((this.value[(i << 2) | 2] & 255) << 8)
+		      | ((this.value[(i << 2) | 3] & 255) << 0);
+	    return rc;
+	}
+	
+	/**
+	 * Returns the value as a {@link String}
+	 * 
+	 * @return  The value as a {@link String}
+	 */
+	public String getString()
+	{
+	    try
+	    {   return new String(this.value, "UTF-8");
+	    }
+	    catch (final Throwable err)
+	    {   System.err.println("Unable to decode UTF-8");
+		Rarity.abort();
+	    }
+	}
+    }
+    
+    /**
+     * Reads a property on the window
+     * 
+     * @param   property     The property
+     * @param   requestType  The atom identifier associated with the property type or {@code null} for any type
+     * @return               The property value and information about it
+     */
+    public PropertyInformation getProperty(final XAtom property, final XAtom requestType)
+    {
+	final PropertyInformation rc = new PropertyInformation();
+	final int requestType_ = requestType == null ? ANY_PROPERTY_TYPE : requestType.atom;
+	final byte[] raw =  xGetWindowProperty(this.pointer, property.atom, false, requestType_);
+	
+	rc.format = raw[0] & 255;
+	rc.type = new XAtom(((raw[1] & 255) << 24) | ((raw[2] & 255) << 16) | ((raw[3] & 255) << 8) | (raw[4] & 255));
+	System.arraycopy(raw, 5, rc.value = new byte[raw.length - 5], 0, raw.length - 5);
+	
+	return rc;
     }
     // use XFree :: BadAtom BadValue BadWindow
+    
+    /**
+     * Deletes a property on the window
+     * 
+     * @param  property  The property
+     */
+    public void deleteProperty(final XAtom property)
+    {
+	xGetWindowProperty(this.pointer, property.atom, true, ANY_PROPERTY_TYPE);
+    }
+    // use XFree :: BadAtom BadValue BadWindow
+    
+    
+    /**
+     * Deletes a property only if the property was defined on a window
+     * 
+     * @param  address   The memory address of the window
+     * @param  property  The property
+     */
+    private static native void xDeleteProperty(long address, int property); // BadAtom BadWindow
+    
+    /**
+     * Transfers the value associeted with atom number <i>i</i> to atom
+     * number (<i>i</i> + <tt>positions</tt>) mod |<tt>properties</tt>|
+     * for all <i>i</i> &lt; |<tt>properties</tt>|. Where atom number
+     * <i>i</i> is {@code properties[i]}.
+     * 
+     * @param  address     The memory address of the window
+     * @param  properties  Array of properties that are to be rotated
+     * @param  positions   The rotation amount
+     */
+    private static native void xRotateWindowProperties(long address, int properties, int positions); // BadAtom BadMatch BadWindow
+    
+    /**
+     * Sets a property on a window
+     * 
+     * @param  address   The memory address of the window
+     * @param  property  The property
+     * @param  type      The property's type
+     * @param  format    8 for {@code char} array, 16 for {@code short} array, 32 for {@code int} array stored as an C {@code long int} array
+     * @param  mode      Either {@link #MODE_REPLACE}, {@link #MODE_PREPEND} or {@link #MODE_APPEND}
+     * @param  data      The value, or the value prependix or appendix, as a byte array
+     */
+    private static native void xChangeProperty(long address, int property, int type, int format, int mode, byte[] data);
+    // BadAlloc BadAtom BadMatch BadValue BadWindow
+    
+    /**
+     * Gets a list of all properties on a window
+     * 
+     * @param   address  The memory address of the window
+     * @return           All properties on the window, a zero-length array if none were found, never {@code null}
+     */
+    private static native int[] xListProperties(long address); // BadWindow :: XFree()
+    
+    /**
+     * Gets or deletes a property on a window
+     * 
+     * @param   address      The memory address of the window
+     * @param   property     The property
+     * @param   delete       Whether to delete the 
+     * @param   requestType  Atom identifier associated with the property type
+     * @return               Format(1 byte) || Type(4 bytes) || Value, or {@code null} if <tt>delete</tt> is true
+     */
+    private static native byte[] xGetWindowProperty(long address, int property, boolean delete, int requestType);
+    // BadAtom BadValue BadWindow :: XFree()
     
 }
 
