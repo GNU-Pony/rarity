@@ -1,7 +1,6 @@
 RUNTIME DEPENDENCIES:
 
 	java-runtime>=7     : The majority of the program is written in Java 7
-	sh                  : The launch command is written in POSIX shell
 	libxinerama>=1<2    : X11 with Xinerama is used as the window system
 
 
