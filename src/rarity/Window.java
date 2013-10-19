@@ -551,6 +551,17 @@ public class Window extends PropertyBase
     /**
      * Reads a property on the window
      * 
+     * @param   property  The property
+     * @return            The property value and information about it
+     */
+    public PropertyInformation getProperty(final XAtom property)
+    {
+	return getProperty(property, null);
+    }
+    
+    /**
+     * Reads a property on the window
+     * 
      * @param   property     The property
      * @param   requestType  The atom identifier associated with the property type or {@code null} for any type
      * @return               The property value and information about it
