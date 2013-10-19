@@ -118,11 +118,6 @@ public class WindowSizer implements Blackboard.BlackboardObserver
 			    else if (type == EWMH._NET_WM_WINDOW_TYPE_DOCK ||
 				     type == EWMH._NET_WM_WINDOW_TYPE_DESKTOP)
 				return;
-			//if (types.length == 0)
-			//    if (window.getProperty(EWMH.WM_TRANSIENT_FOR).isSet())
-			//	break normal_test; /* Implicitly _NET_WM_WINDOW_TYPE_DIALOG */
-			//    else
-			//	break normal_test; /* Implicitly _NET_WM_WINDOW_TYPE_NORMAL */
 			return;
 		    }
 		    this.windows.add(window);
