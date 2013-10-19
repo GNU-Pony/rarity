@@ -83,12 +83,12 @@ public class Screen extends PropertyBase
     /**
      * Constructor
      * 
-     * @param  width        The screen's virtual resolution on the X-axis
-     * @param  height       The screen's virtual resolution on the Y-axis
-     * @param  left         The screen's offset on the X-axis
-     * @param  top          The screen's offset on the Y-axis
+     * @param  width   The screen's virtual resolution on the X-axis
+     * @param  height  The screen's virtual resolution on the Y-axis
+     * @param  left    The screen's offset on the X-axis
+     * @param  top     The screen's offset on the Y-axis
      */
-    protected Screen(final int width, final int height, final int left, final int top)
+    protected Screen(final int width, final int height, final int left, final int top, final int index)
     {
 	this.set(RESOLUTION_X, width);
 	this.set(RESOLUTION_Y, height);
@@ -116,6 +116,7 @@ public class Screen extends PropertyBase
 		    return screen.getInteger(RESOLUTION_Y) - screen.getInteger(MARGIN_TOP) - screen.getInteger(MARGIN_BOTTOM);
 		}
 	    });
+	this.root = X11.rootWindow(index);
     }
     
     
@@ -124,6 +125,11 @@ public class Screen extends PropertyBase
      * All screens in index order
      */
     static Vector<Screen> screens = new Vector<Screen>();
+    
+    /**
+     * The screen's root window
+     */
+    private final long root;
     
     
     
@@ -247,6 +253,25 @@ public class Screen extends PropertyBase
     {
 	synchronized (screens)
 	{   return screens.size();
+	}
+    }
+    
+    
+    /**
+     * Gets the screen's root window
+     * 
+     * @return  The screen's root window
+     */
+    public Window getRootWindow()
+    {	
+	synchronized (Window.windows)
+	{   Window rc = Window.getByAddress(this.root);
+	    if (rc == null)
+	    {	final int w = this.getInteger(RESOLUTION_X);
+		final int h = this.getInteger(RESOLUTION_Y);
+		Window.windows.add(rc = new Window(0, 0, w, h, this.root));
+	    }
+	    return rc;
 	}
     }
     

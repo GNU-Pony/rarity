@@ -248,3 +248,17 @@ jlong Java_rarity_X11_getDisplayPointer(JNIEnv* env, jclass class)
   return (jlong)(void*)&display;
 }
 
+/**
+ * Gets a screen's root window
+ * 
+ * @param   index  The index of the screen
+ * @return         The screen's root window
+ */
+jlong Java_rarity_X11_rootWindow(JNIEnv* env, jclass class, jint index)
+{
+  (void) env;
+  (void) class;
+  
+  return (jlong)RootWindow(display, index);
+}
+

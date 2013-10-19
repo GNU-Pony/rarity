@@ -81,7 +81,7 @@ public class Rarity
 		for (int i = 0; i < screenCount; i++)
 		{   X11.activateScreen(i);
 		    X11.selectRootInput(i, SCREEN_INPUT);
-		    Screen.screens.add(new Screen(X11.screenWidth(i), X11.screenHeight(i), 0, 0));
+		    Screen.screens.add(new Screen(X11.screenWidth(i), X11.screenHeight(i), 0, 0, i));
 		    Screen.ExistanceMessage e = new Screen.ExistanceMessage(Screen.ExistanceMessage.ADDED, i);
 		    Blackboard.getInstance(Screen.ExistanceMessage.class).broadcastMessage(e);
 	    }   }

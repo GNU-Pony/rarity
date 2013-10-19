@@ -201,5 +201,14 @@ public class X11
     public static native long getDisplayPointer();
     // return (jlong)(void*)&display;
     
+    /**
+     * Gets a screen's root window
+     * 
+     * @param   index  The index of the screen
+     * @return         The screen's root window
+     */
+    public static native long rootWindow(int index);
+    // return (jlong)RootWindow(display, index);
+    
 }
 
