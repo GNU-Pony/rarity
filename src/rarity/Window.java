@@ -271,7 +271,7 @@ public class Window extends PropertyBase
 		    index++;
 	    if (index == windows.size())
 		return;
-	    final Blackboard blackboard = Blackboard.getInstance(Window.class);
+	    final Blackboard blackboard = Blackboard.getInstance(Window.ExistanceMessage.class);
 	    blackboard.broadcastMessage(new Window.ExistanceMessage(Window.ExistanceMessage.REMOVING, index));
 	    windows.remove(index);
 	    blackboard.broadcastMessage(new Window.ExistanceMessage(Window.ExistanceMessage.REMOVED, index));

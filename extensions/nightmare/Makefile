@@ -19,6 +19,7 @@
 #Optional definitions:
 #    NO_XINERAMA  --  Do not compile with Xinerama support
 #    TESTING      --  Compile for testing
+#    DEBUG        --  Compile with DEBUG defined
 
 
 # extension information
@@ -83,6 +84,15 @@ JNI_INCLUDE = -I$(shell echo $${JAVA_HOME})/include
 JNI_C_CFLAGS = $(JNI_INCLUDE) -fPIC
 JNI_C_LDFLAGS = -shared
 
+# jpp flags
+JPP_SRCPATH = -s "."
+JPP_BINPATH = -o "$(BIN)"
+JPP_EXPORTS = --export LIBPATH="$(EXTPATH)" --export LIB="$(LIBFILE)"
+ifdef DEBUG
+  JPP_EXPORTS += --export DEBUG
+endif
+JPP_FLAGS = $(JPP_EXPORTS) $(JPP_SRCPATH) $(JPP_BINPATH)
+
 # javac flags
 JAVA_VERSION = -source $(JAVA_SOURCE) -target $(JAVA_TARGET)
 JAVA_WARNINGS = -Xlint
@@ -133,7 +143,7 @@ endif
 $(BIN)/%.java: %.java
 	@echo -e '\e[34;01m$@\e[21m: $^\e[00m'
 	@mkdir -p "$(BIN)"
-	$(JPP) --export LIBPATH="$(EXTPATH)" --export LIB="$(LIBFILE)" -s "." -o "$(BIN)" "$<"
+	$(JPP) $(JPP_FLAGS) "$<"
 
 # .class files
 $(BIN)/%.class: $(JAVA_PRAECLASS)

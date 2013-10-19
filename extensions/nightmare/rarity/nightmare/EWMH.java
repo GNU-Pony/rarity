@@ -105,7 +105,7 @@ public class EWMH
     
     
     
-    public static final XAtom WM_TRANSIENT_FOR = (new XAtom("WM_TRANSIENT_FOR", true)).atom;
+    public static final XAtom WM_TRANSIENT_FOR = new XAtom("WM_TRANSIENT_FOR", true);
     
 }
 
