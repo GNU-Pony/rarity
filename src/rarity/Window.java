@@ -97,6 +97,7 @@ public class Window extends PropertyBase
 	this.set(WIDTH, width);
 	this.set(HEIGHT, height);
 	this.set(VISIBLE, true);
+	// FIXME: override-redirect
 	this.pointer = pointer;
     }
     
@@ -245,7 +246,7 @@ public class Window extends PropertyBase
      */
     public static Window getByAddress(final long address)
     {
-	/* We are going to assume that there are not so many windows that a mash map should be used */
+	/* We are going to assume that there are not so many windows that a hash map should be used */
 	synchronized (windows)
 	{   for (final Window window : windows)
 		if (window.pointer == address)
@@ -546,6 +547,18 @@ public class Window extends PropertyBase
 		rc = rc.substring(0, rc.indexOf('\0'));
 	    return rc;
 	}
+	
+	
+	/**
+	 * Returns whether the property is set
+	 * 
+	 * @return  Whether the property is set
+	 */
+	public boolean isSet()
+	{
+	    return this.value.length != 0;
+	}
+	
     }
     
     /**

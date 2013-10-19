@@ -27,24 +27,6 @@ import rarity.*;
  */
 public class WindowSizer implements Blackboard.BlackboardObserver
 {
-    private static XAtom _NET_WM_WINDOW_TYPE = null;
-    private static int _NET_WM_WINDOW_TYPE_DESKTOP;
-    private static int _NET_WM_WINDOW_TYPE_DOCK;
-    private static int _NET_WM_WINDOW_TYPE_TOOLBAR;
-    private static int _NET_WM_WINDOW_TYPE_MENU;
-    private static int _NET_WM_WINDOW_TYPE_UTILITY;
-    private static int _NET_WM_WINDOW_TYPE_SPLASH;
-    private static int _NET_WM_WINDOW_TYPE_DIALOG;
-    private static int _NET_WM_WINDOW_TYPE_DROPDOWN_MENU;
-    private static int _NET_WM_WINDOW_TYPE_POPUP_MENU;
-    private static int _NET_WM_WINDOW_TYPE_TOOLTIP;
-    private static int _NET_WM_WINDOW_TYPE_NOTIFICATION;
-    private static int _NET_WM_WINDOW_TYPE_COMBO;
-    private static int _NET_WM_WINDOW_TYPE_DND;
-    private static int _NET_WM_WINDOW_TYPE_NORMAL;
-    
-    
-    
     /**
      * Private constructor
      */
@@ -92,43 +74,31 @@ public class WindowSizer implements Blackboard.BlackboardObserver
 	<"">System.err.println("WindowSizer: receives message " + message.getClass());
 	if (message instanceof Window.ExistanceMessage)
 	{
-	    if (_NET_WM_WINDOW_TYPE == null)
-	    {
-		_NET_WM_WINDOW_TYPE = new XAtom("_NET_WM_WINDOW_TYPE", false);
-		_NET_WM_WINDOW_TYPE_DESKTOP       = (new XAtom("_NET_WM_WINDOW_TYPE_DESKTOP",       false)).atom;//
-		_NET_WM_WINDOW_TYPE_DOCK          = (new XAtom("_NET_WM_WINDOW_TYPE_DOCK",          false)).atom;//
-		_NET_WM_WINDOW_TYPE_TOOLBAR       = (new XAtom("_NET_WM_WINDOW_TYPE_TOOLBAR",       false)).atom;//
-		_NET_WM_WINDOW_TYPE_MENU          = (new XAtom("_NET_WM_WINDOW_TYPE_MENU",          false)).atom;
-		_NET_WM_WINDOW_TYPE_UTILITY       = (new XAtom("_NET_WM_WINDOW_TYPE_UTILITY",       false)).atom;//
-		_NET_WM_WINDOW_TYPE_SPLASH        = (new XAtom("_NET_WM_WINDOW_TYPE_SPLASH",        false)).atom;//
-		_NET_WM_WINDOW_TYPE_DIALOG        = (new XAtom("_NET_WM_WINDOW_TYPE_DIALOG",        false)).atom;
-		_NET_WM_WINDOW_TYPE_DROPDOWN_MENU = (new XAtom("_NET_WM_WINDOW_TYPE_DROPDOWN_MENU", false)).atom;
-		_NET_WM_WINDOW_TYPE_POPUP_MENU    = (new XAtom("_NET_WM_WINDOW_TYPE_POPUP_MENU",    false)).atom;
-		_NET_WM_WINDOW_TYPE_TOOLTIP       = (new XAtom("_NET_WM_WINDOW_TYPE_TOOLTIP",       false)).atom;
-		_NET_WM_WINDOW_TYPE_NOTIFICATION  = (new XAtom("_NET_WM_WINDOW_TYPE_NOTIFICATION",  false)).atom;//
-		_NET_WM_WINDOW_TYPE_COMBO         = (new XAtom("_NET_WM_WINDOW_TYPE_COMBO",         false)).atom;
-		_NET_WM_WINDOW_TYPE_DND           = (new XAtom("_NET_WM_WINDOW_TYPE_DND",           false)).atom;
-		_NET_WM_WINDOW_TYPE_NORMAL        = (new XAtom("_NET_WM_WINDOW_TYPE_NORMAL",        false)).atom;
-	    }
-	    
 	    final Window.ExistanceMessage event = (Window.ExistanceMessage)message;
 	    if (event.action != Window.ExistanceMessage.ADDED)
 		return;
 	    final Window window = Window.getWindow(event.index);
-	    final int[] types = window.getProperty(_NET_WM_WINDOW_TYPE).getIntArray();
+	    final int[] types = window.getProperty(EWMH._NET_WM_WINDOW_TYPE).getIntArray();
 	    
 	    normal_test: {
 		for (final int type : types)
-		    if (     type == _NET_WM_WINDOW_TYPE_NORMAL ||
-			     type == _NET_WM_WINDOW_TYPE_DIALOG)
+		    if (     type == EWMH._NET_WM_WINDOW_TYPE_NORMAL ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_DIALOG ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_SPLASH ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_UTILITY)
 			break normal_test;
-		    else if (type == _NET_WM_WINDOW_TYPE_MENU          ||
-			     type == _NET_WM_WINDOW_TYPE_DROPDOWN_MENU ||
-			     type == _NET_WM_WINDOW_TYPE_POPUP_MENU    || 
-			     type == _NET_WM_WINDOW_TYPE_TOOLTIP       ||
-			     type == _NET_WM_WINDOW_TYPE_COMBO         ||
-			     type == _NET_WM_WINDOW_TYPE_DND)
+		    else if (type == EWMH._NET_WM_WINDOW_TYPE_MENU          ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU    || 
+			     type == EWMH._NET_WM_WINDOW_TYPE_TOOLTIP       ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_COMBO         ||
+			     type == EWMH._NET_WM_WINDOW_TYPE_DND)
 			return;
+		if (types.length == 0)
+		    if (window.getProperty(EWMH.WM_TRANSIENT_FOR).isSet())
+			break normal_test; /* Implicitly _NET_WM_WINDOW_TYPE_DIALOG */
+		    else
+			break normal_test; /* Implicitly _NET_WM_WINDOW_TYPE_NORMAL */
 		return;
 	    }
 	    
