@@ -28,6 +28,68 @@ import rarity.*;
 public class EWMH
 {
     /**
+     * List of supported window states, stored on the root window
+     */
+    public static final XAtom _NET_SUPPORTED = new XAtom("_NET_SUPPORTED", true);
+    
+    /**
+     * List, in order of age, of windows managed by the window mananger, stored on the root window
+     */
+    public static final XAtom _NET_CLIENT_LIST = new XAtom("_NET_CLIENT_LIST", true);
+    
+    /**
+     * List, in bottom-to-stacking order, of windows managed by the window mananger, stored on the root window
+     */
+    public static final XAtom _NET_CLIENT_LIST_STACKING = new XAtom("_NET_CLIENT_LIST", true);
+    
+    public static final XAtom _NET_NUMBER_OF_DESKTOPS = new XAtom("_NET_NUMBER_OF_DESKTOPS", true);
+    
+    public static final XAtom _NET_DESKTOP_GEOMETRY = new XAtom("_NET_DESKTOP_GEOMETRY", true);
+    
+    public static final XAtom _NET_DESKTOP_VIEWPORT = new XAtom("_NET_DESKTOP_VIEWPORT", true);
+    
+    public static final XAtom _NET_CURRENT_DESKTOP = new XAtom("_NET_CURRENT_DESKTOP", true);
+    
+    public static final XAtom _NET_DESKTOP_NAMES = new XAtom("_NET_DESKTOP_NAMES", true);
+    
+    public static final XAtom _NET_ACTIVE_WINDOW = new XAtom("_NET_ACTIVE_WINDOW", true);
+    
+    public static final XAtom _NET_WORKAREA = new XAtom("_NET_WORKAREA", true);
+    
+    public static final XAtom _NET_SUPPORTING_WM_CHECK = new XAtom("_NET_SUPPORTING_WM_CHECK", true);
+    
+    public static final XAtom _NET_VIRTUAL_ROOTS = new XAtom("_NET_VIRTUAL_ROOTS", true);
+    
+    public static final XAtom _NET_DESKTOP_LAYOUT = new XAtom("_NET_DESKTOP_LAYOUT", true);
+    
+    public static final XAtom _NET_SHOWING_DESKTOP = new XAtom("_NET_SHOWING_DESKTOP", true);
+    
+    
+    
+    public static final XAtom _NET_CLOSE_WINDOW = new XAtom("_NET_CLOSE_WINDOW", true);
+    
+    public static final XAtom _NET_MOVERESIZE_WINDOW = new XAtom("_NET_MOVERESIZE_WINDOW", true);
+    
+    public static final XAtom _NET_WM_MOVERESIZE = new XAtom("_NET_WM_MOVERESIZE", true);
+    
+    public static final XAtom _NET_RESTACK_WINDOW = new XAtom("_NET_RESTACK_WINDOW", true);
+    
+    public static final XAtom _NET_REQUEST_FRAME_EXTENTS = new XAtom("_NET_REQUEST_FRAME_EXTENTS", true);
+    
+    
+    
+    public static final XAtom _NET_WM_NAME = new XAtom("_NET_WM_NAME", true);
+    
+    public static final XAtom _NET_WM_VISIBLE_NAME = new XAtom("_NET_WM_VISIBLE_NAME", true);
+    
+    public static final XAtom _NET_WM_ICON_NAME = new XAtom("_NET_WM_ICON_NAME", true);
+    
+    public static final XAtom _NET_WM_VISIBLE_ICON_NAME = new XAtom("_NET_WM_VISIBLE_ICON_NAME", true);
+    
+    public static final XAtom _NET_WM_DESKTOP = new XAtom("_NET_WM_DESKTOP", true);
+    
+    
+    /**
      * Window type hints, in order of preference
      */
     public static final XAtom _NET_WM_WINDOW_TYPE = new XAtom("_NET_WM_WINDOW_TYPE", true);
@@ -102,6 +164,97 @@ public class EWMH
      * Normal, top-level, window
      */
     public static final int _NET_WM_WINDOW_TYPE_NORMAL = (new XAtom("_NET_WM_WINDOW_TYPE_NORMAL", true)).atom;
+    
+    
+    public static final XAtom _NET_WM_STATE = new XAtom("_NET_WM_STATE", true);
+    
+    public static final int _NET_WM_STATE_MODAL = (new XAtom("_NET_WM_STATE_MODAL", true)).atom;
+    
+    public static final int _NET_WM_STATE_STICKY = (new XAtom("_NET_WM_STATE_STICKY", true)).atom;
+    
+    public static final int _NET_WM_STATE_MAXIMIZED_VERT = (new XAtom("_NET_WM_STATE_MAXIMIZED_VERT", true)).atom;
+    
+    public static final int _NET_WM_STATE_MAXIMIZED_HORZ = (new XAtom("_NET_WM_STATE_MAXIMIZED_HORZ", true)).atom;
+    
+    public static final int _NET_WM_STATE_SHADED = (new XAtom("_NET_WM_STATE_SHADED", true)).atom;
+    
+    public static final int _NET_WM_STATE_SKIP_TASKBAR = (new XAtom("_NET_WM_STATE_SKIP_TASKBAR", true)).atom;
+    
+    public static final int _NET_WM_STATE_SKIP_PAGER = (new XAtom("_NET_WM_STATE_SKIP_PAGER", true)).atom;
+    
+    public static final int _NET_WM_STATE_HIDDEN = (new XAtom("_NET_WM_STATE_HIDDEN", true)).atom;
+    
+    public static final int _NET_WM_STATE_FULLSCREEN = (new XAtom("_NET_WM_STATE_FULLSCREEN", true)).atom;
+    
+    public static final int _NET_WM_STATE_ABOVE = (new XAtom("_NET_WM_STATE_ABOVE", true)).atom;
+    
+    public static final int _NET_WM_STATE_BELOW = (new XAtom("_NET_WM_STATE_BELOW", true)).atom;
+    
+    public static final int _NET_WM_STATE_DEMANDS_ATTENTION = (new XAtom("_NET_WM_STATE_DEMANDS_ATTENTION", true)).atom;
+    
+    public static final int _NET_WM_STATE_REMOVE = 0;
+    
+    public static final int _NET_WM_STATE_ADD = 1;
+    
+    public static final int _NET_WM_STATE_TOGGLE = 2;
+    
+    
+    public static final XAtom _NET_WM_ALLOWED_ACTIONS = new XAtom("_NET_WM_ALLOWED_ACTIONS", true);
+    
+    public static final int _NET_WM_ACTION_MOVE = (new XAtom("_NET_WM_ACTION_MOVE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_RESIZE = (new XAtom("_NET_WM_ACTION_RESIZE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_MINIMIZE = (new XAtom("_NET_WM_ACTION_MINIMIZE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_SHADE = (new XAtom("_NET_WM_ACTION_SHADE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_STICK = (new XAtom("_NET_WM_ACTION_STICK", true)).atom;
+    
+    public static final int _NET_WM_ACTION_MAXIMIZE_HORZ = (new XAtom("_NET_WM_ACTION_MAXIMIZE_HORZ", true)).atom;
+    
+    public static final int _NET_WM_ACTION_MAXIMIZE_VERT = (new XAtom("_NET_WM_ACTION_MAXIMIZE_VERT", true)).atom;
+    
+    public static final int _NET_WM_ACTION_FULLSCREEN = (new XAtom("_NET_WM_ACTION_FULLSCREEN", true)).atom;
+    
+    public static final int _NET_WM_ACTION_CHANGE_DESKTOP = (new XAtom("_NET_WM_ACTION_CHANGE_DESKTOP", true)).atom;
+    
+    public static final int _NET_WM_ACTION_CLOSE = (new XAtom("_NET_WM_ACTION_CLOSE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_ABOVE = (new XAtom("_NET_WM_ACTION_ABOVE", true)).atom;
+    
+    public static final int _NET_WM_ACTION_BELOW = (new XAtom("_NET_WM_ACTION_BELOW", true)).atom;
+    
+    
+    public static final XAtom _NET_WM_STRUT = new XAtom("_NET_WM_STRUT", true);
+    
+    public static final XAtom _NET_WM_STRUT_PARTIAL = new XAtom("_NET_WM_STRUT_PARTIAL", true);
+    
+    public static final XAtom _NET_WM_ICON_GEOMETRY = new XAtom("_NET_WM_ICON_GEOMETRY", true);
+    
+    public static final XAtom _NET_WM_ICON = new XAtom("_NET_WM_ICON", true);
+    
+    public static final XAtom _NET_WM_PID = new XAtom("_NET_WM_PID", true);
+    
+    public static final XAtom _NET_WM_HANDLED_ICONS = new XAtom("_NET_WM_HANDLED_ICONS", true);
+    
+    public static final XAtom _NET_WM_USER_TIME = new XAtom("_NET_WM_USER_TIME", true);
+    
+    public static final XAtom _NET_WM_USER_TIME_WINDOW = new XAtom("_NET_WM_USER_TIME_WINDOW", true);
+    
+    public static final XAtom _NET_FRAME_EXTENTS = new XAtom("_NET_FRAME_EXTENTS", true);
+    
+    
+    
+    public static final XAtom _NET_WM_PING = new XAtom("_NET_WM_PING", true);
+    
+    public static final XAtom _NET_WM_SYNC_REQUEST = new XAtom("_NET_WM_SYNC_REQUEST", true);
+    
+    public static final XAtom _NET_WM_FULLSCREEN_MONITORS = new XAtom("_NET_WM_FULLSCREEN_MONITORS", true);
+    
+    
+    
+    public static final XAtom _NET_WM_FULL_PLACEMENT = new XAtom("_NET_WM_FULL_PLACEMENT", true);
     
     
     
