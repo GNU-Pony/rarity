@@ -417,8 +417,8 @@ public class Window extends PropertyBase
     {
 	final byte[] data_ = new byte[data.length * 2];
 	for (int i = 0, n = data.length; i < n; i++)
-	{   data_[(i << 1) | 0] = (byte)((data[i] >>> (1 * 8)) & 255);
-	    data_[(i << 1) | 1] = (byte)((data[i] >>> (0 * 8)) & 255);
+	{   data_[(i << 1) | 0] = (byte)((data[i] >>> (0 * 8)) & 255);
+	    data_[(i << 1) | 1] = (byte)((data[i] >>> (1 * 8)) & 255);
 	}
 	
 	xChangeProperty(this.pointer, property.atom, type.atom, 16, mode, data_);
@@ -436,10 +436,10 @@ public class Window extends PropertyBase
     {
 	final byte[] data_ = new byte[data.length * 4];
 	for (int i = 0, n = data.length; i < n; i++)
-	{   data_[(i << 2) | 0] = (byte)((data[i] >>> (3 * 8)) & 255);
-	    data_[(i << 2) | 1] = (byte)((data[i] >>> (2 * 8)) & 255);
-	    data_[(i << 2) | 2] = (byte)((data[i] >>> (1 * 8)) & 255);
-	    data_[(i << 2) | 3] = (byte)((data[i] >>> (0 * 8)) & 255);
+	{   data_[(i << 2) | 0] = (byte)((data[i] >>> (0 * 8)) & 255);
+	    data_[(i << 2) | 1] = (byte)((data[i] >>> (1 * 8)) & 255);
+	    data_[(i << 2) | 2] = (byte)((data[i] >>> (2 * 8)) & 255);
+	    data_[(i << 2) | 3] = (byte)((data[i] >>> (3 * 8)) & 255);
 	}
 	
 	xChangeProperty(this.pointer, property.atom, type.atom, 32, mode, data_);
@@ -505,8 +505,8 @@ public class Window extends PropertyBase
 	{
 	    final short[] rc = new short[this.value.length >> 1];
 	    for (int i = 0, n = this.value.length >> 1; i < n; i++)
-		rc[i] = (short)(((this.value[(i << 1) | 0] & 255) << 8)
-			      | ((this.value[(i << 1) | 1] & 255) << 0));
+		rc[i] = (short)(((this.value[(i << 1) | 0] & 255) << 0)
+			      | ((this.value[(i << 1) | 1] & 255) << 8));
 	    return rc;
 	}
 	
@@ -519,10 +519,10 @@ public class Window extends PropertyBase
 	{
 	    final int[] rc = new int[this.value.length >> 2];
 	    for (int i = 0, n = this.value.length >> 2; i < n; i++)
-		rc[i] = ((this.value[(i << 2) | 0] & 255) << 24)
-		      | ((this.value[(i << 2) | 1] & 255) << 16)
-		      | ((this.value[(i << 2) | 2] & 255) << 8)
-		      | ((this.value[(i << 2) | 3] & 255) << 0);
+		rc[i] = ((this.value[(i << 2) | 0] & 255) <<  0)
+		      | ((this.value[(i << 2) | 1] & 255) <<  8)
+		      | ((this.value[(i << 2) | 2] & 255) << 16)
+		      | ((this.value[(i << 2) | 3] & 255) << 24);
 	    return rc;
 	}
 	
@@ -533,14 +533,18 @@ public class Window extends PropertyBase
 	 */
 	public String getString()
 	{
+	    String rc;
 	    try
-	    {   return new String(this.value, "UTF-8");
+	    {   rc = new String(this.value, "UTF-8");
 	    }
 	    catch (final Throwable err)
 	    {   System.err.println("Unable to decode UTF-8");
 		Rarity.abort();
 		return null;
 	    }
+	    if (rc.indexOf('\0') >= 0)
+		rc = rc.substring(0, rc.indexOf('\0'));
+	    return rc;
 	}
     }
     

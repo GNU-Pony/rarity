@@ -220,7 +220,7 @@ jintArray Java_rarity_Window_xListProperties(JNIEnv* env, jclass class, jlong ad
 jbyteArray Java_rarity_Window_xGetWindowProperty(JNIEnv* env, jclass class, jlong address, jint property, jint requestType)
 {
   Atom type;
-  int format, j, k;
+  int format, j, k, jn;
   unsigned long i, n, m;
   unsigned char* data;
   
@@ -239,7 +239,7 @@ jbyteArray Java_rarity_Window_xGetWindowProperty(JNIEnv* env, jclass class, jlon
   XGetWindowProperty(d, w, p, 0, 1, 0, t, &type, &format, &n, &m, &data);
   XFree(data);
   
-  len = (n * format / 8 + m) / 4;
+  len = 1 + (m + 3) / 4;
   raw = malloc((5 + len * 4) * sizeof(jbyte));
   XGetWindowProperty(d, w, p, 0, len, 0, t, &type, &format, &n, &m, &data);
   
@@ -250,9 +250,9 @@ jbyteArray Java_rarity_Window_xGetWindowProperty(JNIEnv* env, jclass class, jlon
   
   *raw = format;
   *(raw + 1) = (((int)type) >> 24) & 255;
-  *(raw + 1) = (((int)type) >> 16) & 255;
-  *(raw + 1) = (((int)type) >>  8) & 255;
-  *(raw + 1) = (((int)type) >>  0) & 255;
+  *(raw + 2) = (((int)type) >> 16) & 255;
+  *(raw + 3) = (((int)type) >>  8) & 255;
+  *(raw + 4) = (((int)type) >>  0) & 255;
   raw += 5;
   
   if ((format == 32) && (format != sizeof(long) * 8))
@@ -260,13 +260,13 @@ jbyteArray Java_rarity_Window_xGetWindowProperty(JNIEnv* env, jclass class, jlon
   
   m = format / 8;
   for (i = j = k = 0; i < n; i++, k += skip)
-    for (; j < format; j++)
+    for (jn = m * (i + 1); j < jn; j++)
       *(raw + j) = *(data + k++);
   
-  XFree(data);
   raw -= 5;
+  XFree(data);
   
-  rc = (*env)->NewByteArray(env, n);
+  rc = (*env)->NewByteArray(env, 5 + j);
   (*env)->SetByteArrayRegion(env, rc, 0, 5 + j, raw);
   
   return rc;
